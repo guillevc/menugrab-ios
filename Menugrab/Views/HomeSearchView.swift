@@ -21,8 +21,8 @@ struct HomeSearchView: View {
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(width: 18, height: 18, alignment: .center)
+                        .foregroundColor(.myBlack)
                 }
-                .foregroundColor(.black)
                 RestaurantSearchInputView(fontSize: 17, textFieldDisabled: false, showSlider: false, onSliderTapped: nil)
             }
             .padding(.horizontal)

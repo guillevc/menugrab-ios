@@ -23,20 +23,20 @@ struct RestaurantSearchInputView: View {
                     .foregroundColor(.gray)
                 TextField("Search restaurants", text: $keywords)
                     .font(.custom("DM Sans", size: fontSize))
-                    .foregroundColor(.black)
-                    .padding(.vertical, 8)
+                    .foregroundColor(.myBlack)
+                    .padding(.vertical, 6)
                     .disabled(textFieldDisabled)
             if showSlider {
                 Button(action: { onSliderTapped?() }) {
                     Image(systemName: "slider.horizontal.3")
-                        .foregroundColor(.gray)
+                        .foregroundColor(.darkGray)
                 }
             }
         }
         .padding(.horizontal, 10)
         .background(
             RoundedRectangle(cornerRadius: 8)
-                .foregroundColor(Color.gray.opacity(0.10))
+                .foregroundColor(.lightestGray)
         )
     }
 }

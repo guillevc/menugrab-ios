@@ -20,18 +20,21 @@ struct HomeView: View {
                 HStack {
                     Image(systemName: "person")
                         .font(.system(size: 22))
+                        .foregroundColor(.myBlack)
                     Spacer()
                     HStack(spacing: 5) {
                         Text("Current location")
                             .font(.custom("DM Sans", size: 17))
                             .fontWeight(.bold)
+                            .foregroundColor(.myBlack)
                         Image(systemName: "chevron.down")
                             .font(.system(size: 17))
-                            .foregroundColor(.red)
+                            .foregroundColor(.myPrimary)
                     }
                     Spacer()
                     Image(systemName: "cart")
                         .font(.system(size: 22))
+                        .foregroundColor(.myBlack)
                 }
                 .padding()
                 Divider()
@@ -107,6 +110,7 @@ fileprivate struct HeaderView: View {
             Text(text)
                 .font(.custom("DM Sans", size: 17))
                 .fontWeight(.medium)
+                .foregroundColor(.myBlack)
             Spacer()
             NavigationLink(destination: AllRestaurantsView()) {
                 Text("View all")

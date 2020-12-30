@@ -41,6 +41,7 @@ struct RestaurantCellView: View {
                                     .frame(width: 17.5, height: 17.5, alignment: .center)
                                 Text("Table")
                                     .font(.custom("DM Sans", size: 13))
+                                    .foregroundColor(.myBlack)
                             }
                         }
                         if acceptingOrderTypes.contains(.pickup) {
@@ -51,11 +52,13 @@ struct RestaurantCellView: View {
                                     .frame(width: 15.5, height: 15.5, alignment: .center)
                                 Text("Pickup")
                                     .font(.custom("DM Sans", size: 13))
+                                    .foregroundColor(.myBlack)
                             }
                         }
                         Spacer()
                         Text("8 km away")
                             .font(.custom("DM Sans", size: 13))
+                            .foregroundColor(.myBlack)
                     }
                     .padding(.horizontal)
                 }
