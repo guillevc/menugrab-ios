@@ -46,11 +46,11 @@ struct HomeView: View {
                                 .padding()
                         }
                         .buttonStyle(PlainButtonStyle())
-                        HeaderView(text: "Favourites ⭐")
+                        HeaderView(text: "Favourites ⭐", destination: AllRestaurantsView(title: "All our favourites"))
                             .padding(.horizontal)
                             .padding(.bottom, -5)
                         HCarouselView(restaurants: restaurants)
-                        HeaderView(text: "Nearby 📍")
+                        HeaderView(text: "Nearby 📍", destination: AllRestaurantsView(title: "All restaurants"))
                             .padding(.horizontal)
                             .padding(.top, 10)
                         ForEach(Array(restaurants.enumerated()), id: \.offset) { index, restaurant in
@@ -103,8 +103,9 @@ fileprivate struct HCarouselView: View {
     }
 }
 
-fileprivate struct HeaderView: View {
+fileprivate struct HeaderView<Destination: View>: View {
     let text: String
+    let destination: Destination
     
     var body: some View {
         HStack(spacing: 0) {
@@ -113,7 +114,7 @@ fileprivate struct HeaderView: View {
                 .fontWeight(.medium)
                 .foregroundColor(.myBlack)
             Spacer()
-            NavigationLink(destination: AllRestaurantsView()) {
+            NavigationLink(destination: destination) {
                 Text("View all")
                     .font(.custom("DM Sans", size: 13))
                     .fontWeight(.medium)

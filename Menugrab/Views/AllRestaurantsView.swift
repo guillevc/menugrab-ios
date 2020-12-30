@@ -11,6 +11,7 @@ struct AllRestaurantsView: View {
     
     @Environment(\.presentationMode) private var presentationMode
     
+    let title: String
     private let restaurants = Restaurant.sampleRestaurants()
     
     var body: some View {
@@ -27,7 +28,7 @@ struct AllRestaurantsView: View {
                     Spacer()
                 }
                 Spacer()
-                Text("Favourites")
+                Text(title)
                     .font(.system(size: 17))
                     .fontWeight(.medium)
                     .foregroundColor(.myBlack)
@@ -52,6 +53,6 @@ struct AllRestaurantsView: View {
 
 struct HomeViewAllRestaurantsView_Previews: PreviewProvider {
     static var previews: some View {
-        AllRestaurantsView()
+        AllRestaurantsView(title: "Title")
     }
 }
