@@ -24,9 +24,7 @@ struct HomeView: View {
                     Spacer()
                     HStack(spacing: 5) {
                         Text("Current location")
-                            .font(.custom("DM Sans", size: 17))
-                            .fontWeight(.bold)
-                            .foregroundColor(.myBlack)
+                            .myFont(size: 17, weight: .bold)
                         Image(systemName: "chevron.down")
                             .font(.system(size: 17))
                             .foregroundColor(.myPrimary)
@@ -110,15 +108,11 @@ fileprivate struct HeaderView<Destination: View>: View {
     var body: some View {
         HStack(spacing: 0) {
             Text(text)
-                .font(.custom("DM Sans", size: 17))
-                .fontWeight(.medium)
-                .foregroundColor(.myBlack)
+                .myFont(size: 17, weight: .medium)
             Spacer()
             NavigationLink(destination: destination) {
                 Text("View all")
-                    .font(.custom("DM Sans", size: 13))
-                    .fontWeight(.medium)
-                    .foregroundColor(.gray)
+                    .myFont(size: 13, weight: .medium, color: .gray)
             }
         }
     }

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		B373A9CD259CF87B0089FA60 /* Color+.swift in Sources */ = {isa = PBXBuildFile; fileRef = B373A9CC259CF87A0089FA60 /* Color+.swift */; };
+		B373A9EA259D167F0089FA60 /* View+.swift in Sources */ = {isa = PBXBuildFile; fileRef = B373A9E9259D167F0089FA60 /* View+.swift */; };
 		B38B6371259CE45100378052 /* MenugrabApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38B6370259CE45100378052 /* MenugrabApp.swift */; };
 		B38B6375259CE45400378052 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B38B6374259CE45400378052 /* Assets.xcassets */; };
 		B38B6378259CE45400378052 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B38B6377259CE45400378052 /* Preview Assets.xcassets */; };
@@ -44,6 +45,7 @@
 
 /* Begin PBXFileReference section */
 		B373A9CC259CF87A0089FA60 /* Color+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+.swift"; sourceTree = "<group>"; };
+		B373A9E9259D167F0089FA60 /* View+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+.swift"; sourceTree = "<group>"; };
 		B38B636D259CE45000378052 /* Menugrab.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Menugrab.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B38B6370259CE45100378052 /* MenugrabApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenugrabApp.swift; sourceTree = "<group>"; };
 		B38B6374259CE45400378052 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -95,6 +97,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B373A9E8259D166D0089FA60 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				B373A9CC259CF87A0089FA60 /* Color+.swift */,
+				B373A9E9259D167F0089FA60 /* View+.swift */,
+				B38B63CD259CE56A00378052 /* UINavigationController+.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
 		B38B6364259CE45000378052 = {
 			isa = PBXGroup;
 			children = (
@@ -122,7 +134,6 @@
 				B38B6379259CE45400378052 /* Info.plist */,
 				B38B63B4259CE4EB00378052 /* Models */,
 				B38B63BD259CE55C00378052 /* Views */,
-				B38B63CC259CE56A00378052 /* Extensions */,
 				B38B639E259CE46100378052 /* Resources */,
 				B38B6376259CE45400378052 /* Preview Content */,
 			);
@@ -175,10 +186,11 @@
 		B38B63BD259CE55C00378052 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				B38B63BE259CE55C00378052 /* AllRestaurantsView.swift */,
 				B38B63BF259CE55C00378052 /* HomeView.swift */,
 				B38B63C0259CE55C00378052 /* HomeSearchView.swift */,
+				B38B63BE259CE55C00378052 /* AllRestaurantsView.swift */,
 				B38B63C1259CE55C00378052 /* Shared */,
+				B373A9E8259D166D0089FA60 /* Helpers */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -190,15 +202,6 @@
 				B38B63C3259CE55C00378052 /* RestaurantCellView.swift */,
 			);
 			path = Shared;
-			sourceTree = "<group>";
-		};
-		B38B63CC259CE56A00378052 /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-				B38B63CD259CE56A00378052 /* UINavigationController+.swift */,
-				B373A9CC259CF87A0089FA60 /* Color+.swift */,
-			);
-			path = Extensions;
 			sourceTree = "<group>";
 		};
 		B38B63D2259CE59E00378052 /* Fonts */ = {
@@ -352,6 +355,7 @@
 				B38B63C5259CE55C00378052 /* HomeView.swift in Sources */,
 				B38B6371259CE45100378052 /* MenugrabApp.swift in Sources */,
 				B38B63C8259CE55C00378052 /* RestaurantCellView.swift in Sources */,
+				B373A9EA259D167F0089FA60 /* View+.swift in Sources */,
 				B38B63CE259CE56A00378052 /* UINavigationController+.swift in Sources */,
 				B38B63C7259CE55C00378052 /* RestaurantSearchInputView.swift in Sources */,
 				B38B63C4259CE55C00378052 /* AllRestaurantsView.swift in Sources */,

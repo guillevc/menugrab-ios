@@ -9,6 +9,7 @@ import UIKit
 
 // Preserve swipe back gesture - https://stackoverflow.com/questions/59921239/hide-navigation-bar-without-losing-swipe-back-gesture-in-swiftui
 extension UINavigationController: UIGestureRecognizerDelegate  {
+    
     override open func viewDidLoad() {
         super.viewDidLoad()
         

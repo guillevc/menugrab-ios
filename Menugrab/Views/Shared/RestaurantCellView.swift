@@ -20,9 +20,7 @@ struct RestaurantCellView: View {
                 .frame(minWidth: 0, idealWidth: 320, maxWidth: .infinity, minHeight: 0, idealHeight: 160, maxHeight: .infinity, alignment: .center)
                 .clipShape(RoundedRectangle(cornerRadius: 12))
             Text(name)
-                .font(.custom("DM Sans", size: 23))
-                .fontWeight(.bold)
-                .foregroundColor(.white)
+                .myFont(size: 23, weight: .bold, color: .white)
                 .multilineTextAlignment(.center)
                 .padding(.horizontal)
                 .shadow(color: .black, radius: 3, x: 0, y: 0)
@@ -40,8 +38,7 @@ struct RestaurantCellView: View {
                                     .aspectRatio(contentMode: .fit)
                                     .frame(width: 17.5, height: 17.5, alignment: .center)
                                 Text("Table")
-                                    .font(.custom("DM Sans", size: 13))
-                                    .foregroundColor(.myBlack)
+                                    .myFont(size: 13)
                             }
                         }
                         if acceptingOrderTypes.contains(.pickup) {
@@ -51,14 +48,12 @@ struct RestaurantCellView: View {
                                     .aspectRatio(contentMode: .fit)
                                     .frame(width: 15.5, height: 15.5, alignment: .center)
                                 Text("Pickup")
-                                    .font(.custom("DM Sans", size: 13))
-                                    .foregroundColor(.myBlack)
+                                    .myFont(size: 13)
                             }
                         }
                         Spacer()
                         Text("8 km away")
-                            .font(.custom("DM Sans", size: 13))
-                            .foregroundColor(.myBlack)
+                            .myFont(size: 13)
                     }
                     .padding(.horizontal)
                 }

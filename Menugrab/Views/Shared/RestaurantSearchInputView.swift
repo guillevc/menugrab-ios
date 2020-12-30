@@ -22,8 +22,7 @@ struct RestaurantSearchInputView: View {
                 Image(systemName: "magnifyingglass")
                     .foregroundColor(.gray)
                 TextField("Search restaurants", text: $keywords)
-                    .font(.custom("DM Sans", size: fontSize))
-                    .foregroundColor(.myBlack)
+                    .myFont(size: fontSize)
                     .padding(.vertical, 6)
                     .disabled(textFieldDisabled)
             if showSlider {
