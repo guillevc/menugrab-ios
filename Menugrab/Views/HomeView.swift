@@ -37,6 +37,7 @@ struct HomeView: View {
                         .foregroundColor(.myBlack)
                 }
                 .padding()
+                .frame(width: UIScreen.main.bounds.size.width, height: 54)
                 Divider()
                 ScrollView(showsIndicators: false) {
                     VStack(spacing: 0) {

@@ -26,9 +26,8 @@ struct HomeSearchView: View {
                 RestaurantSearchInputView(fontSize: 17, textFieldDisabled: false, showSlider: false, onSliderTapped: nil)
             }
             .padding(.horizontal)
-            .padding(.top)
-            .padding(.bottom, 10)
-            Divider()
+            .padding(.vertical, 10)
+            .frame(width: UIScreen.main.bounds.size.width, height: 54)
             ScrollView {
                 VStack(spacing: 0) {
                     ForEach(Array(restaurants.enumerated()), id: \.offset) { index, restaurant in

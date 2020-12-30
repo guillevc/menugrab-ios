@@ -9,22 +9,44 @@ import SwiftUI
 
 struct AllRestaurantsView: View {
     
-    let restaurants = Restaurant.sampleRestaurants()
+    @Environment(\.presentationMode) private var presentationMode
+    
+    private let restaurants = Restaurant.sampleRestaurants()
     
     var body: some View {
-        ScrollView {
-            VStack(spacing: 0) {
-                ForEach(Array(restaurants.enumerated()), id: \.offset) { index, restaurant in
-                    RestaurantCellView(name: restaurant.name, image: restaurant.image, acceptingOrderTypes: restaurant.acceptingOrderTypes)
-                        .padding(.horizontal)
-                        .padding(.top, 20)
-                        .padding(.bottom, index == restaurants.count - 1 ? 20 : 0)
+        VStack(spacing: 0) {
+            ZStack {
+                HStack {
+                    Button(action: { presentationMode.wrappedValue.dismiss() }) {
+                        Image(systemName: "arrow.left")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 18, height: 18, alignment: .center)
+                            .foregroundColor(.myBlack)
+                    }
+                    Spacer()
+                }
+                Spacer()
+                Text("Favourites")
+                    .font(.system(size: 17))
+                    .fontWeight(.medium)
+                    .foregroundColor(.myBlack)
+                Spacer()
+            }
+            .padding()
+            .frame(width: UIScreen.main.bounds.size.width, height: 54)
+            ScrollView {
+                VStack(spacing: 0) {
+                    ForEach(Array(restaurants.enumerated()), id: \.offset) { index, restaurant in
+                        RestaurantCellView(name: restaurant.name, image: restaurant.image, acceptingOrderTypes: restaurant.acceptingOrderTypes)
+                            .padding(.horizontal)
+                            .padding(.top, 20)
+                            .padding(.bottom, index == restaurants.count - 1 ? 20 : 0)
+                    }
                 }
             }
+            .navigationBarHidden(true)
         }
-        .navigationBarTitle("Favourites")
-        .navigationBarTitleDisplayMode(.inline)
-        .navigationBarBackButtonHidden(false)
     }
 }
 
