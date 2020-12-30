@@ -27,7 +27,7 @@ struct HomeSearchView: View {
             }
             .padding(.horizontal)
             .padding(.vertical, 10)
-            .frame(width: UIScreen.main.bounds.size.width, height: 54)
+            .frame(height: 54)
             ScrollView {
                 VStack(spacing: 0) {
                     ForEach(Array(restaurants.enumerated()), id: \.offset) { index, restaurant in

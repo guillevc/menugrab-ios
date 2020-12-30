@@ -35,8 +35,9 @@ struct HomeView: View {
                         .foregroundColor(.myBlack)
                 }
                 .padding()
-                .frame(width: UIScreen.main.bounds.size.width, height: 54)
+                .frame(height: 54)
                 Divider()
+                    .opacity(0.5)
                 ScrollView(showsIndicators: false) {
                     VStack(spacing: 0) {
                         NavigationLink(destination: HomeSearchView()) {

@@ -33,8 +33,7 @@ struct RestaurantSearchInputView: View {
     @State var keywords = ""
     
     var body: some View {
-        UITextField.appearance().clearButtonMode = .whileEditing
-        return HStack {
+        HStack {
             Image(systemName: "magnifyingglass")
                 .foregroundColor(.gray)
                 .font(.system(size: 18))
@@ -55,6 +54,9 @@ struct RestaurantSearchInputView: View {
             RoundedRectangle(cornerRadius: 8)
                 .foregroundColor(.lightestGray)
         )
+        .onAppear {
+            UITextField.appearance().clearButtonMode = .whileEditing
+        }
     }
 }
 
