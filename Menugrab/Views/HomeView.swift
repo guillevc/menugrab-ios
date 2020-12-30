@@ -40,7 +40,7 @@ struct HomeView: View {
                 ScrollView(showsIndicators: false) {
                     VStack(spacing: 0) {
                         NavigationLink(destination: HomeSearchView()) {
-                            RestaurantSearchInputView(fontSize: 15, textFieldDisabled: true, showSlider: true, onSliderTapped: { showingActionSheet = true })
+                            RestaurantSearchInputView(type: .display(onSliderTapped: { showingActionSheet = true }))
                                 .padding()
                         }
                         .buttonStyle(PlainButtonStyle())

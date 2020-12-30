@@ -23,7 +23,7 @@ struct HomeSearchView: View {
                         .frame(width: 18, height: 18, alignment: .center)
                         .foregroundColor(.myBlack)
                 }
-                RestaurantSearchInputView(fontSize: 17, textFieldDisabled: false, showSlider: false, onSliderTapped: nil)
+                RestaurantSearchInputView(type: .input)
             }
             .padding(.horizontal)
             .padding(.vertical, 10)
