@@ -20,18 +20,14 @@ struct AllRestaurantsView: View {
                 HStack {
                     Button(action: { presentationMode.wrappedValue.dismiss() }) {
                         Image(systemName: "arrow.left")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 18, height: 18, alignment: .center)
+                            .font(.system(size: 20))
                             .foregroundColor(.myBlack)
                     }
                     Spacer()
                 }
                 Spacer()
                 Text(title)
-                    .font(.system(size: 17))
-                    .fontWeight(.medium)
-                    .foregroundColor(.myBlack)
+                    .myFont(size: 17, weight: .medium)
                 Spacer()
             }
             .padding()

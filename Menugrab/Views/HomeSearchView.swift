@@ -18,9 +18,7 @@ struct HomeSearchView: View {
             HStack(spacing: 12) {
                 Button(action: { presentationMode.wrappedValue.dismiss() }) {
                     Image(systemName: "arrow.left")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 18, height: 18, alignment: .center)
+                        .font(.system(size: 20))
                         .foregroundColor(.myBlack)
                 }
                 RestaurantSearchInputView(type: .input)

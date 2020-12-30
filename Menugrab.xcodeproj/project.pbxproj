@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B3311741259D2EFC0016619A /* BasketView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3311740259D2EFC0016619A /* BasketView.swift */; };
 		B373A9CD259CF87B0089FA60 /* Color+.swift in Sources */ = {isa = PBXBuildFile; fileRef = B373A9CC259CF87A0089FA60 /* Color+.swift */; };
 		B373A9EA259D167F0089FA60 /* View+.swift in Sources */ = {isa = PBXBuildFile; fileRef = B373A9E9259D167F0089FA60 /* View+.swift */; };
 		B38B6371259CE45100378052 /* MenugrabApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38B6370259CE45100378052 /* MenugrabApp.swift */; };
@@ -44,6 +45,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B3311740259D2EFC0016619A /* BasketView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasketView.swift; sourceTree = "<group>"; };
 		B373A9CC259CF87A0089FA60 /* Color+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+.swift"; sourceTree = "<group>"; };
 		B373A9E9259D167F0089FA60 /* View+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+.swift"; sourceTree = "<group>"; };
 		B38B636D259CE45000378052 /* Menugrab.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Menugrab.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -189,6 +191,7 @@
 				B38B63BF259CE55C00378052 /* HomeView.swift */,
 				B38B63C0259CE55C00378052 /* HomeSearchView.swift */,
 				B38B63BE259CE55C00378052 /* AllRestaurantsView.swift */,
+				B3311740259D2EFC0016619A /* BasketView.swift */,
 				B38B63C1259CE55C00378052 /* Shared */,
 				B373A9E8259D166D0089FA60 /* Helpers */,
 			);
@@ -349,6 +352,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B3311741259D2EFC0016619A /* BasketView.swift in Sources */,
 				B38B63C6259CE55C00378052 /* HomeSearchView.swift in Sources */,
 				B373A9CD259CF87B0089FA60 /* Color+.swift in Sources */,
 				B38B63B9259CE4F500378052 /* Restaurant.swift in Sources */,

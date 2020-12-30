@@ -13,13 +13,14 @@ struct HomeView: View {
     
     @State private var restaurants = Self.allRestaurants.filter({ $0.acceptingOrderTypes.contains(.table) })
     @State private var showingActionSheet = false
+    @State private var showingBasketSheet = false
     
     var body: some View {
         NavigationView {
             VStack(spacing: 0) {
                 HStack {
                     Image(systemName: "person")
-                        .font(.system(size: 22))
+                        .font(.system(size: 23))
                         .foregroundColor(.myBlack)
                     Spacer()
                     HStack(spacing: 5) {
@@ -31,8 +32,9 @@ struct HomeView: View {
                     }
                     Spacer()
                     Image(systemName: "cart")
-                        .font(.system(size: 22))
+                        .font(.system(size: 23))
                         .foregroundColor(.myBlack)
+                        .onTapGesture { showingBasketSheet = true }
                 }
                 .padding()
                 .frame(height: 54)
@@ -79,7 +81,11 @@ struct HomeView: View {
                     .cancel()
                 ])
             }
-        }.navigationViewStyle(StackNavigationViewStyle())
+        }
+        .navigationViewStyle(StackNavigationViewStyle())
+        .sheet(isPresented: $showingBasketSheet) {
+            BasketView()
+        }
     }
 }
 
