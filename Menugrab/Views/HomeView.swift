@@ -19,9 +19,11 @@ struct HomeView: View {
         NavigationView {
             VStack(spacing: 0) {
                 HStack {
-                    Image(systemName: "person")
-                        .font(.system(size: 23))
-                        .foregroundColor(.myBlack)
+                    Button(action: {}) {
+                        Image(systemName: "person")
+                            .font(.system(size: 23))
+                            .foregroundColor(.myBlack)
+                    }
                     Spacer()
                     HStack(spacing: 5) {
                         Text("Current location")
@@ -31,10 +33,11 @@ struct HomeView: View {
                             .foregroundColor(.myPrimary)
                     }
                     Spacer()
-                    Image(systemName: "cart")
-                        .font(.system(size: 23))
-                        .foregroundColor(.myBlack)
-                        .onTapGesture { showingBasketSheet = true }
+                    Button(action: { showingBasketSheet = true }) {
+                        Image(systemName: "cart")
+                            .font(.system(size: 23))
+                            .foregroundColor(.myBlack)
+                    }
                 }
                 .padding()
                 .frame(height: 54)
@@ -60,7 +63,7 @@ struct HomeView: View {
                                     .padding(.horizontal)
                                     .padding(.top, 20)
                                     .padding(.bottom, index == restaurants.count - 1 ? 20 : 0)
-                            }
+                            }.buttonStyle(IdentityButtonStyle())
                         }
                     }
                 }
