@@ -13,6 +13,8 @@ struct RestaurantDetailView: View {
     
     let restaurant: Restaurant
     
+    @State var isHeaderVisible = false
+    
     private func scrollOffset(_ geometry: GeometryProxy) -> CGFloat {
         geometry.frame(in: .global).minY
     }
@@ -32,7 +34,7 @@ struct RestaurantDetailView: View {
         GeometryReader { geometry in
             ZStack(alignment: .top) {
                 ScrollView {
-                    ZStack {
+                    VStack {
                         GeometryReader { geometry in
                             ZStack(alignment: .top) {
                                 restaurant.image
@@ -42,30 +44,38 @@ struct RestaurantDetailView: View {
                                     .clipped()
                                     .offset(x: 0, y: offsetForHeaderImage(geometry))
                                     .brightness(-0.08)
-                                
-                                
                             }
-                            
                         }.frame(height: 200)
+                        Text("hi").frame(height: 300)
+                        Text("hi").frame(height: 300)
+                        Text("hi").frame(height: 300)
                     }
                 }
-                HStack {
-                    Button(action: { presentationMode.wrappedValue.dismiss() }) {
-                        Image(systemName: "arrow.left")
-                            .font(.system(size: 20))
-                            .foregroundColor(.white)
+                ZStack {
+                    HStack {
+                        Button(action: { presentationMode.wrappedValue.dismiss() }) {
+                            Image(systemName: "arrow.left")
+                                .font(.system(size: 20))
+                                .foregroundColor(.blue)
+                        }
+                        Spacer()
                     }
+                    Spacer()
+                    Text("Restaurant name")
+                        .myFont(size: 17, weight: .medium, color: .blue)
+                        .opacity(isHeaderVisible ? 1 : 0)
                     Spacer()
                 }
                 .padding()
                 .frame(height: 54)
+                .background(Color.red.opacity(isHeaderVisible ? 1 : 0))
                 .offset(x: 0, y: geometry.safeAreaInsets.top)
             }
             .edgesIgnoringSafeArea(.all)
             .navigationBarHidden(true)
         }
     }
-
+    
 }
 
 struct RestaurantDetailView_Previews: PreviewProvider {
