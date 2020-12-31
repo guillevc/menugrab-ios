@@ -22,10 +22,8 @@ struct BasketView: View {
                     }
                     Spacer()
                 }
-                Spacer()
                 Text("Your basket")
                     .myFont(size: 17, weight: .medium)
-                Spacer()
             }
             .padding()
             .frame(height: 54)

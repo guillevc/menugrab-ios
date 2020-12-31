@@ -18,25 +18,26 @@ struct HomeView: View {
     var body: some View {
         NavigationView {
             VStack(spacing: 0) {
-                HStack {
-                    Button(action: {}) {
-                        Image(systemName: "person")
-                            .font(.system(size: 23))
-                            .foregroundColor(.myBlack)
+                ZStack {
+                    HStack {
+                        Button(action: {}) {
+                            Image(systemName: "person")
+                                .font(.system(size: 23))
+                                .foregroundColor(.myBlack)
+                        }
+                        Spacer()
+                        Button(action: { showingBasketSheet = true }) {
+                            Image(systemName: "cart")
+                                .font(.system(size: 23))
+                                .foregroundColor(.myBlack)
+                        }
                     }
-                    Spacer()
                     HStack(spacing: 5) {
                         Text("Current location")
                             .myFont(size: 17, weight: .bold)
                         Image(systemName: "chevron.down")
                             .font(.system(size: 17))
                             .foregroundColor(.myPrimary)
-                    }
-                    Spacer()
-                    Button(action: { showingBasketSheet = true }) {
-                        Image(systemName: "cart")
-                            .font(.system(size: 23))
-                            .foregroundColor(.myBlack)
                     }
                 }
                 .padding()

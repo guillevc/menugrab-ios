@@ -25,10 +25,8 @@ struct AllRestaurantsView: View {
                     }
                     Spacer()
                 }
-                Spacer()
                 Text(title)
                     .myFont(size: 17, weight: .medium)
-                Spacer()
             }
             .padding()
             .frame(height: 54)
