@@ -11,7 +11,7 @@ struct HomeSearchView: View {
     
     @Environment(\.presentationMode) private var presentationMode
     
-    private let restaurants = Restaurant.sampleRestaurants()
+    private let restaurants = Restaurant.sampleRestaurants
     
     var body: some View {
         VStack(spacing: 0) {

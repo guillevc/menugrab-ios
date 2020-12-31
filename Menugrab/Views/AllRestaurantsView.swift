@@ -12,7 +12,7 @@ struct AllRestaurantsView: View {
     @Environment(\.presentationMode) private var presentationMode
     
     let title: String
-    private let restaurants = Restaurant.sampleRestaurants()
+    private let restaurants = Restaurant.sampleRestaurants
     
     var body: some View {
         VStack(spacing: 0) {

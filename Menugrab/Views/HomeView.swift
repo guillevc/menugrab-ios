@@ -9,7 +9,7 @@ import SwiftUI
 
 struct HomeView: View {
     
-    private static let allRestaurants = Restaurant.sampleRestaurants()
+    private static let allRestaurants = Restaurant.sampleRestaurants
     
     @State private var restaurants = Self.allRestaurants.filter({ $0.acceptingOrderTypes.contains(.table) })
     @State private var showingActionSheet = false

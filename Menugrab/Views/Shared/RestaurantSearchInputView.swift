@@ -36,7 +36,7 @@ struct RestaurantSearchInputView: View {
         HStack {
             Image(systemName: "magnifyingglass")
                 .foregroundColor(.gray)
-                .font(.system(size: 18))
+                .font(.system(size: 17))
             TextField("Search restaurants", text: $keywords)
                 .myFont(size: type == .input ? 17 : 15)
                 .padding(.vertical, type == .input ? 7 : 9)

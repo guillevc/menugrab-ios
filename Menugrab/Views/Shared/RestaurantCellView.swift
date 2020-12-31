@@ -68,7 +68,7 @@ struct RestaurantCellView: View {
 struct RestaurantCellView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            ForEach(Array(Restaurant.sampleRestaurants().enumerated()), id: \.offset) { index, restaurant in
+            ForEach(Array(Restaurant.sampleRestaurants.enumerated()), id: \.offset) { index, restaurant in
                 RestaurantCellView(name: restaurant.name, image: restaurant.image, acceptingOrderTypes: restaurant.acceptingOrderTypes)
                     .padding()
             }.previewLayout(.fixed(width: 320, height: 170))

@@ -19,12 +19,10 @@ struct Restaurant {
 }
 
 extension Restaurant {
-    static func sampleRestaurants() -> [Self] {
-        [
-            Self.init(name: "San Tung", image: Image("santung"), acceptingOrderTypes: [.table]),
-            Self.init(name: "Hamburguesería Buenosaires", image: Image("buenosaires"), acceptingOrderTypes: [.table, .pickup]),
-            Self.init(name: "La Favola", image: Image("favola"), acceptingOrderTypes: [.table]),
-            Self.init(name: "Los Farolillos", image: Image("farolillos"), acceptingOrderTypes: [.pickup])
-        ]
-    }
+    static let sampleRestaurants: [Restaurant] = [
+        .init(name: "San Tung", image: Image("santung"), acceptingOrderTypes: [.table]),
+        .init(name: "Hamburguesería Buenosaires", image: Image("buenosaires"), acceptingOrderTypes: [.table, .pickup]),
+        .init(name: "La Favola", image: Image("favola"), acceptingOrderTypes: [.table]),
+        .init(name: "Los Farolillos", image: Image("farolillos"), acceptingOrderTypes: [.pickup])
+    ]
 }

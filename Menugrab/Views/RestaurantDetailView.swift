@@ -80,7 +80,7 @@ struct RestaurantDetailView: View {
 
 struct RestaurantDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        RestaurantDetailView(restaurant: Restaurant.sampleRestaurants().first!)
+        RestaurantDetailView(restaurant: Restaurant.sampleRestaurants.first!)
             .previewDevice(PreviewDevice(rawValue: "iPhone 11 Pro"))
     }
 }
