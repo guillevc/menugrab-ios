@@ -55,10 +55,12 @@ struct HomeView: View {
                             .padding(.horizontal)
                             .padding(.top, 10)
                         ForEach(Array(restaurants.enumerated()), id: \.offset) { index, restaurant in
-                            RestaurantCellView(name: restaurant.name, image: restaurant.image, acceptingOrderTypes: restaurant.acceptingOrderTypes)
-                                .padding(.horizontal)
-                                .padding(.top, 20)
-                                .padding(.bottom, index == restaurants.count - 1 ? 20 : 0)
+                            NavigationLink(destination: RestaurantDetailView(restaurant: restaurant)) {
+                                RestaurantCellView(name: restaurant.name, image: restaurant.image, acceptingOrderTypes: restaurant.acceptingOrderTypes)
+                                    .padding(.horizontal)
+                                    .padding(.top, 20)
+                                    .padding(.bottom, index == restaurants.count - 1 ? 20 : 0)
+                            }
                         }
                     }
                 }
