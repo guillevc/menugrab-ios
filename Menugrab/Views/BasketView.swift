@@ -28,7 +28,7 @@ struct BasketView: View {
                             .myFont(size: 17, weight: .medium)
                     }
                     .padding()
-                    .frame(height: 48)
+                    .frame(height: 52)
                     Divider()
                         .opacity(0.3)
                     ScrollView {
@@ -103,7 +103,8 @@ struct BasketView: View {
                                         .foregroundColor(Color.myPrimary)
                                         .frame(width: 325, height: 50, alignment: .center)
                                 )
-                                .padding(.vertical, 32)
+                                .padding(.top, 32)
+                                .padding(.bottom, 62)
                                 .padding(.bottom, geometry.safeAreaInsets.bottom)
                             }
                         }
@@ -146,16 +147,10 @@ fileprivate struct OrderItemsView: View {
             }
             HStack(spacing: 16) {
                 Spacer().frame(width: 26)
-                HStack {
+                SecondaryButtonView(text: "Add more items") {
                     Image(systemName: "plus")
                         .font(.system(size: 17))
-                        .foregroundColor(.myPrimary)
-                    Text("Add more items")
-                        .myFont(size: 15, weight: .medium, color: .myPrimary)
                 }
-                .padding(.vertical, 8)
-                .padding(.horizontal)
-                .background(Color.myPrimaryLight.cornerRadius(20))
                 Spacer()
             }
             .padding(.vertical, 4)

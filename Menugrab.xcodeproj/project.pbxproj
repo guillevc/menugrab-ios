@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B329FE68259F6EE100B404A7 /* SecondaryButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B329FE67259F6EE100B404A7 /* SecondaryButtonView.swift */; };
 		B3311741259D2EFC0016619A /* BasketView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3311740259D2EFC0016619A /* BasketView.swift */; };
 		B3311749259D35740016619A /* RestaurantDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3311748259D35740016619A /* RestaurantDetailView.swift */; };
 		B3311751259D57E80016619A /* IdentityButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3311750259D57E80016619A /* IdentityButtonStyle.swift */; };
@@ -49,6 +50,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B329FE67259F6EE100B404A7 /* SecondaryButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondaryButtonView.swift; sourceTree = "<group>"; };
 		B3311740259D2EFC0016619A /* BasketView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasketView.swift; sourceTree = "<group>"; };
 		B3311748259D35740016619A /* RestaurantDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantDetailView.swift; sourceTree = "<group>"; };
 		B3311750259D57E80016619A /* IdentityButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdentityButtonStyle.swift; sourceTree = "<group>"; };
@@ -215,6 +217,7 @@
 				B38B63C2259CE55C00378052 /* RestaurantSearchInputView.swift */,
 				B38B63C3259CE55C00378052 /* RestaurantCellView.swift */,
 				B34B4118259F559400C64D34 /* ZigZagBackgroundView.swift */,
+				B329FE67259F6EE100B404A7 /* SecondaryButtonView.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -367,6 +370,7 @@
 				B3311741259D2EFC0016619A /* BasketView.swift in Sources */,
 				B38B63C6259CE55C00378052 /* HomeSearchView.swift in Sources */,
 				B373A9CD259CF87B0089FA60 /* Color+.swift in Sources */,
+				B329FE68259F6EE100B404A7 /* SecondaryButtonView.swift in Sources */,
 				B38B63B9259CE4F500378052 /* Restaurant.swift in Sources */,
 				B38B63C5259CE55C00378052 /* HomeView.swift in Sources */,
 				B38B6371259CE45100378052 /* MenugrabApp.swift in Sources */,
