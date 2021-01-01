@@ -86,29 +86,39 @@ struct BasketView: View {
                                 Text("You will notified with an estimate time to collect your order")
                                     .myFont(size: 15)
                                 Spacer()
-                            }.padding(.horizontal)
-                            Color.lightestGray.frame(height: 8).opacity(0.5)
+                            }
+                            .padding(.horizontal)
+                            Color.lightestGray.frame(height: 8).opacity(0.7)
                             OrderItemsView()
-                                .padding()
-                            ZStack {
-                                ZigZagBackgroundView(color: Color.lightestGray, numberOfTriangles: 20, triangleHeight: 10)
-                                
-                                RoundedRectangle(cornerRadius: 16)
-                                    .foregroundColor(Color.myPrimary)
-                                    .frame(width: 325, height: 50, alignment: .center)
-                                    .overlay(
-                                        HStack {
-                                            Text("Check out")
-                                                .myFont(size: 17, weight: .bold)
-                                        }
-                                    )
-                                    .padding(.vertical)
+                                .padding(.horizontal)
+                                .padding(.bottom, 6)
+                            ZStack(alignment: .center) {
+                                ZigZagBackgroundView(color: Color.lightestGray.opacity(0.7), numberOfTriangles: 20, triangleHeight: 10)
+                                HStack {
+                                    Text("Check out")
+                                        .myFont(size: 17, weight: .bold)
+                                }
+                                .background(
+                                    RoundedRectangle(cornerRadius: 16)
+                                        .foregroundColor(Color.myPrimary)
+                                        .frame(width: 325, height: 50, alignment: .center)
+                                )
+                                .padding(.vertical, 32)
+                                .padding(.bottom, geometry.safeAreaInsets.bottom)
                             }
                         }
                     }
-                }.background(Color.white)
-            }.background(Color.lightestGray)
-        }.edgesIgnoringSafeArea(.bottom)
+                }
+                .background(Color.white)
+            }
+            .background(
+                VStack {
+                    Color.white
+                    Color.lightestGray.opacity(0.7)
+                }
+            )
+        }
+        .edgesIgnoringSafeArea(.bottom)
     }
 }
 
@@ -134,6 +144,28 @@ fileprivate struct OrderItemsView: View {
                         .myFont(size: 15)
                 }
             }
+            HStack(spacing: 16) {
+                Spacer().frame(width: 26)
+                HStack {
+                    Image(systemName: "plus")
+                        .font(.system(size: 17))
+                        .foregroundColor(.myPrimary)
+                    Text("Add more items")
+                        .myFont(size: 15, weight: .medium, color: .myPrimary)
+                }
+                .padding(.vertical, 8)
+                .padding(.horizontal)
+                .background(Color.myPrimaryLight.cornerRadius(20))
+                Spacer()
+            }
+            .padding(.vertical, 4)
+            HStack(spacing: 16) {
+                Spacer().frame(width: 26)
+                Text("Total")
+                Spacer()
+                Text("30 €")
+            }
+            .myFont(size: 17, weight: .medium)
         }
     }
 }
