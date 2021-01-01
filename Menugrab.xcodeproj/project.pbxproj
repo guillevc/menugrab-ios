@@ -10,6 +10,7 @@
 		B3311741259D2EFC0016619A /* BasketView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3311740259D2EFC0016619A /* BasketView.swift */; };
 		B3311749259D35740016619A /* RestaurantDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3311748259D35740016619A /* RestaurantDetailView.swift */; };
 		B3311751259D57E80016619A /* IdentityButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3311750259D57E80016619A /* IdentityButtonStyle.swift */; };
+		B34B4119259F559400C64D34 /* ZigZagBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B34B4118259F559400C64D34 /* ZigZagBackgroundView.swift */; };
 		B35B9D1E259D765100488D75 /* Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = B35B9D1D259D765100488D75 /* Menu.swift */; };
 		B373A9CD259CF87B0089FA60 /* Color+.swift in Sources */ = {isa = PBXBuildFile; fileRef = B373A9CC259CF87A0089FA60 /* Color+.swift */; };
 		B373A9EA259D167F0089FA60 /* View+.swift in Sources */ = {isa = PBXBuildFile; fileRef = B373A9E9259D167F0089FA60 /* View+.swift */; };
@@ -51,6 +52,7 @@
 		B3311740259D2EFC0016619A /* BasketView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasketView.swift; sourceTree = "<group>"; };
 		B3311748259D35740016619A /* RestaurantDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantDetailView.swift; sourceTree = "<group>"; };
 		B3311750259D57E80016619A /* IdentityButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdentityButtonStyle.swift; sourceTree = "<group>"; };
+		B34B4118259F559400C64D34 /* ZigZagBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZigZagBackgroundView.swift; sourceTree = "<group>"; };
 		B35B9D1D259D765100488D75 /* Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Menu.swift; sourceTree = "<group>"; };
 		B373A9CC259CF87A0089FA60 /* Color+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+.swift"; sourceTree = "<group>"; };
 		B373A9E9259D167F0089FA60 /* View+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+.swift"; sourceTree = "<group>"; };
@@ -212,6 +214,7 @@
 			children = (
 				B38B63C2259CE55C00378052 /* RestaurantSearchInputView.swift */,
 				B38B63C3259CE55C00378052 /* RestaurantCellView.swift */,
+				B34B4118259F559400C64D34 /* ZigZagBackgroundView.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -373,6 +376,7 @@
 				B3311749259D35740016619A /* RestaurantDetailView.swift in Sources */,
 				B38B63CE259CE56A00378052 /* UINavigationController+.swift in Sources */,
 				B38B63C7259CE55C00378052 /* RestaurantSearchInputView.swift in Sources */,
+				B34B4119259F559400C64D34 /* ZigZagBackgroundView.swift in Sources */,
 				B38B63C4259CE55C00378052 /* AllRestaurantsView.swift in Sources */,
 				B3311751259D57E80016619A /* IdentityButtonStyle.swift in Sources */,
 			);
