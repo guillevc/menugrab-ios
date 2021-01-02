@@ -150,6 +150,7 @@ fileprivate struct OrderItemsView: View {
                 Spacer()
             }
             .padding(.vertical, 4)
+            Divider().opacity(0.5)
             HStack(spacing: 16) {
                 Spacer().frame(width: 26)
                 Text("Total")
