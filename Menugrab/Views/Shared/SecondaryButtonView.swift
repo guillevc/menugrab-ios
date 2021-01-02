@@ -25,7 +25,7 @@ struct SecondaryButtonView<Icon: View>: View {
         }
         .padding(.vertical, 8)
         .padding(.horizontal)
-        .background(Color.myPrimaryLight.cornerRadius(20))
+        .background(Color.myPrimaryLighter.cornerRadius(20))
     }
 }
 

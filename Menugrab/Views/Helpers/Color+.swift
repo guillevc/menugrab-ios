@@ -12,9 +12,10 @@ import SwiftUI
 extension Color {
     
     public static let myPrimary = Color("MyPrimary")
-    public static let myPrimaryLight = Color("MyPrimaryLight")
+//    public static let myPrimaryLight = Color("MyPrimaryLight")
+    public static let myPrimaryLighter = Color("MyPrimaryLighter")
     public static let myPrimaryDark = Color("MyPrimaryDark")
-    public static let myPrimaryDarker = Color("MyPrimeryDarker")
+    public static let myPrimaryDarker = Color("MyPrimaryDarker")
     
     public static let myBlack = Color("MyBlack")
     

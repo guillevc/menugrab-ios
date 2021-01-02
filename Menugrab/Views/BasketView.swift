@@ -45,7 +45,7 @@ struct BasketView: View {
                             .background(
                                 VStack {
                                     Spacer()
-                                    Color.myPrimaryLight
+                                    Color.myPrimaryLighter
                                         .frame(height: 5)
                                         .offset(x: 0, y: -7)
                                 }

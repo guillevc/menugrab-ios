@@ -11,9 +11,17 @@ struct HomeView: View {
     
     private static let allRestaurants = Restaurant.sampleRestaurants
     
-    @State private var restaurants = Self.allRestaurants.filter({ $0.acceptingOrderTypes.contains(.table) })
+    @State private var appliedFilter: OrderType?
     @State private var showingActionSheet = false
     @State private var showingBasketSheet = false
+    
+    private var restaurants: [Restaurant] {
+        if let appliedFilter = appliedFilter {
+            return Self.allRestaurants.filter({ $0.acceptingOrderTypes.contains(appliedFilter) })
+        } else {
+            return Self.allRestaurants
+        }
+    }
     
     var body: some View {
         NavigationView {
@@ -51,6 +59,14 @@ struct HomeView: View {
                                 .padding()
                         }
                         .buttonStyle(PlainButtonStyle())
+                        if let appliedFilter = appliedFilter {
+                            HStack {
+                                RestaurantFilterAppliedTagView(type: appliedFilter, onRemoveTapped: { self.appliedFilter = nil })
+                                Spacer()
+                            }
+                            .padding(.horizontal)
+                            .padding(.bottom)
+                        }
                         HeaderView(text: "Favourites ⭐", destination: AllRestaurantsView(title: "All our favourites"))
                             .padding(.horizontal)
                             .padding(.bottom, -5)
@@ -73,15 +89,15 @@ struct HomeView: View {
             .actionSheet(isPresented: $showingActionSheet) {
                 ActionSheet(title: Text("Filter restaurants"), message: nil, buttons: [
                     .default(Text("Show all")) {
-                        restaurants = Self.allRestaurants
+                        appliedFilter = nil
                         showingActionSheet = false
                     },
                     .default(Text("Show pickup")) {
-                        restaurants = Self.allRestaurants.filter({ $0.acceptingOrderTypes.contains(.pickup) })
+                        appliedFilter = .pickup
                         showingActionSheet = false
                     },
                     .default(Text("Show table service")) {
-                        restaurants = Self.allRestaurants.filter({ $0.acceptingOrderTypes.contains(.table) })
+                        appliedFilter = .table
                         showingActionSheet = false
                     },
                     .cancel()
