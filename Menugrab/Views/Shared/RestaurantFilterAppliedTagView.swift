@@ -25,19 +25,16 @@ struct RestaurantFilterAppliedTagView: View {
             Text(text)
                 .myFont(size: 15, weight: .regular, color: .myBlack)
             Image(systemName: "xmark")
-                .resizable()
-                .frame(width: 8, height: 8)
-                .aspectRatio(contentMode: .fit)
+                .font(.system(size: 13, weight: .medium, design: .default))
                 .foregroundColor(.myBlack)
                 .padding(4)
-                .background(Color.myPrimaryDark.cornerRadius(4))
                 .onTapGesture(perform: { onRemoveTapped?() })
         }
         .padding(.vertical, 5)
-        .padding(.leading, 10)
+        .padding(.leading, 12)
         .padding(.trailing, 8)
         .background(
-            Color.myPrimary.cornerRadius(8)
+            Color.myPrimaryLight.cornerRadius(8)
         )
     }
 }

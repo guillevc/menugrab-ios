@@ -30,25 +30,40 @@ struct RestaurantDetailView: View {
         return offset > 0 ? imageHeight + offset : imageHeight
     }
     
+    private func updateNavbarVisibility(imageGeometry: GeometryProxy, topGeometry: GeometryProxy) {
+        if -scrollOffset(imageGeometry) >= (imageGeometry
+            .size.height + topGeometry.safeAreaInsets.top) {
+            DispatchQueue.main.async {
+                isHeaderVisible = true
+            }
+        } else {
+            DispatchQueue.main.async {
+                isHeaderVisible = false
+            }
+        }
+    }
+    
     var body: some View {
-        GeometryReader { geometry in
+        GeometryReader { topGeometry in
             ZStack(alignment: .top) {
                 ScrollView(showsIndicators: false) {
                     VStack {
                         GeometryReader { geometry in
-                            ZStack(alignment: .top) {
-                                restaurant.image
+                            ZStack(alignment: .top) { () -> AnyView in
+                                updateNavbarVisibility(imageGeometry: geometry, topGeometry: topGeometry)
+                                return AnyView(
+                                    restaurant.image
                                     .resizable()
                                     .scaledToFill()
                                     .frame(width: geometry.size.width, height: heightForHeaderImage(geometry))
                                     .clipped()
                                     .offset(x: 0, y: offsetForHeaderImage(geometry))
-                                    .brightness(-0.08)
+                                )
                             }
                         }.frame(height: 200)
-                        Text("hi").frame(height: 300)
-                        Text("hi").frame(height: 300)
-                        Text("hi").frame(height: 300)
+                        Text("hi").frame(height: 300).background(Color.green)
+                        Text("hi").frame(height: 300).background(Color.orange)
+                        Text("hi").frame(height: 300).background(Color.yellow)
                     }
                 }
                 ZStack {
@@ -56,7 +71,7 @@ struct RestaurantDetailView: View {
                         Button(action: { presentationMode.wrappedValue.dismiss() }) {
                             Image(systemName: "arrow.left")
                                 .font(.system(size: 20))
-                                .foregroundColor(.blue)
+                                .foregroundColor(isHeaderVisible ? .black : .blue)
                         }
                         Spacer()
                     }
@@ -69,7 +84,7 @@ struct RestaurantDetailView: View {
                 .padding()
                 .frame(height: 54)
                 .background(Color.red.opacity(isHeaderVisible ? 1 : 0))
-                .offset(x: 0, y: geometry.safeAreaInsets.top)
+                .offset(x: 0, y: topGeometry.safeAreaInsets.top)
             }
             .edgesIgnoringSafeArea(.all)
             .navigationBarHidden(true)

@@ -11,7 +11,7 @@ struct HomeView: View {
     
     private static let allRestaurants = Restaurant.sampleRestaurants
     
-    @State private var appliedFilter: OrderType?
+    @State private var appliedFilter: OrderType? = .pickup
     @State private var showingActionSheet = false
     @State private var showingBasketSheet = false
     
@@ -88,16 +88,16 @@ struct HomeView: View {
             .navigationBarHidden(true)
             .actionSheet(isPresented: $showingActionSheet) {
                 ActionSheet(title: Text("Filter restaurants"), message: nil, buttons: [
-                    .default(Text("Show all")) {
-                        appliedFilter = nil
-                        showingActionSheet = false
-                    },
                     .default(Text("Show pickup")) {
                         appliedFilter = .pickup
                         showingActionSheet = false
                     },
                     .default(Text("Show table service")) {
                         appliedFilter = .table
+                        showingActionSheet = false
+                    },
+                    .default(Text("Show all")) {
+                        appliedFilter = nil
                         showingActionSheet = false
                     },
                     .cancel()
