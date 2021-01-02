@@ -133,7 +133,7 @@ fileprivate struct OrderItemsView: View {
                 Text("See the menu")
                     .myFont(size: 13, weight: .medium, color: .gray)
             }
-            ForEach(BasketItem.sampleBasketItems, id: \.menuItem.name) { basketItem in
+            ForEach(Basket.sampleBasket.items, id: \.menuItem.name) { basketItem in
                 HStack(spacing: 16) {
                     Text("\(basketItem.quantity)x")
                         .myFont(size: 15)
@@ -141,7 +141,7 @@ fileprivate struct OrderItemsView: View {
                     Text(basketItem.menuItem.name)
                         .myFont(size: 15)
                     Spacer()
-                    Text(basketItem.menuItem.price)
+                    Text("\(basketItem.totalPrice.formattedAmount ?? "-") €")
                         .myFont(size: 15)
                 }
             }
@@ -158,7 +158,7 @@ fileprivate struct OrderItemsView: View {
                 Spacer().frame(width: 26)
                 Text("Total")
                 Spacer()
-                Text("30 €")
+                Text("\(Basket.sampleBasket.totalPrice.formattedAmount ?? "-") €")
             }
             .myFont(size: 17, weight: .medium)
         }
