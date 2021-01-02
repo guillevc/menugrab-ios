@@ -35,20 +35,20 @@ struct BasketView: View {
                         HStack {
                             Text("San Tung")
                                 .myFont(size: 23, weight: .bold)
+                                .background(
+                                    VStack {
+                                        Spacer()
+                                        Color.myPrimaryLighter
+                                            .frame(height: 5)
+                                            .offset(x: 0, y: -7)
+                                    }
+                                )
                             Image(systemName: "chevron.right")
                                 .font(.system(size: 17))
                                 .foregroundColor(.myPrimary)
                             
                         }
                         .padding(.horizontal, 5)
-                        .background(
-                            VStack {
-                                Spacer()
-                                Color.myPrimaryLighter
-                                    .frame(height: 5)
-                                    .offset(x: 0, y: -7)
-                            }
-                        )
                         .padding(.vertical)
                         HStack(spacing: 10) {
                             Image("pickup-icon")
