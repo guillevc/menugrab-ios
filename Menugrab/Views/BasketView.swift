@@ -13,7 +13,7 @@ struct BasketView: View {
     
     var body: some View {
         GeometryReader { geometry in
-            ScrollView {
+            ScrollView(showsIndicators: false) {
                 VStack(spacing: 0) {
                     ZStack {
                         HStack(alignment: .center) {
@@ -31,7 +31,7 @@ struct BasketView: View {
                     .frame(height: 52)
                     Divider()
                         .opacity(0.3)
-                    ScrollView {
+                    ScrollView(showsIndicators: false) {
                         VStack {
                             HStack {
                                 Text("San Tung")

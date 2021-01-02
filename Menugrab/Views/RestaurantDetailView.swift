@@ -33,7 +33,7 @@ struct RestaurantDetailView: View {
     var body: some View {
         GeometryReader { geometry in
             ZStack(alignment: .top) {
-                ScrollView {
+                ScrollView(showsIndicators: false) {
                     VStack {
                         GeometryReader { geometry in
                             ZStack(alignment: .top) {

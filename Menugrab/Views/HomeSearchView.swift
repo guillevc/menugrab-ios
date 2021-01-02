@@ -26,7 +26,7 @@ struct HomeSearchView: View {
             .padding(.horizontal)
             .padding(.vertical, 10)
             .frame(height: 54)
-            ScrollView {
+            ScrollView(showsIndicators: false) {
                 VStack(spacing: 0) {
                     ForEach(Array(restaurants.enumerated()), id: \.offset) { index, restaurant in
                         RestaurantCellView(name: restaurant.name, image: restaurant.image, acceptingOrderTypes: restaurant.acceptingOrderTypes)
