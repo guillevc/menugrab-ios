@@ -21,11 +21,15 @@ struct Basket {
             result.advanced(by: basketItem.totalPrice)
         }
     }
+    
+    func basketItemWithMenuItem(_ menuItem: MenuItem) -> BasketItem? {
+        self.items.first(where: { $0.menuItem.name == menuItem.name }) // TODO: implement propper logic
+    }
 }
 
 struct BasketItem {
-    let quantity: Int
     let menuItem: MenuItem
+    var quantity: Int
     
     var totalPrice: Decimal {
         menuItem.price * Decimal(quantity)
@@ -55,11 +59,11 @@ extension Decimal {
 extension Basket {
     static let sampleBasketItems: [BasketItem] = {
         [
-            .init(quantity: 5, menuItem: .init(name: "Shrimp with Vermicelli and Garlic", price: Decimal.currency(18))),
-            .init(quantity: 1, menuItem: .init(name: "Braised Pork Balls in Gravy", price: Decimal.currency(9.00))),
-            .init(quantity: 3, menuItem: .init(name: "Bottle of water (50cl)", price: Decimal.currency(4.30))),
-            .init(quantity: 2, menuItem: .init(name: "Peking Roasted Duck", price: Decimal.currency(19.50))),
-            .init(quantity: 1, menuItem: .init(name: "Chow Mein", price: Decimal.currency(13.15)))
+            .init(menuItem: Menu.sampleMenuItemCategories[0].items[1], quantity: 5),
+            .init(menuItem: Menu.sampleMenuItemCategories[0].items[2], quantity: 1),
+            .init(menuItem: Menu.sampleMenuItemCategories[1].items[0], quantity: 3),
+            .init(menuItem: Menu.sampleMenuItemCategories[1].items[3], quantity: 2),
+            .init(menuItem: Menu.sampleMenuItemCategories[1].items[4], quantity: 1)
         ]
     }()
     
