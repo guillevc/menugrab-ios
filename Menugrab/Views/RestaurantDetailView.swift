@@ -73,7 +73,7 @@ struct RestaurantDetailView: View {
                                     Spacer()
                                 }
                                 ForEach(itemCategory.items, id: \.name) { menuItem in
-                                    MenuItemView(menuItem: menuItem)
+                                    MenuItemView(menuItem: menuItem, basket: basket)
                                 }
                             }
                             Text("hi").frame(height: 300).background(Color.yellow)
@@ -180,6 +180,8 @@ fileprivate struct OrderTypeSegmentedPickerView: View {
 
 fileprivate struct MenuItemView: View {
     let menuItem: MenuItem
+    let basket: Basket
+    
     var body: some View {
         HStack(alignment: .top) {
             VStack(alignment: .leading, spacing: 8) {
@@ -192,15 +194,45 @@ fileprivate struct MenuItemView: View {
             VStack(spacing: 24) {
                 Text("\(menuItem.price.formattedAmount ?? "-") €")
                     .myFont(size: 15, weight: .bold)
-                Button(action: {}) {
-                    Text("ADD")
-                        .myFont(size: 15, weight: .bold, color: .myPrimary)
-                        .padding(.vertical, 5)
-                        .padding(.horizontal, 15)
-                        .background(Color.myPrimaryLighter.cornerRadius(20))
+                if let basketItem = basket.basketItemWithMenuItem(menuItem) {
+                    HStack {
+                        ModifyQuantityButton(action: { }, type: .remove)
+                        Text(String(basketItem.quantity))
+                            .myFont(size: 15, weight: .medium)
+                        ModifyQuantityButton(action: { }, type: .add)
+                        
+                    }
+                } else {
+                    Button(action: {}) {
+                        Text("ADD")
+                            .myFont(size: 15, weight: .bold, color: .myPrimary)
+                            .padding(.vertical, 5)
+                            .padding(.horizontal, 15)
+                            .background(Color.myPrimaryLighter.cornerRadius(20))
+                    }
+                    .buttonStyle(PlainButtonStyle())
                 }
-                .buttonStyle(PlainButtonStyle())
             }
+        }
+    }
+    
+    private struct ModifyQuantityButton: View {
+        enum ModifyQuantityButtonType {
+            case add
+            case remove
+        }
+        
+        let action: () -> ()
+        let type: ModifyQuantityButtonType
+        
+        var body: some View {
+            Button(action: { }) {
+                Image(systemName: type == .add ? "plus" : "minus")
+                    .myFont(size: 14, weight: .medium, color: .myPrimary)
+                    .frame(width: 28, height: 28)
+                    .background(Circle().foregroundColor(.myPrimaryLighter))
+            }
+            .buttonStyle(PlainButtonStyle())
         }
     }
 }
