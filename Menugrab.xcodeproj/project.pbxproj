@@ -32,6 +32,7 @@
 		B38B63DA259CE59E00378052 /* DMSans-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B38B63D4259CE59E00378052 /* DMSans-Medium.ttf */; };
 		B38B63DB259CE59E00378052 /* DMSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B38B63D5259CE59E00378052 /* DMSans-Bold.ttf */; };
 		B398E13725A0CB6F00F480E7 /* RestaurantFilterAppliedTagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B398E13625A0CB6F00F480E7 /* RestaurantFilterAppliedTagView.swift */; };
+		B3C20B9425A3D64200B3B595 /* Decimal+Currency.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C20B9325A3D64200B3B595 /* Decimal+Currency.swift */; };
 		B3D5ADD325A26C4700F0E58C /* Order.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D5ADD225A26C4700F0E58C /* Order.swift */; };
 /* End PBXBuildFile section */
 
@@ -87,6 +88,7 @@
 		B38B63D7259CE59E00378052 /* DMSans-MediumItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DMSans-MediumItalic.ttf"; sourceTree = "<group>"; };
 		B38B63D8259CE59E00378052 /* DMSans-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DMSans-Italic.ttf"; sourceTree = "<group>"; };
 		B398E13625A0CB6F00F480E7 /* RestaurantFilterAppliedTagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantFilterAppliedTagView.swift; sourceTree = "<group>"; };
+		B3C20B9325A3D64200B3B595 /* Decimal+Currency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Decimal+Currency.swift"; sourceTree = "<group>"; };
 		B3D5ADD225A26C4700F0E58C /* Order.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Order.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -118,6 +120,7 @@
 		B373A9E8259D166D0089FA60 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				B3C20B9325A3D64200B3B595 /* Decimal+Currency.swift */,
 				B3311750259D57E80016619A /* IdentityButtonStyle.swift */,
 				B373A9CC259CF87A0089FA60 /* Color+.swift */,
 				B373A9E9259D167F0089FA60 /* View+.swift */,
@@ -392,6 +395,7 @@
 				B38B63CE259CE56A00378052 /* UINavigationController+.swift in Sources */,
 				B38B63C7259CE55C00378052 /* RestaurantSearchInputView.swift in Sources */,
 				B34B4119259F559400C64D34 /* ZigZagBackgroundView.swift in Sources */,
+				B3C20B9425A3D64200B3B595 /* Decimal+Currency.swift in Sources */,
 				B38B63C4259CE55C00378052 /* AllRestaurantsView.swift in Sources */,
 				B3311751259D57E80016619A /* IdentityButtonStyle.swift in Sources */,
 				B398E13725A0CB6F00F480E7 /* RestaurantFilterAppliedTagView.swift in Sources */,

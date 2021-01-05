@@ -6,9 +6,17 @@
 //
 
 import Foundation
+import Combine
 
-struct Basket {
-    var items: [BasketItem]
+class Basket: ObservableObject {
+    
+    private var subscriptions = Set<AnyCancellable>()
+    
+    @Published private(set) var items: [BasketItem] {
+        didSet {
+            subscribeToItemsChanges()
+        }
+    }
     
     var totalQuantity: Int {
         items.reduce(0) { result, basketItem in
@@ -22,34 +30,56 @@ struct Basket {
         }
     }
     
-    func basketItemWithMenuItem(_ menuItem: MenuItem) -> BasketItem? {
-        self.items.first(where: { $0.menuItem.name == menuItem.name }) // TODO: implement propper logic
+    init(items: [BasketItem]) {
+        self.items = items
+        subscribeToItemsChanges()
     }
+    
+    private func subscribeToItemsChanges() {
+        for item in items {
+            item.objectWillChange
+                .sink(receiveValue: { _ in self.objectWillChange.send() })
+                .store(in: &subscriptions)
+        }
+    }
+    
+    func quantityOfMenuItem(_ menuItem: MenuItem) -> Int {
+        items.first(where: { $0.menuItem == menuItem })?.quantity ?? 0
+    }
+    
+    func incrementQuantityOfMenuItem(_ menuItem: MenuItem) {
+        if let basketItem = items.first(where: { $0.menuItem == menuItem }) {
+            basketItem.quantity += 1
+        } else {
+            let newBasketItem = BasketItem(menuItem: menuItem)
+            items.append(newBasketItem)
+        }
+    }
+    
+    func decrementQuantityOfMenuItem(_ menuItem:  MenuItem) {
+        if let basketItemIndex = items.firstIndex(where: { $0.menuItem.name == menuItem.name }) {
+            let basketItem = items[basketItemIndex]
+            basketItem.quantity -= 1
+            if basketItem.quantity == 0 {
+                items.remove(at: basketItemIndex)
+            }
+        }
+    }
+    
 }
 
-struct BasketItem {
+class BasketItem: ObservableObject {
+    
     let menuItem: MenuItem
-    var quantity: Int
+    @Published var quantity: Int
+    
+    init(menuItem: MenuItem, quantity: Int = 1) {
+        self.menuItem = menuItem
+        self.quantity = quantity
+    }
     
     var totalPrice: Decimal {
         menuItem.price * Decimal(quantity)
-    }
-}
-
-// MARK: - Decimal + Currency helper methods
-
-extension Decimal {
-    
-    static func currency(_ value: Double) -> Self {
-        NSNumber(floatLiteral: value).decimalValue
-    }
-    
-    var formattedAmount: String? {
-        let formatter = NumberFormatter()
-        formatter.generatesDecimalNumbers = true
-        formatter.minimumFractionDigits = 2
-        formatter.maximumFractionDigits = 2
-        return formatter.string(from: self as NSDecimalNumber)
     }
     
 }
@@ -57,6 +87,7 @@ extension Decimal {
 // MARK: - Samples
 
 extension Basket {
+    
     static let sampleBasketItems: [BasketItem] = {
         [
             .init(menuItem: Menu.sampleMenuItemCategories[0].items[1], quantity: 5),
@@ -67,7 +98,8 @@ extension Basket {
         ]
     }()
     
-    static let sampleBasket: Self = {
-        Self(items: Self.sampleBasketItems)
+    static let sampleBasket: Basket = {
+        Basket(items: Basket.sampleBasketItems)
     }()
+    
 }

@@ -11,7 +11,7 @@ struct HomeView: View {
     
     private static let allRestaurants = Restaurant.sampleRestaurants
     
-    @State private var appliedFilter: OrderType? = .pickup
+    @State private var appliedFilter: OrderType?
     @State private var showingActionSheet = false
     @State private var showingBasketSheet = false
     

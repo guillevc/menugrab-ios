@@ -11,8 +11,9 @@ struct RestaurantDetailView: View {
     
     @Environment(\.presentationMode) private var presentationMode
     
+    @EnvironmentObject private var basket: Basket
+    
     let restaurant: Restaurant
-    let basket = Basket.sampleBasket
     
     @State var isHeaderVisible = false
     
@@ -180,7 +181,7 @@ fileprivate struct OrderTypeSegmentedPickerView: View {
 
 fileprivate struct MenuItemView: View {
     let menuItem: MenuItem
-    let basket: Basket
+    @ObservedObject var basket: Basket
     
     var body: some View {
         HStack(alignment: .top) {
@@ -191,19 +192,19 @@ fileprivate struct MenuItemView: View {
                     .myFont(size: 13, color: .darkGray)
             }
             Spacer()
-            VStack(spacing: 24) {
+            VStack(alignment: .trailing, spacing: 24) {
                 Text("\(menuItem.price.formattedAmount ?? "-") €")
                     .myFont(size: 15, weight: .bold)
-                if let basketItem = basket.basketItemWithMenuItem(menuItem) {
+                if let quantityInBasket = basket.quantityOfMenuItem(menuItem), quantityInBasket > 0 {
                     HStack {
-                        ModifyQuantityButton(action: { }, type: .remove)
-                        Text(String(basketItem.quantity))
+                        ModifyQuantityButton(action: { basket.decrementQuantityOfMenuItem(menuItem) }, type: .remove)
+                        Text(String(quantityInBasket))
                             .myFont(size: 15, weight: .medium)
-                        ModifyQuantityButton(action: { }, type: .add)
+                        ModifyQuantityButton(action: { basket.incrementQuantityOfMenuItem(menuItem) }, type: .add)
                         
                     }
                 } else {
-                    Button(action: {}) {
+                    Button(action: { basket.incrementQuantityOfMenuItem(menuItem) }) {
                         Text("ADD")
                             .myFont(size: 15, weight: .bold, color: .myPrimary)
                             .padding(.vertical, 5)
@@ -226,7 +227,7 @@ fileprivate struct MenuItemView: View {
         let type: ModifyQuantityButtonType
         
         var body: some View {
-            Button(action: { }) {
+            Button(action: action) {
                 Image(systemName: type == .add ? "plus" : "minus")
                     .myFont(size: 14, weight: .medium, color: .myPrimary)
                     .frame(width: 28, height: 28)
@@ -240,6 +241,7 @@ fileprivate struct MenuItemView: View {
 struct RestaurantDetailView_Previews: PreviewProvider {
     static var previews: some View {
         RestaurantDetailView(restaurant: Restaurant.sampleRestaurants.first!)
+            .environmentObject(Basket.sampleBasket)
             .previewDevice(PreviewDevice(rawValue: "iPhone 11 Pro"))
     }
 }
