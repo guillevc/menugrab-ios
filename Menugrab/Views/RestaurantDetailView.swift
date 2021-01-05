@@ -10,6 +10,7 @@ import SwiftUI
 struct RestaurantDetailView: View {
     
     private static let initialImageHeight: CGFloat = 200
+    fileprivate static let menuItemsHorizontalPadding: CGFloat = 16
     
     @Environment(\.presentationMode) private var presentationMode
     @EnvironmentObject private var basket: Basket
@@ -79,7 +80,9 @@ struct RestaurantDetailView: View {
                                         Spacer()
                                     }
                                     .padding(.bottom, 6)
+                                    .padding(.horizontal, Self.menuItemsHorizontalPadding)
                                     Divider()
+                                        .padding(.horizontal, Self.menuItemsHorizontalPadding)
                                         .padding(.bottom, 12)
                                     VStack(alignment: .leading, spacing: 14) {
                                         ForEach(itemCategory.items, id: \.name) { menuItem in
@@ -89,7 +92,7 @@ struct RestaurantDetailView: View {
                                     .padding(.bottom, 24)
                                 }
                             }
-                            .padding()
+                            .padding(.vertical)
                         }
                         .padding(.top, -Self.initialImageHeight/2)
                     }
@@ -193,11 +196,22 @@ fileprivate struct OrderTypeSegmentedPickerView: View {
 
 fileprivate struct MenuItemView: View {
     private static let controlFrameWidth: CGFloat = 88
+    private static let inBasketMarkWidth: CGFloat = 3
+    
     let menuItem: MenuItem
     @ObservedObject var basket: Basket
     
+    var quantityInBasket: Int {
+        basket.quantityOfMenuItem(menuItem)
+    }
+    
     var body: some View {
-        HStack(alignment: .top) {
+        HStack(alignment: .top, spacing: 0) {
+            Color.myPrimaryLight
+                .frame(width: Self.inBasketMarkWidth, alignment: .center)
+                .padding(.trailing, RestaurantDetailView.menuItemsHorizontalPadding - Self.inBasketMarkWidth)
+                .opacity(quantityInBasket > 0 ? 1 : 0)
+                .transition(.slide)
             VStack(alignment: .leading, spacing: 8) {
                 Text(menuItem.name)
                     .myFont(size: 15)
@@ -208,7 +222,7 @@ fileprivate struct MenuItemView: View {
             VStack(alignment: .trailing, spacing: 24) {
                 Text("\(menuItem.price.formattedAmount ?? "-") €")
                     .myFont(size: 15, weight: .bold)
-                if let quantityInBasket = basket.quantityOfMenuItem(menuItem), quantityInBasket > 0 {
+                if quantityInBasket > 0 {
                     HStack(spacing: 4) {
                         ModifyQuantityButton(action: { basket.decrementQuantityOfMenuItem(menuItem) }, type: .remove)
                         Text(String(quantityInBasket))
@@ -231,6 +245,7 @@ fileprivate struct MenuItemView: View {
                 }
             }
         }
+        .padding(.trailing, RestaurantDetailView.menuItemsHorizontalPadding)
     }
     
     private struct ModifyQuantityButton: View {
