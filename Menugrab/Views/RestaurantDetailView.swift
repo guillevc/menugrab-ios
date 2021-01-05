@@ -180,6 +180,7 @@ fileprivate struct OrderTypeSegmentedPickerView: View {
 }
 
 fileprivate struct MenuItemView: View {
+    private static let controlFrameWidth: CGFloat = 88
     let menuItem: MenuItem
     @ObservedObject var basket: Basket
     
@@ -196,13 +197,15 @@ fileprivate struct MenuItemView: View {
                 Text("\(menuItem.price.formattedAmount ?? "-") €")
                     .myFont(size: 15, weight: .bold)
                 if let quantityInBasket = basket.quantityOfMenuItem(menuItem), quantityInBasket > 0 {
-                    HStack {
+                    HStack(spacing: 4) {
                         ModifyQuantityButton(action: { basket.decrementQuantityOfMenuItem(menuItem) }, type: .remove)
                         Text(String(quantityInBasket))
                             .myFont(size: 15, weight: .medium)
+                            .frame(width: 22)
                         ModifyQuantityButton(action: { basket.incrementQuantityOfMenuItem(menuItem) }, type: .add)
                         
                     }
+                    .frame(width: Self.controlFrameWidth, alignment: .trailing)
                 } else {
                     Button(action: { basket.incrementQuantityOfMenuItem(menuItem) }) {
                         Text("ADD")
@@ -212,6 +215,7 @@ fileprivate struct MenuItemView: View {
                             .background(Color.myPrimaryLighter.cornerRadius(20))
                     }
                     .buttonStyle(PlainButtonStyle())
+                    .frame(width: Self.controlFrameWidth, alignment: .trailing)
                 }
             }
         }
