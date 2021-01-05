@@ -33,7 +33,7 @@ struct RestaurantCellView: View {
                     HStack(spacing: 14) {
                         if acceptingOrderTypes.contains(.table) {
                             HStack(spacing: 4) {
-                                Image("table-icon")
+                                OrderType.table.icon
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
                                     .frame(width: 17.5, height: 17.5, alignment: .center)
@@ -43,7 +43,7 @@ struct RestaurantCellView: View {
                         }
                         if acceptingOrderTypes.contains(.pickup) {
                             HStack(spacing: 4) {
-                                Image("pickup-icon")
+                                OrderType.pickup.icon
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
                                     .frame(width: 15.5, height: 15.5, alignment: .center)

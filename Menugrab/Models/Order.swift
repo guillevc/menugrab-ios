@@ -14,9 +14,9 @@ enum OrderType: String, CaseIterable {
     var icon: Image {
         switch self {
         case .table:
-            return Image("table-icon")
+            return Image("TableIcon")
         case .pickup:
-            return Image("pickup-icon")
+            return Image("PickupIcon")
         }
     }
 }
