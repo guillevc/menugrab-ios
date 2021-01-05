@@ -9,13 +9,15 @@ import SwiftUI
 
 struct RestaurantDetailView: View {
     
-    @Environment(\.presentationMode) private var presentationMode
+    private static let initialImageHeight: CGFloat = 200
     
+    @Environment(\.presentationMode) private var presentationMode
     @EnvironmentObject private var basket: Basket
     
     let restaurant: Restaurant
     
     @State var isHeaderVisible = false
+    @State var headerTopPadding: CGSize? = nil
     
     private func scrollOffset(_ geometry: GeometryProxy) -> CGFloat {
         geometry.frame(in: .global).minY
@@ -34,7 +36,7 @@ struct RestaurantDetailView: View {
     
     private func updateNavbarVisibility(imageGeometry: GeometryProxy, topGeometry: GeometryProxy) {
         if -scrollOffset(imageGeometry) >= (imageGeometry
-                                                .size.height + topGeometry.safeAreaInsets.top) {
+                                                .size.height + topGeometry.safeAreaInsets.top - 60) {
             DispatchQueue.main.async {
                 isHeaderVisible = true
             }
@@ -49,7 +51,7 @@ struct RestaurantDetailView: View {
         GeometryReader { topGeometry in
             ZStack(alignment: .top) {
                 ScrollView(showsIndicators: false) {
-                    VStack {
+                    VStack(spacing: 0) {
                         GeometryReader { geometry in
                             ZStack(alignment: .top) { () -> AnyView in
                                 updateNavbarVisibility(imageGeometry: geometry, topGeometry: topGeometry)
@@ -62,24 +64,34 @@ struct RestaurantDetailView: View {
                                         .offset(x: 0, y: offsetForHeaderImage(geometry))
                                 )
                             }
-                        }.frame(height: 200)
-                        RestaurantHeaderView(restaurant: restaurant)
-                            .padding()
-                        VStack(alignment: .leading, spacing: 14) {
-                            ForEach(restaurant.menu.itemCategories, id: \.name) { itemCategory in
-                                HStack {
-                                    Spacer()
-                                    Text(itemCategory.name.uppercased())
-                                        .myFont(size: 13, color: .gray)
-                                    Spacer()
-                                }
-                                ForEach(itemCategory.items, id: \.name) { menuItem in
-                                    MenuItemView(menuItem: menuItem, basket: basket)
+                        }
+                        .frame(height: Self.initialImageHeight)
+                        VStack(spacing: 0) {
+                            RestaurantHeaderView(restaurant: restaurant)
+                                .padding(.horizontal)
+                                .padding(.bottom)
+                            VStack(alignment: .leading, spacing: 0) {
+                                ForEach(restaurant.menu.itemCategories, id: \.name) { itemCategory in
+                                    HStack {
+                                        Spacer()
+                                        Text(itemCategory.name.uppercased())
+                                            .myFont(size: 13, color: .gray)
+                                        Spacer()
+                                    }
+                                    .padding(.bottom, 6)
+                                    Divider()
+                                        .padding(.bottom, 12)
+                                    VStack(alignment: .leading, spacing: 14) {
+                                        ForEach(itemCategory.items, id: \.name) { menuItem in
+                                            MenuItemView(menuItem: menuItem, basket: basket)
+                                        }
+                                    }
+                                    .padding(.bottom, 24)
                                 }
                             }
-                            Text("hi").frame(height: 300).background(Color.yellow)
+                            .padding()
                         }
-                        .padding()
+                        .padding(.top, -Self.initialImageHeight/2)
                     }
                 }
                 ZStack {
@@ -87,22 +99,21 @@ struct RestaurantDetailView: View {
                         Button(action: { presentationMode.wrappedValue.dismiss() }) {
                             Image(systemName: "arrow.left")
                                 .font(.system(size: 20))
-                                .foregroundColor(isHeaderVisible ? .black : .blue)
+                                .foregroundColor(.myBlack)
                         }
                         Spacer()
                     }
                     Spacer()
-                    Text("Restaurant name")
-                        .myFont(size: 17, weight: .medium, color: .blue)
+                    Text(restaurant.name)
+                        .myFont(size: 17, weight: .medium, color: .myBlack)
                         .opacity(isHeaderVisible ? 1 : 0)
                     Spacer()
                 }
                 .padding()
-                .frame(height: 54)
-                .background(Color.red.opacity(isHeaderVisible ? 1 : 0))
-                .offset(x: 0, y: topGeometry.safeAreaInsets.top)
+                .frame(height: Constants.customNavbarHeight + topGeometry.safeAreaInsets.top, alignment: .bottom)
+                .background(Color.white.opacity(isHeaderVisible ? 1 : 0))
             }
-            .edgesIgnoringSafeArea(.all)
+            .edgesIgnoringSafeArea(.top)
             .navigationBarHidden(true)
         }
     }
@@ -139,7 +150,8 @@ fileprivate struct RestaurantHeaderView: View {
         .padding(.vertical)
         .padding(.horizontal, 26)
         .background(
-            Color.white.cornerRadius(14)
+            Color.white
+                .cornerRadius(14)
                 .shadow(color: Color.black.opacity(0.15), radius: 8)
         )
     }
@@ -166,7 +178,7 @@ fileprivate struct OrderTypeSegmentedPickerView: View {
                 .padding(.vertical, 4)
                 .background(
                     RoundedRectangle(cornerRadius: Self.cornerRadius)
-                        .foregroundColor(isSelected ? Color.myPrimary : Color.clear)
+                        .foregroundColor(isSelected ? Color.myPrimaryLight : Color.clear)
                 )
                 .onTapGesture {
                     currentOrderType = type
@@ -233,8 +245,8 @@ fileprivate struct MenuItemView: View {
         var body: some View {
             Button(action: action) {
                 Image(systemName: type == .add ? "plus" : "minus")
-                    .myFont(size: 14, weight: .medium, color: .myPrimary)
-                    .frame(width: 28, height: 28)
+                    .myFont(size: 16, weight: .medium, color: .myPrimary)
+                    .frame(width: 30, height: 30)
                     .background(Circle().foregroundColor(.myPrimaryLighter))
             }
             .buttonStyle(PlainButtonStyle())

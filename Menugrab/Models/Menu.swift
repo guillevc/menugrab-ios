@@ -18,6 +18,7 @@ struct MenuItemCategory {
 
 struct MenuItem: Equatable {
     let name: String
+    // TODO: add description
     let price: Decimal
 }
 
