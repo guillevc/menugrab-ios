@@ -17,8 +17,8 @@ struct RestaurantDetailView: View {
     
     let restaurant: Restaurant
     
-    @State var isHeaderVisible = false
-    @State var headerTopPadding: CGSize? = nil
+    @State private var isHeaderVisible = false
+    @State private var headerTopPadding: CGSize? = nil
     
     private func scrollOffset(_ geometry: GeometryProxy) -> CGFloat {
         geometry.frame(in: .global).minY
@@ -86,16 +86,24 @@ struct RestaurantDetailView: View {
                                         .padding(.bottom, 12)
                                     VStack(alignment: .leading, spacing: 14) {
                                         ForEach(itemCategory.items, id: \.name) { menuItem in
-                                            MenuItemView(menuItem: menuItem, basket: basket)
+                                            MenuItemView(menuItem: menuItem)
                                         }
                                     }
                                     .padding(.bottom, 24)
                                 }
                             }
                             .padding(.vertical)
+                            .padding(.bottom, 50)
                         }
                         .padding(.top, -Self.initialImageHeight/2)
                     }
+                }
+                if !basket.items.isEmpty {
+                    VStack {
+                        Spacer()
+                        BasketFloatingButtonView(totalQuantity: basket.totalQuantity, totalPrice: basket.totalPrice)
+                    }
+                    .padding(.bottom)
                 }
                 ZStack {
                     HStack {
@@ -198,10 +206,11 @@ fileprivate struct MenuItemView: View {
     private static let controlFrameWidth: CGFloat = 88
     private static let inBasketMarkWidth: CGFloat = 3
     
-    let menuItem: MenuItem
-    @ObservedObject var basket: Basket
+    @EnvironmentObject private var basket: Basket
     
-    var quantityInBasket: Int {
+    let menuItem: MenuItem
+    
+    private var quantityInBasket: Int {
         basket.quantityOfMenuItem(menuItem)
     }
     
@@ -266,6 +275,34 @@ fileprivate struct MenuItemView: View {
             }
             .buttonStyle(PlainButtonStyle())
         }
+    }
+}
+
+fileprivate struct BasketFloatingButtonView: View {
+    let totalQuantity: Int
+    let totalPrice: Decimal
+    
+    var body: some View {
+        HStack(spacing: 12) {
+            Text(String(totalQuantity))
+                .myFont(size: 17, weight: .medium)
+                .frame(width: 30, height: 26)
+                .background(
+                    Color.myPrimaryDarker
+                        .cornerRadius(4)
+                )
+            Text("View basket")
+                .myFont(size: 17, weight: .bold)
+            Spacer()
+            Text("\(totalPrice.formattedAmount ?? "-") €")
+                .myFont(size: 17, weight: .bold)
+        }
+        .padding(.horizontal, 22)
+        .frame(width: 325, height: 50, alignment: .center)
+        .background(
+            Color.myPrimary
+                .cornerRadius(16)
+        )
     }
 }
 
