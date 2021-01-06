@@ -12,6 +12,9 @@ class Basket: ObservableObject {
     
     private var subscriptions = Set<AnyCancellable>()
     
+    let restaurant: Restaurant
+    let orderType: OrderType
+
     @Published private(set) var items: [BasketItem] {
         didSet {
             subscribeToItemsChanges()
@@ -19,18 +22,16 @@ class Basket: ObservableObject {
     }
     
     var totalQuantity: Int {
-        items.reduce(0) { result, basketItem in
-            result + basketItem.quantity
-        }
+        items.reduce(0) { $0 + $1.quantity }
     }
     
     var totalPrice: Decimal {
-        items.reduce(Decimal.currency(0)) { result, basketItem in
-            result.advanced(by: basketItem.totalPrice)
-        }
+        items.reduce(Decimal.currency(0)) { $0.advanced(by: $1.totalPrice) }
     }
     
-    init(items: [BasketItem]) {
+    init(restaurant: Restaurant, orderType: OrderType, items: [BasketItem] = []) {
+        self.restaurant = restaurant
+        self.orderType = orderType
         self.items = items
         subscribeToItemsChanges()
     }
@@ -99,7 +100,7 @@ extension Basket {
     }()
     
     static let sampleBasket: Basket = {
-        Basket(items: Basket.sampleBasketItems)
+        Basket(restaurant: Restaurant.sampleRestaurants[0], orderType: .pickup, items: Basket.sampleBasketItems)
     }()
     
 }

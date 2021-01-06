@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct BasketView: View {
-    
-    @Environment(\.presentationMode) var presentationMode
+    @Environment(\.presentationMode) private var presentationMode
+    @EnvironmentObject private var basket: Basket
     
     var body: some View {
         GeometryReader { geometry in
@@ -33,7 +33,7 @@ struct BasketView: View {
                 ScrollView(showsIndicators: false) {
                     VStack {
                         HStack {
-                            Text("San Tung")
+                            Text(basket.restaurant.name)
                                 .myFont(size: 23, weight: .bold)
                                 .background(
                                     VStack {
@@ -51,12 +51,12 @@ struct BasketView: View {
                         .padding(.horizontal, 5)
                         .padding(.vertical)
                         HStack(spacing: 10) {
-                            Image("pickup-icon")
+                            basket.orderType.icon
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                                 .scaledToFit()
                                 .frame(width: 25, height: 25)
-                            Text("Pick up the order at the restaurant")
+                            Text(basket.orderType == .pickup ? "Pick up the order at the restaurant" : "table number")
                                 .myFont(size: 15)
                             Spacer()
                         }.padding(.horizontal)
@@ -66,7 +66,7 @@ struct BasketView: View {
                                 .font(.system(size: 20))
                             VStack(alignment: .leading, spacing: 4) {
                                 HStack {
-                                    Text("San Tung")
+                                    Text(basket.restaurant.name)
                                         .myFont(size: 15)
                                     Spacer()
                                     Text("View map")
@@ -120,6 +120,8 @@ struct BasketView: View {
 }
 
 fileprivate struct OrderItemsView: View {
+    @EnvironmentObject private var basket: Basket
+    
     var body: some View {
         VStack(spacing: 8) {
             HStack {
@@ -129,7 +131,7 @@ fileprivate struct OrderItemsView: View {
                 Text("See the menu")
                     .myFont(size: 13, weight: .medium, color: .gray)
             }
-            ForEach(Basket.sampleBasket.items, id: \.menuItem.name) { basketItem in
+            ForEach(basket.items, id: \.menuItem.name) { basketItem in
                 HStack(spacing: 16) {
                     Text("\(basketItem.quantity)x")
                         .myFont(size: 15)
@@ -155,7 +157,7 @@ fileprivate struct OrderItemsView: View {
                 Spacer().frame(width: 26)
                 Text("Total")
                 Spacer()
-                Text("\(Basket.sampleBasket.totalPrice.formattedAmount ?? "-") €")
+                Text("\(basket.totalPrice.formattedAmount ?? "-") €")
             }
             .myFont(size: 17, weight: .medium)
         }
@@ -165,5 +167,6 @@ fileprivate struct OrderItemsView: View {
 struct BasketView_Previews: PreviewProvider {
     static var previews: some View {
         BasketView()
+            .environmentObject(Basket.sampleBasket)
     }
 }
