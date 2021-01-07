@@ -19,6 +19,7 @@ struct RestaurantDetailView: View {
     
     @State private var isHeaderVisible = false
     @State private var headerTopPadding: CGSize? = nil
+    @State private var showingMoreInfoSheet = false
     
     private func scrollOffset(_ geometry: GeometryProxy) -> CGFloat {
         geometry.frame(in: .global).minY
@@ -68,7 +69,7 @@ struct RestaurantDetailView: View {
                         }
                         .frame(height: Self.initialImageHeight)
                         VStack(spacing: 0) {
-                            RestaurantHeaderView(restaurant: restaurant)
+                            RestaurantHeaderView(restaurant: restaurant, onMoreInfoButtonTapped: { showingMoreInfoSheet = true })
                                 .padding(.horizontal)
                                 .padding(.bottom)
                             VStack(alignment: .leading, spacing: 0) {
@@ -127,11 +128,16 @@ struct RestaurantDetailView: View {
             .edgesIgnoringSafeArea(.top)
             .navigationBarHidden(true)
         }
+        .navigationViewStyle(StackNavigationViewStyle())
+        .sheet(isPresented: $showingMoreInfoSheet) {
+            RestaurantMoreInfoView(restaurant: restaurant)
+        }
     }
 }
 
 fileprivate struct RestaurantHeaderView: View {
     let restaurant: Restaurant
+    let onMoreInfoButtonTapped: (() -> ())?
     
     var body: some View {
         VStack(spacing: 10) {
@@ -141,13 +147,16 @@ fileprivate struct RestaurantHeaderView: View {
             HStack(spacing: 16) {
                 Text("13 km away")
                     .myFont(size: 13)
-                HStack(spacing: 4) {
-                    Text("More info")
-                        .myFont(size: 13, weight: .bold)
-                    Image(systemName: "chevron.forward.2")
-                        .font(Font.system(size: 9).weight(.bold))
-                        .foregroundColor(.myPrimary)
+                Button(action: { onMoreInfoButtonTapped?() }) {
+                    HStack(spacing: 4) {
+                        Text("More info")
+                            .myFont(size: 13, weight: .medium)
+                        Image(systemName: "chevron.forward.2")
+                            .font(Font.system(size: 9).weight(.bold))
+                            .foregroundColor(.myBlack)
+                    }
                 }
+                .buttonStyle(PlainButtonStyle())
             }
             HStack(spacing: 10) {
                 Image(systemName: "info.circle")

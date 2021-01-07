@@ -6,12 +6,21 @@
 //
 
 import SwiftUI
+import MapKit
 
-struct Restaurant {
+struct Restaurant: Identifiable {
+    let id = UUID()
     let name: String
     let image: Image
+    let coordinate = CLLocationCoordinate2D(latitude: 43.3834, longitude: -8.3943)
     let acceptingOrderTypes: [OrderType]
     let menu: Menu
+    
+    var mapsURL: URL? {
+        guard let nameWithPercentEncoding = name.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else { return nil }
+        let stringURL = "maps://?ll=\(coordinate.latitude),\(coordinate.longitude)&q=\(nameWithPercentEncoding)"
+        return URL(string: stringURL)
+    }
 }
 
 // MARK: - Samples

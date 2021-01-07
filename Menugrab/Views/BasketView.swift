@@ -27,7 +27,7 @@ struct BasketView: View {
                         .myFont(size: 17, weight: .medium)
                 }
                 .padding()
-                .frame(height: 52)
+                .frame(height: Constants.customNavbarHeight)
                 Divider()
                     .opacity(0.3)
                 ScrollView(showsIndicators: false) {
@@ -61,23 +61,8 @@ struct BasketView: View {
                             Spacer()
                         }.padding(.horizontal)
                         Divider().opacity(0.5).padding(.horizontal)
-                        HStack(spacing: 10) {
-                            Image(systemName: "map")
-                                .font(.system(size: 20))
-                            VStack(alignment: .leading, spacing: 4) {
-                                HStack {
-                                    Text(basket.restaurant.name)
-                                        .myFont(size: 15)
-                                    Spacer()
-                                    Text("View map")
-                                        .myFont(size: 13, weight: .medium, color: .gray)
-                                }
-                                Text("Wolf Crater, 897, Marsh")
-                                    .myFont(size: 13, color: .gray)
-                                Text("3 km away")
-                                    .myFont(size: 13, color: .gray)
-                            }
-                        }.padding(.horizontal)
+                        RestaurantLocationSectionView(restaurant: basket.restaurant, type: .text)
+                            .padding(.horizontal)
                         Divider().opacity(0.5).padding(.horizontal)
                         HStack(spacing: 10) {
                             Image(systemName: "clock")
@@ -87,7 +72,7 @@ struct BasketView: View {
                             Spacer()
                         }
                         .padding(.horizontal)
-                        Color.lightestGray.frame(height: 8).opacity(0.7)
+                        Divider().opacity(0.5).padding(.horizontal)
                         OrderItemsView()
                             .padding(.horizontal)
                             .padding(.bottom, 6)
