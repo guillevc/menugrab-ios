@@ -31,23 +31,13 @@ struct RestaurantCellView: View {
                         .opacity(0.85)
                         .frame(minWidth: 0, idealWidth: 320, maxWidth: .infinity, minHeight: 28, idealHeight: 28, maxHeight: 28, alignment: .center)
                     HStack(spacing: 14) {
-                        if acceptingOrderTypes.contains(.table) {
+                        ForEach(acceptingOrderTypes, id: \.self) { orderType in
                             HStack(spacing: 4) {
-                                OrderType.table.icon
+                                orderType.icon
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
                                     .frame(width: 17.5, height: 17.5, alignment: .center)
-                                Text("Table")
-                                    .myFont(size: 13)
-                            }
-                        }
-                        if acceptingOrderTypes.contains(.pickup) {
-                            HStack(spacing: 4) {
-                                OrderType.pickup.icon
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(width: 15.5, height: 15.5, alignment: .center)
-                                Text("Pickup")
+                                Text(orderType.rawValue)
                                     .myFont(size: 13)
                             }
                         }

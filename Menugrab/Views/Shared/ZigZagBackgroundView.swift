@@ -35,6 +35,6 @@ struct ZigZagBackgroundView: View {
 
 struct ZigZagSeparatorView_Previews: PreviewProvider {
     static var previews: some View {
-        ZigZagBackgroundView(color: .lightGray, numberOfTriangles: 20, triangleHeight: 10)
+        ZigZagBackgroundView(color: .lightestGray, numberOfTriangles: 20, triangleHeight: 10)
     }
 }

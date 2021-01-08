@@ -21,7 +21,7 @@ extension Color {
     
     public static let darkGray = Self(UIColor.darkGray)
     public static let lightGray = Self(UIColor.lightGray)
-    public static let lighterGray = Self(UIColor.systemGray5)
     public static let lightestGray = Color("LightestGray")
+    public static let backgroundGray = Color("BackgroundGray")
     
 }

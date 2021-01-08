@@ -60,7 +60,7 @@ struct HomeView: View {
                     .padding()
                     .frame(height: 54)
                     Divider()
-                        .opacity(0.5)
+                        .light()
                     ScrollView(showsIndicators: false) {
                         VStack(spacing: 0) {
                             NavigationLink(destination: HomeSearchView()) {
@@ -203,13 +203,11 @@ fileprivate struct LocationSelectorView: View {
             .cornerRadius(18)
             .clipped()
             LocationSelectorItemView(type: .currentLocation, isSelected: true)
-                .padding(.horizontal)
-                .padding(.vertical, 10)
+                .padding()
             LocationSelectorItemView(type: .custom(name: "Avenida de arteixo"), isSelected: false)
-                .padding(.horizontal)
-                .padding(.vertical, 10)
+                .padding()
             Divider()
-                .opacity(0.5)
+                .light()
                 .padding(.horizontal)
             SecondaryButtonView(text: "Add an address") {
                 Image(systemName: "plus")

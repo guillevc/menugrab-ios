@@ -28,10 +28,8 @@ struct BasketView: View {
                 }
                 .padding()
                 .frame(height: Constants.customNavbarHeight)
-                Divider()
-                    .opacity(0.3)
                 ScrollView(showsIndicators: false) {
-                    VStack {
+                    VStack(spacing: 0) {
                         HStack {
                             Text(basket.restaurant.name)
                                 .myFont(size: 23, weight: .bold)
@@ -59,11 +57,16 @@ struct BasketView: View {
                             Text(basket.orderType == .pickup ? "Pick up the order at the restaurant" : "table number")
                                 .myFont(size: 15)
                             Spacer()
-                        }.padding(.horizontal)
-                        Divider().opacity(0.5).padding(.horizontal)
-                        RestaurantLocationSectionView(restaurant: basket.restaurant, type: .text)
+                        }
+                        .padding()
+                        Divider()
+                            .light()
                             .padding(.horizontal)
-                        Divider().opacity(0.5).padding(.horizontal)
+                        RestaurantLocationSectionView(restaurant: basket.restaurant, type: .text)
+                            .padding()
+                        Divider()
+                            .light()
+                            .padding(.horizontal)
                         HStack(spacing: 10) {
                             Image(systemName: "clock")
                                 .font(.system(size: 20))
@@ -71,40 +74,42 @@ struct BasketView: View {
                                 .myFont(size: 15)
                             Spacer()
                         }
-                        .padding(.horizontal)
-                        Divider().opacity(0.5).padding(.horizontal)
-                        OrderItemsView()
+                        .padding()
+                        Divider()
+                            .light()
                             .padding(.horizontal)
-                            .padding(.bottom, 6)
+                        OrderItemsView()
+                            .padding()
                         ZStack {
-                            ZigZagBackgroundView(color: Color.lightestGray.opacity(0.7), numberOfTriangles: 20, triangleHeight: 10)
-                            HStack {
-                                Text("Check out")
-                                    .myFont(size: 17, weight: .bold)
-                            }
-                            .background(
-                                RoundedRectangle(cornerRadius: 16)
-                                    .foregroundColor(Color.myPrimary)
-                                    .frame(width: 325, height: 50, alignment: .center)
-                            )
-                            .padding(.top, 56)
-                            .padding(.bottom, 62 + geometry.safeAreaInsets.bottom)
+                            ZigZagBackgroundView(color: .backgroundGray, numberOfTriangles: 20, triangleHeight: 10)
+                            Color.myPrimary
+                                .cornerRadius(16)
+                                .frame(width: 325, height: 50, alignment: .center)
+                                .overlay(
+                                    Text("Check out")
+                                        .myFont(size: 17, weight: .bold)
+                                )
+                                .padding(.top, 40)
                         }
-                    }.background(Color.white)
+                        .padding(.bottom, geometry.safeAreaInsets.bottom)
+                        .background(Color.backgroundGray)
+                    }
+                    .background(Color.white)
                 }
             }
             .background(
                 VStack {
                     Color.white
-                    Color.lightestGray.opacity(0.7)
+                    Color.backgroundGray
                 }
             )
+            .edgesIgnoringSafeArea(.bottom)
         }
-        .edgesIgnoringSafeArea(.bottom)
     }
 }
 
 fileprivate struct OrderItemsView: View {
+    private static let quantityFrameWidth: CGFloat = 26
     @EnvironmentObject private var basket: Basket
     
     var body: some View {
@@ -120,7 +125,7 @@ fileprivate struct OrderItemsView: View {
                 HStack(spacing: 16) {
                     Text("\(basketItem.quantity)x")
                         .myFont(size: 15)
-                        .frame(width: 26, alignment: .trailing)
+                        .frame(width: Self.quantityFrameWidth, alignment: .trailing)
                     Text(basketItem.menuItem.name)
                         .myFont(size: 15)
                     Spacer()
@@ -129,17 +134,18 @@ fileprivate struct OrderItemsView: View {
                 }
             }
             HStack(spacing: 16) {
-                Spacer().frame(width: 26)
+                Spacer().frame(width: Self.quantityFrameWidth)
                 SecondaryButtonView(text: "Add more items") {
                     Image(systemName: "plus")
                         .font(.system(size: 17))
                 }
                 Spacer()
             }
-            .padding(.vertical, 4)
-            Divider().opacity(0.5)
+            .padding(.vertical, 6)
+            Divider()
+                .light()
             HStack(spacing: 16) {
-                Spacer().frame(width: 26)
+                Spacer().frame(width: Self.quantityFrameWidth)
                 Text("Total")
                 Spacer()
                 Text("\(basket.totalPrice.formattedAmount ?? "-") €")

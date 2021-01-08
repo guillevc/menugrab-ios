@@ -47,7 +47,8 @@ struct RestaurantMoreInfoView: View {
                     }
                     RestaurantLocationSectionView(restaurant: restaurant, type: .button)
                         .padding()
-                    Divider().opacity(0.5)
+                    Divider()
+                        .light()
                         .padding(.horizontal)
                     HStack(alignment: .top, spacing: 10) {
                         Image(systemName: "clock")
