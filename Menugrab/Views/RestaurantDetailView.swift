@@ -122,7 +122,7 @@ struct RestaurantDetailView: View {
                     Spacer()
                 }
                 .padding()
-                .frame(height: Constants.customNavbarHeight + topGeometry.safeAreaInsets.top, alignment: .bottom)
+                .frame(height: Constants.customNavigationBarHeight + topGeometry.safeAreaInsets.top, alignment: .bottom)
                 .background(Color.white.opacity(isHeaderVisible ? 1 : 0))
             }
             .edgesIgnoringSafeArea(.top)

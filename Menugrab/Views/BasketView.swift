@@ -14,20 +14,7 @@ struct BasketView: View {
     var body: some View {
         GeometryReader { geometry in
             VStack(spacing: 0) {
-                ZStack {
-                    HStack(alignment: .center) {
-                        Button(action: { presentationMode.wrappedValue.dismiss() }) {
-                            Image(systemName: "xmark")
-                                .font(.system(size: 20))
-                                .foregroundColor(.myBlack)
-                        }
-                        Spacer()
-                    }
-                    Text("Your basket")
-                        .myFont(size: 17, weight: .medium)
-                }
-                .padding()
-                .frame(height: Constants.customNavbarHeight)
+                CustomNavigationBarView(type: .sheet, title: "Your basket", onDismiss: { presentationMode.wrappedValue.dismiss() })
                 ScrollView(showsIndicators: false) {
                     VStack(spacing: 0) {
                         HStack {

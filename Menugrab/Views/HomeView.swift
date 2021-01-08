@@ -58,7 +58,7 @@ struct HomeView: View {
                         .buttonStyle(PlainButtonStyle())
                     }
                     .padding()
-                    .frame(height: 54)
+                    .frame(height: Constants.customNavigationBarHeight)
                     Divider()
                         .light()
                     ScrollView(showsIndicators: false) {

@@ -25,20 +25,7 @@ struct RestaurantMoreInfoView: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            ZStack {
-                HStack(alignment: .center) {
-                    Button(action: { presentationMode.wrappedValue.dismiss() }) {
-                        Image(systemName: "xmark")
-                            .font(.system(size: 20))
-                            .foregroundColor(.myBlack)
-                    }
-                    Spacer()
-                }
-                Text("Restaurant info")
-                    .myFont(size: 17, weight: .medium)
-            }
-            .padding()
-            .frame(height: Constants.customNavbarHeight)
+            CustomNavigationBarView(type: .sheet, title: "Restaurant info", onDismiss: { presentationMode.wrappedValue.dismiss() })
             ScrollView {
                 VStack(spacing: 0) {
                     LinkIfDestinationNotNull(destination: restaurant.mapsURL) {

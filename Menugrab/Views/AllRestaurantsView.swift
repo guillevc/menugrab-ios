@@ -16,20 +16,7 @@ struct AllRestaurantsView: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            ZStack {
-                HStack {
-                    Button(action: { presentationMode.wrappedValue.dismiss() }) {
-                        Image(systemName: "arrow.left")
-                            .font(.system(size: 20))
-                            .foregroundColor(.myBlack)
-                    }
-                    Spacer()
-                }
-                Text(title)
-                    .myFont(size: 17, weight: .medium)
-            }
-            .padding()
-            .frame(height: 54)
+            CustomNavigationBarView(type: .default, title: title, onDismiss: { presentationMode.wrappedValue.dismiss() })
             ScrollView(showsIndicators: false) {
                 VStack(spacing: 0) {
                     ForEach(Array(restaurants.enumerated()), id: \.offset) { index, restaurant in

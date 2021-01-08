@@ -8,5 +8,5 @@
 import SwiftUI
 
 enum Constants {
-    static let customNavbarHeight: CGFloat = 54
+    static let customNavigationBarHeight: CGFloat = 54
 }
