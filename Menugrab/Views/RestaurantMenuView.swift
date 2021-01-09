@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct RestaurantDetailView: View {
+struct RestaurantMenuView: View {
     
     private static let initialImageHeight: CGFloat = 200
     fileprivate static let menuItemsHorizontalPadding: CGFloat = 16
@@ -84,13 +84,13 @@ struct RestaurantDetailView: View {
                                     .padding(.horizontal, Self.menuItemsHorizontalPadding)
                                     Divider()
                                         .padding(.horizontal, Self.menuItemsHorizontalPadding)
-                                        .padding(.bottom, 12)
-                                    VStack(alignment: .leading, spacing: 14) {
+                                        .padding(.bottom, 20)
+                                    VStack(alignment: .leading, spacing: 36) {
                                         ForEach(itemCategory.items, id: \.name) { menuItem in
                                             MenuItemView(menuItem: menuItem)
                                         }
                                     }
-                                    .padding(.bottom, 24)
+                                    .padding(.bottom, 36)
                                 }
                             }
                             .padding(.vertical)
@@ -213,6 +213,7 @@ fileprivate struct OrderTypeSegmentedPickerView: View {
 
 fileprivate struct MenuItemView: View {
     private static let controlFrameWidth: CGFloat = 88
+    private static let controlFrameHeight: CGFloat = 30
     private static let inBasketMarkWidth: CGFloat = 3
     
     @EnvironmentObject private var basket: Basket
@@ -224,17 +225,18 @@ fileprivate struct MenuItemView: View {
     }
     
     var body: some View {
-        HStack(alignment: .top, spacing: 0) {
-            Color.myPrimaryLight
-                .frame(width: Self.inBasketMarkWidth, alignment: .center)
-                .padding(.trailing, RestaurantDetailView.menuItemsHorizontalPadding - Self.inBasketMarkWidth)
-                .opacity(quantityInBasket > 0 ? 1 : 0)
-                .transition(.slide)
+        HStack(alignment: .top, spacing: 5) {
             VStack(alignment: .leading, spacing: 8) {
-                Text(menuItem.name)
-                    .myFont(size: 15)
-                Text("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sed vestibulum nisi, sed iaculis metus.")
-                    .myFont(size: 13, color: .darkGray)
+                HStack {
+                    Text(menuItem.name)
+                        .myFont(size: 15)
+                    Spacer()
+                }
+                if let description = menuItem.description {
+                    Text(description)
+                        .myFont(size: 13, color: .darkGray)
+                        .lineLimit(nil)
+                }
             }
             Spacer()
             VStack(alignment: .trailing, spacing: 24) {
@@ -247,9 +249,8 @@ fileprivate struct MenuItemView: View {
                             .myFont(size: 15, weight: .medium)
                             .frame(width: 22)
                         ModifyQuantityButton(action: { basket.incrementQuantityOfMenuItem(menuItem) }, type: .add)
-                        
                     }
-                    .frame(width: Self.controlFrameWidth, alignment: .trailing)
+                    .frame(width: Self.controlFrameWidth, height: Self.controlFrameHeight, alignment: .trailing)
                 } else {
                     Button(action: { basket.incrementQuantityOfMenuItem(menuItem) }) {
                         Text("ADD")
@@ -259,31 +260,42 @@ fileprivate struct MenuItemView: View {
                             .background(Color.myPrimaryLighter.cornerRadius(20))
                     }
                     .buttonStyle(PlainButtonStyle())
-                    .frame(width: Self.controlFrameWidth, alignment: .trailing)
+                    .frame(width: Self.controlFrameWidth, height: Self.controlFrameHeight, alignment: .trailing)
+                    .clipped()
                 }
             }
         }
-        .padding(.trailing, RestaurantDetailView.menuItemsHorizontalPadding)
+        .padding(.horizontal, RestaurantMenuView.menuItemsHorizontalPadding)
+        .overlay(
+            HStack {
+                if quantityInBasket > 0 {
+                    Color.myPrimaryLight
+                        .frame(width: Self.inBasketMarkWidth, alignment: .center)
+                        .transition(.slide)
+                    Spacer()
+                }
+            }
+        )
+    }
+}
+
+private struct ModifyQuantityButton: View {
+    enum ModifyQuantityButtonType {
+        case add
+        case remove
     }
     
-    private struct ModifyQuantityButton: View {
-        enum ModifyQuantityButtonType {
-            case add
-            case remove
+    let action: () -> ()
+    let type: ModifyQuantityButtonType
+    
+    var body: some View {
+        Button(action: action) {
+            Image(systemName: type == .add ? "plus" : "minus")
+                .myFont(size: 16, weight: .medium, color: .myPrimary)
+                .frame(width: 30, height: 30)
+                .background(Circle().foregroundColor(.myPrimaryLighter))
         }
-        
-        let action: () -> ()
-        let type: ModifyQuantityButtonType
-        
-        var body: some View {
-            Button(action: action) {
-                Image(systemName: type == .add ? "plus" : "minus")
-                    .myFont(size: 16, weight: .medium, color: .myPrimary)
-                    .frame(width: 30, height: 30)
-                    .background(Circle().foregroundColor(.myPrimaryLighter))
-            }
-            .buttonStyle(PlainButtonStyle())
-        }
+        .buttonStyle(PlainButtonStyle())
     }
 }
 
@@ -317,7 +329,7 @@ fileprivate struct BasketFloatingButtonView: View {
 
 struct RestaurantDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        RestaurantDetailView(restaurant: Restaurant.sampleRestaurants.first!)
+        RestaurantMenuView(restaurant: Restaurant.sampleRestaurants.first!)
             .environmentObject(Basket.sampleBasket)
             .previewDevice(PreviewDevice(rawValue: "iPhone 11 Pro"))
     }
