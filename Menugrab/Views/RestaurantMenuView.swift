@@ -212,8 +212,7 @@ fileprivate struct OrderTypeSegmentedPickerView: View {
 }
 
 fileprivate struct MenuItemView: View {
-    private static let controlFrameWidth: CGFloat = 88
-    private static let controlFrameHeight: CGFloat = 30
+    private static let controlFrameWidth: CGFloat = 90
     private static let inBasketMarkWidth: CGFloat = 3
     
     @EnvironmentObject private var basket: Basket
@@ -235,7 +234,8 @@ fileprivate struct MenuItemView: View {
                 if let description = menuItem.description {
                     Text(description)
                         .myFont(size: 13, color: .darkGray)
-                        .lineLimit(nil)
+//                        .lineLimit(nil)
+                        .fixedSize(horizontal: false, vertical: true)
                 }
             }
             Spacer()
@@ -250,7 +250,6 @@ fileprivate struct MenuItemView: View {
                             .frame(width: 22)
                         ModifyQuantityButton(action: { basket.incrementQuantityOfMenuItem(menuItem) }, type: .add)
                     }
-                    .frame(width: Self.controlFrameWidth, height: Self.controlFrameHeight, alignment: .trailing)
                 } else {
                     Button(action: { basket.incrementQuantityOfMenuItem(menuItem) }) {
                         Text("ADD")
@@ -260,10 +259,9 @@ fileprivate struct MenuItemView: View {
                             .background(Color.myPrimaryLighter.cornerRadius(20))
                     }
                     .buttonStyle(PlainButtonStyle())
-                    .frame(width: Self.controlFrameWidth, height: Self.controlFrameHeight, alignment: .trailing)
-                    .clipped()
                 }
             }
+            .frame(width: Self.controlFrameWidth, alignment: .topTrailing)
         }
         .padding(.horizontal, RestaurantMenuView.menuItemsHorizontalPadding)
         .overlay(
