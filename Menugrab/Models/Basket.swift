@@ -84,23 +84,3 @@ class BasketItem: ObservableObject {
     }
     
 }
-
-// MARK: - Samples
-
-extension Basket {
-    
-    static let sampleBasketItems: [BasketItem] = {
-        [
-            .init(menuItem: Menu.sampleMenuItemCategories[0].items[1], quantity: 5),
-            .init(menuItem: Menu.sampleMenuItemCategories[0].items[2], quantity: 1),
-            .init(menuItem: Menu.sampleMenuItemCategories[1].items[0], quantity: 3),
-            .init(menuItem: Menu.sampleMenuItemCategories[1].items[3], quantity: 2),
-            .init(menuItem: Menu.sampleMenuItemCategories[1].items[4], quantity: 1)
-        ]
-    }()
-    
-    static let sampleBasket: Basket = {
-        Basket(restaurant: Restaurant.sampleRestaurants[0], orderType: .pickup, items: Basket.sampleBasketItems)
-    }()
-    
-}

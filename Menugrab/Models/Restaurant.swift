@@ -22,14 +22,3 @@ struct Restaurant: Identifiable {
         return URL(string: stringURL)
     }
 }
-
-// MARK: - Samples
-
-extension Restaurant {
-    static let sampleRestaurants: [Restaurant] = [
-        .init(name: "San Tung", image: Image("santung"), acceptingOrderTypes: [.table], menu: Menu(itemCategories: Menu.sampleMenuItemCategories)),
-        .init(name: "Hamburguesería Buenosaires", image: Image("buenosaires"), acceptingOrderTypes: [.table, .pickup], menu: Menu(itemCategories: [])),
-        .init(name: "La Favola", image: Image("favola"), acceptingOrderTypes: [.table], menu: Menu(itemCategories: [])),
-        .init(name: "Los Farolillos", image: Image("farolillos"), acceptingOrderTypes: [.pickup], menu: Menu(itemCategories: []))
-    ]
-}

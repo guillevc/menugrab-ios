@@ -57,18 +57,3 @@ struct Order {
         state.isInProgress
     }
 }
-
-// MARK: - Samples
-
-extension Order {
-    
-    static let sampleOrders: [Order] = {
-        let user = User(name: "Guille", email: "guille@asdsf.com", orders: [])
-        return [
-            Order(type: .pickup, date: Date.init(), state: .completed, user: user, restaurant: Restaurant.sampleRestaurants[0], items: Basket.sampleBasketItems),
-            Order(type: .table, date: Date.init(), state: .pending, user: user, restaurant: Restaurant.sampleRestaurants[1], items: Basket.sampleBasketItems),
-            Order(type: .table, date: Date.init(), state: .completed, user: user, restaurant: Restaurant.sampleRestaurants[2], items: Basket.sampleBasketItems)
-        ]
-    }()
-    
-}

@@ -13,9 +13,3 @@ struct User {
     let email: String
     let orders: [Order]
 }
-
-// MARK: - Samples
-
-extension User {
-    static let sampleUser = User(name: "Guillermo Varela", email: "guillermo.varela@email.com", orders: Order.sampleOrders)
-}
