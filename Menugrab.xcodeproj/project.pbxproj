@@ -47,6 +47,7 @@
 		B3B0BCA025A7F3080068C1EC /* Divider+.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3B0BC9F25A7F3080068C1EC /* Divider+.swift */; };
 		B3B0BCAD25A7F9580068C1EC /* CustomNavigationBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3B0BCAC25A7F9580068C1EC /* CustomNavigationBarView.swift */; };
 		B3C20B9425A3D64200B3B595 /* Decimal+Currency.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C20B9325A3D64200B3B595 /* Decimal+Currency.swift */; };
+		B3D0BF4225AE5D3D00FF2B28 /* restaurants.json in Resources */ = {isa = PBXBuildFile; fileRef = B3D0BF3A25AE5D0100FF2B28 /* restaurants.json */; };
 		B3D5ADD325A26C4700F0E58C /* Order.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D5ADD225A26C4700F0E58C /* Order.swift */; };
 /* End PBXBuildFile section */
 
@@ -117,6 +118,7 @@
 		B3B0BC9F25A7F3080068C1EC /* Divider+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Divider+.swift"; sourceTree = "<group>"; };
 		B3B0BCAC25A7F9580068C1EC /* CustomNavigationBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavigationBarView.swift; sourceTree = "<group>"; };
 		B3C20B9325A3D64200B3B595 /* Decimal+Currency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Decimal+Currency.swift"; sourceTree = "<group>"; };
+		B3D0BF3A25AE5D0100FF2B28 /* restaurants.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = restaurants.json; sourceTree = "<group>"; };
 		B3D5ADD225A26C4700F0E58C /* Order.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Order.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -197,6 +199,8 @@
 		B38B6376259CE45400378052 /* Preview Content */ = {
 			isa = PBXGroup;
 			children = (
+				B33D527525AE5B7C003ADD1A /* Models+SampleData.swift */,
+				B3D0BF3A25AE5D0100FF2B28 /* restaurants.json */,
 				B38B6377259CE45400378052 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
@@ -237,7 +241,6 @@
 				B35B9D1D259D765100488D75 /* Menu.swift */,
 				B329FE6C259F7E4600B404A7 /* Basket.swift */,
 				B3A21E3B25A93D310036E399 /* User.swift */,
-				B33D527525AE5B7C003ADD1A /* Models+SampleData.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -404,6 +407,7 @@
 				B38B63DB259CE59E00378052 /* DMSans-Bold.ttf in Resources */,
 				B38B63DA259CE59E00378052 /* DMSans-Medium.ttf in Resources */,
 				B38B6378259CE45400378052 /* Preview Assets.xcassets in Resources */,
+				B3D0BF4225AE5D3D00FF2B28 /* restaurants.json in Resources */,
 				B38B6375259CE45400378052 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
