@@ -12,10 +12,28 @@ enum CustomNavigationBarViewType: CaseIterable {
     case sheet
 }
 
+enum CustomNavigationBarRightButtonType: CaseIterable {
+    case save
+}
+
 struct CustomNavigationBarView: View {
-    let type: CustomNavigationBarViewType
-    let title: String
-    let onDismiss: (() -> ())?
+    private let title: String
+    private let type: CustomNavigationBarViewType
+    private let onDismiss: (() -> ())?
+    private let rightButtonType: CustomNavigationBarRightButtonType?
+    private let onRightButtonTapped: (() -> ())?
+    
+    init(title: String,
+         type: CustomNavigationBarViewType,
+         onDismiss: (() -> ())?,
+         rightButtonType: CustomNavigationBarRightButtonType? = nil,
+         onRightButtonTapped: (() -> ())? = nil) {
+        self.title = title
+        self.type = type
+        self.onDismiss = onDismiss
+        self.rightButtonType = rightButtonType
+        self.onRightButtonTapped = onRightButtonTapped
+    }
     
     var body: some View {
         ZStack {
@@ -26,6 +44,15 @@ struct CustomNavigationBarView: View {
                         .foregroundColor(.myBlack)
                 }
                 Spacer()
+                if let rightButtonType = rightButtonType {
+                    switch rightButtonType {
+                    case .save:
+                        Button(action: { onRightButtonTapped?() } ) {
+                            Text("Save")
+                                .myFont(size: 17, weight: .bold, color: .myPrimary)
+                        }
+                    }
+                }
             }
             Text(title)
                 .myFont(size: 17, weight: .medium)
@@ -39,9 +66,12 @@ struct CustomNavigationBarView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             ForEach(CustomNavigationBarViewType.allCases, id: \.self) { type in
-                CustomNavigationBarView(type: type, title: "Navigation bar title", onDismiss: nil)
+                CustomNavigationBarView(title: "Navigation bar title", type: type, onDismiss: nil)
             }
-            .previewLayout(.sizeThatFits)
+            ForEach(CustomNavigationBarRightButtonType.allCases, id: \.self) { type in
+                CustomNavigationBarView(title: "Navigation bar title", type: .default, onDismiss: nil, rightButtonType: type)
+            }
         }
+        .previewLayout(.sizeThatFits)
     }
 }

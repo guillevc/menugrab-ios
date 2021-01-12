@@ -16,7 +16,7 @@ struct AllRestaurantsView: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            CustomNavigationBarView(type: .default, title: title, onDismiss: { presentationMode.wrappedValue.dismiss() })
+            CustomNavigationBarView(title: title, type: .default, onDismiss: { presentationMode.wrappedValue.dismiss() })
             ScrollView(showsIndicators: false) {
                 VStack(spacing: 0) {
                     ForEach(Array(restaurants.enumerated()), id: \.offset) { index, restaurant in

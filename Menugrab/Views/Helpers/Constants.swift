@@ -9,4 +9,7 @@ import SwiftUI
 
 enum Constants {
     static let customNavigationBarHeight: CGFloat = 54
+    
+    static let formBigSpacing: CGFloat = 30
+    static let formSmallSpacing: CGFloat = 1
 }

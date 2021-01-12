@@ -14,7 +14,7 @@ struct BasketView: View {
     var body: some View {
         GeometryReader { geometry in
             VStack(spacing: 0) {
-                CustomNavigationBarView(type: .sheet, title: "Your basket", onDismiss: { presentationMode.wrappedValue.dismiss() })
+                CustomNavigationBarView(title: "Your basket", type: .sheet, onDismiss: { presentationMode.wrappedValue.dismiss() })
                 ScrollView(showsIndicators: false) {
                     VStack(spacing: 0) {
                         HStack {

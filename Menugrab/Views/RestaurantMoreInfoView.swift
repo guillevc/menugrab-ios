@@ -25,7 +25,7 @@ struct RestaurantMoreInfoView: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            CustomNavigationBarView(type: .sheet, title: "Restaurant info", onDismiss: { presentationMode.wrappedValue.dismiss() })
+            CustomNavigationBarView(title: "Restaurant info", type: .sheet, onDismiss: { presentationMode.wrappedValue.dismiss() })
             ScrollView {
                 VStack(spacing: 0) {
                     LinkIfDestinationNotNull(destination: restaurant.mapsURL) {

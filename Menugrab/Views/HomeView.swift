@@ -30,7 +30,7 @@ struct HomeView: View {
                 VStack(spacing: 0) {
                     ZStack {
                         HStack {
-                            Button(action: {}) {
+                            NavigationLink(destination: AccountView()) {
                                 Image(systemName: "person")
                                     .font(.system(size: 23))
                                     .foregroundColor(.myBlack)
