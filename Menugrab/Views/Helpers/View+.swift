@@ -14,4 +14,6 @@ extension View {
         return self.font(font).foregroundColor(color)
     }
     
+    func eraseToAnyView() -> AnyView { AnyView(self) }
+    
 }

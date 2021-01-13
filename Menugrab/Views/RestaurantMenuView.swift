@@ -57,14 +57,13 @@ struct RestaurantMenuView: View {
                         GeometryReader { geometry in
                             ZStack(alignment: .top) { () -> AnyView in
                                 updateNavbarVisibility(imageGeometry: geometry, topGeometry: topGeometry)
-                                return AnyView(
-                                    restaurant.image
-                                        .resizable()
-                                        .scaledToFill()
-                                        .frame(width: geometry.size.width, height: heightForHeaderImage(geometry))
-                                        .clipped()
-                                        .offset(x: 0, y: offsetForHeaderImage(geometry))
-                                )
+                                return restaurant.image
+                                    .resizable()
+                                    .scaledToFill()
+                                    .frame(width: geometry.size.width, height: heightForHeaderImage(geometry))
+                                    .clipped()
+                                    .offset(x: 0, y: offsetForHeaderImage(geometry))
+                                    .eraseToAnyView()
                             }
                         }
                         .frame(height: Self.initialImageHeight)
