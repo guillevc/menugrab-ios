@@ -16,13 +16,13 @@
                     "name": "Drinks",
                     "items": [
                         {
-                            "id": "1"
+                            "id": "1",
                             "name": "Bottle of water (50cl)",
                             "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
                             "price": 1.30
                         },
                         {
-                            "id": "2"
+                            "id": "2",
                             "name": "Bottle of sprinkling water (50cl)",
                             "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
                             "price": 1.45
@@ -33,13 +33,13 @@
                     "name": "Starters",
                     "items": [
                         {
-                            "id": "3"
+                            "id": "3",
                             "name": "Chow Mein",
                             "description": "Vivamus ac mattis magna. Mauris vel rutrum lectus.",
                             "price": 5.35
                         },
                         {
-                            "id": "4"
+                            "id": "4",
                             "name": "Gyoza",
                             "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur et nibh lacus. In dapibus ac purus in placerat. Morbi eu purus quis mauris varius accumsan in facilisis eros.",
                             "price": 7
