@@ -22,3 +22,19 @@ struct Restaurant: Identifiable {
         return URL(string: stringURL)
     }
 }
+
+//  MARK: - DTOs
+
+struct RestaurantDTO: Identifiable, Decodable {
+    let id: String
+    let name: String
+    let imageURL: String
+    let coordinates: Coordinates
+    let acceptingOrderTypes: [String]
+    let menu: MenuDTO
+}
+
+struct Coordinates: Decodable {
+    let latitude: Double
+    let longitude: Double
+}

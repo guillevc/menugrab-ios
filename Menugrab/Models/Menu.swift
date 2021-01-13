@@ -22,3 +22,21 @@ struct MenuItem: Equatable {
     let description: String?
     let price: Decimal
 }
+
+// MARK: - Menu DTOs
+
+struct MenuDTO: Decodable {
+    let itemCategories: [MenuItemCategoryDTO]
+}
+
+struct MenuItemCategoryDTO: Decodable {
+    let name: String
+    let items: [MenuItemDTO]
+}
+
+struct MenuItemDTO: Decodable {
+    let id: String
+    let name: String
+    let description: String?
+    let price: Decimal
+}
