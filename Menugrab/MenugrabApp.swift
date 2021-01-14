@@ -16,6 +16,7 @@ struct MenugrabApp: App {
         WindowGroup {
             HomeView()
                 .environmentObject(Self.basket)
+//            TestView(viewModel: TestViewModel(container: AppEnvironment.initialize().container))
         }
     }
 }

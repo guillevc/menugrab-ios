@@ -11,7 +11,6 @@ import Combine
 protocol WebRepository {
     var session: URLSession { get }
     var baseURL: String { get }
-//    var backgroundQueue: DispatchQueue { get }
 }
 
 extension WebRepository {

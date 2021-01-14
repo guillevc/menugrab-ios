@@ -29,12 +29,20 @@ struct RestaurantDTO: Identifiable, Decodable {
     let id: String
     let name: String
     let imageURL: String
-    let coordinates: Coordinates
+    let coordinates: CoordinatesDTO
     let acceptingOrderTypes: [String]
     let menu: MenuDTO
+    
+    var allCapsName: String {
+        name.uppercased()
+    }
+    
+    var image: Image {
+        Image("santung")
+    }
 }
 
-struct Coordinates: Decodable {
+struct CoordinatesDTO: Decodable {
     let latitude: Double
     let longitude: Double
 }
