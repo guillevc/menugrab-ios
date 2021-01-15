@@ -16,7 +16,7 @@ struct TestView: View {
         case .notRequested:
             VStack {
                 Text("not requested")
-                Button("Request restaurant", action: { viewModel.loadRestaurant() })
+                Button("Request restaurant", action: { viewModel.loadRestaurant(id: "1") })
             }
         case .isLoading:
             Text("Loading")
@@ -51,9 +51,9 @@ class TestViewModel: ObservableObject {
         _restaurant = .init(wrappedValue: restaurant)
     }
     
-    func loadRestaurant() {
+    func loadRestaurant(id: String) {
         container.services.restaurantsService
-            .load(restaurant: loadableBinding(\.restaurant), id: "1")
+            .load(restaurant: loadableBinding(\.restaurant), id: id)
     }
     
 }
