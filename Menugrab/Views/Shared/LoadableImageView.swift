@@ -13,31 +13,24 @@ struct LoadableImageView: View {
     var body: some View {
         switch viewModel.image {
         case .notRequested:
-            VStack {
-                Text("not requested")
-                Button("Request image", action: { viewModel.loadImage() })
-            }
+            Text("")
+                .onAppear {
+                    viewModel.loadImage()
+                }
         case .isLoading:
-            Text("Loading")
+            Text("loading image...")
         case .loaded(let image):
-            VStack {
-                Text(viewModel.imageURL.absoluteString)
-                Image(uiImage: image)
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 150, height: 150)
-                    .background(Color.gray)
-                
-            }
-        case .failed(let error):
-            Text("Error: \(error.localizedDescription)")
+            Image(uiImage: image)
+//                .resizable()
+        default:
+            Color.lightestGray
         }
     }
 }
 
 extension LoadableImageView {
     class ViewModel: ObservableObject {
-        let imageURL: URL
+        let imageURL: URL?
         @Published var image: Loadable<UIImage>
         
         let container: DIContainer
@@ -45,11 +38,11 @@ extension LoadableImageView {
         
         init(
             container: DIContainer,
-            imageURL: URL,
+            imageURLString: String,
             image: Loadable<UIImage> = .notRequested
         ) {
             self.container = container
-            self.imageURL = imageURL
+            self.imageURL = URL(string: imageURLString)
             _image = .init(initialValue: image)
         }
         
@@ -60,9 +53,9 @@ extension LoadableImageView {
 }
 
 struct LoadableImageView_Previews: PreviewProvider {
-    static let previewImageURL = URL(string: "https://i.imgur.com/QypqfcI.jpeg")!
+    static let previewImageURLString = "https://i.imgur.com/QypqfcI.jpeg"
     
     static var previews: some View {
-        LoadableImageView(viewModel: LoadableImageView.ViewModel(container: AppEnvironment.initialize().container, imageURL: previewImageURL))
+        LoadableImageView(viewModel: LoadableImageView.ViewModel(container: .preview, imageURLString: previewImageURLString))
     }
 }

@@ -14,10 +14,9 @@ struct MenugrabApp: App {
     
     var body: some Scene {
         WindowGroup {
-//            HomeView()
-//                .environmentObject(Self.basket)
+            HomeView()
+                .environmentObject(Self.basket)
 //            TestView(viewModel: TestViewModel(container: AppEnvironment.initialize().container))
-            LoadableImageView(viewModel: LoadableImageView.ViewModel(container: AppEnvironment.initialize().container, imageURL: URL(string: "https://i.imgur.com/QypqfcI.jpeg")!))
         }
     }
 }

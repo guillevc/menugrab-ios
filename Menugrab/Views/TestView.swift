@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct TestView: View {
-    
     @ObservedObject var viewModel: TestViewModel
     
     var body: some View {
@@ -19,16 +18,19 @@ struct TestView: View {
                 Button("Request restaurant", action: { viewModel.loadRestaurant(id: "1") })
             }
         case .isLoading:
-            Text("Loading")
+            Text("Loading...")
         case .loaded(let restaurant):
             VStack {
                 Text(restaurant.allCapsName)
-                restaurant.image
-                    .resizable()
+                LoadableImageView(viewModel: LoadableImageView.ViewModel(container: viewModel.container, imageURLString: restaurant.imageURL))
                     .aspectRatio(contentMode: .fill)
-                    .frame(width: 150, height: 150)
-                    .background(Color.gray)
-                Text(restaurant.imageURL)
+                    .frame(width: 320, height: 160)
+                    .clipped()
+                Button("Request restaurant", action: { viewModel.loadRestaurant(id: "1") })
+                //                restaurant.image
+                //                    .resizable()
+                //                    .aspectRatio(contentMode: .fill)
+                //                Text(restaurant.imageURL)
             }
         case .failed(let error):
             Text("Error: \(error.localizedDescription)")

@@ -24,7 +24,7 @@ extension AppEnvironment {
         
         return .init(
             container: .init(
-                services: configuredServices(appState: appState, webRepositories: configuredWebRepositories(session: urlSession))
+                services: configuredServicesContainer(appState: appState, webRepositories: configuredWebRepositoriesContainer(session: urlSession))
             )
         )
     }
@@ -40,16 +40,17 @@ extension AppEnvironment {
         return .init(configuration: configuration)
     }
     
-    private static func configuredWebRepositories(session: URLSession) -> WebRepositoriesContainer {
+    private static func configuredWebRepositoriesContainer(session: URLSession) -> WebRepositoriesContainer {
         .init(
             restaurantsWebRepository: RestaurantsWebRepositoryImpl(session: session, baseURL: "https://5ffcedf6a77c50001706ccbe.mockapi.io/api/"),
             imagesWebRepository: ImagesWebRepositoryImpl(session: session, baseURL: "")
         )
     }
     
-    private static func configuredServices(appState: Store<AppState>, webRepositories: WebRepositoriesContainer) -> ServicesContainer {
+    private static func configuredServicesContainer(appState: Store<AppState>, webRepositories: WebRepositoriesContainer) -> ServicesContainer {
         .init(
-            restaurantsService: RestaurantsServiceImpl(appState: appState, webRepository: webRepositories.restaurantsWebRepository), imagesService: ImagesServiceImpl(appState: appState, webRepository: webRepositories.imagesWebRepository)
+            restaurantsService: RestaurantsServiceImpl(appState: appState, webRepository: webRepositories.restaurantsWebRepository),
+            imagesService: ImagesServiceImpl(appState: appState, webRepository: webRepositories.imagesWebRepository)
         )
     }
 }
