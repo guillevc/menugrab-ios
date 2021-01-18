@@ -12,7 +12,7 @@ struct HomeView: View {
     private static let allRestaurants = Restaurant.sampleRestaurants
     
     @State private var appliedFilter: OrderType?
-    @State private var showingLocationSelector = false
+    @State private var showingLocationSelector = true
     @State private var showingActionSheet = false
     @State private var showingBasketSheet = false
     
@@ -200,8 +200,6 @@ fileprivate struct LocationSelectorView: View {
                 }
                 .padding()
             }
-            .cornerRadius(18)
-            .clipped()
             LocationSelectorItemView(type: .currentLocation, isSelected: true)
                 .padding()
             LocationSelectorItemView(type: .custom(name: "Avenida de arteixo"), isSelected: false)
@@ -219,6 +217,8 @@ fileprivate struct LocationSelectorView: View {
             Color.white
                 .shadow(radius: 20)
         )
+        .clipShape(RoundedRectangleSpecificCorners(radius: 18, corners: [.topLeft, .topRight]))
+        
     }
 }
 
@@ -269,6 +269,7 @@ struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             HomeView()
+                .previewDevice(PreviewDevice(rawValue: "iPhone SE (2nd generation)"))
             LocationSelectorView(onDismissSelector: nil, bottomPadding: 0)
                 .previewLayout(.sizeThatFits)
         }

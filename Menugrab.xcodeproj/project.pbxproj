@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B30AAB1D25B47EDC00EC9EBA /* RoundedRectangleSpecificCorners.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30AAB1C25B47EDC00EC9EBA /* RoundedRectangleSpecificCorners.swift */; };
 		B329FE68259F6EE100B404A7 /* SecondaryButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B329FE67259F6EE100B404A7 /* SecondaryButtonView.swift */; };
 		B329FE6D259F7E4600B404A7 /* Basket.swift in Sources */ = {isa = PBXBuildFile; fileRef = B329FE6C259F7E4600B404A7 /* Basket.swift */; };
 		B3311741259D2EFC0016619A /* BasketView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3311740259D2EFC0016619A /* BasketView.swift */; };
@@ -86,6 +87,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B30AAB1C25B47EDC00EC9EBA /* RoundedRectangleSpecificCorners.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedRectangleSpecificCorners.swift; sourceTree = "<group>"; };
 		B329FE67259F6EE100B404A7 /* SecondaryButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondaryButtonView.swift; sourceTree = "<group>"; };
 		B329FE6C259F7E4600B404A7 /* Basket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Basket.swift; sourceTree = "<group>"; };
 		B3311740259D2EFC0016619A /* BasketView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasketView.swift; sourceTree = "<group>"; };
@@ -314,6 +316,7 @@
 			isa = PBXGroup;
 			children = (
 				B38B63C2259CE55C00378052 /* RestaurantSearchInputView.swift */,
+				B30AAB1C25B47EDC00EC9EBA /* RoundedRectangleSpecificCorners.swift */,
 				B3B0BCAC25A7F9580068C1EC /* CustomNavigationBarView.swift */,
 				B331DF9525B1145800912AFC /* LoadableImageView.swift */,
 				B38687E625A65AF70026B592 /* RestaurantMapView.swift */,
@@ -540,6 +543,7 @@
 				B3D0BF6025AE715200FF2B28 /* WebRepository.swift in Sources */,
 				B3A21E3025A93C8A0036E399 /* OrdersView.swift in Sources */,
 				B373A9CD259CF87B0089FA60 /* Color+.swift in Sources */,
+				B30AAB1D25B47EDC00EC9EBA /* RoundedRectangleSpecificCorners.swift in Sources */,
 				B3D5ADD325A26C4700F0E58C /* Order.swift in Sources */,
 				B329FE68259F6EE100B404A7 /* SecondaryButtonView.swift in Sources */,
 				B3D0BF6525AE733300FF2B28 /* APICall.swift in Sources */,
