@@ -6,41 +6,27 @@
 //
 
 import SwiftUI
+import Firebase
 
 struct TestView: View {
     @ObservedObject var viewModel: TestViewModel
     
     var body: some View {
-        switch viewModel.restaurant {
-        case .notRequested:
-            VStack {
-                Text("not requested")
-                Button("Request restaurant", action: { viewModel.loadRestaurant(id: "1") })
-            }
-        case .isLoading:
-            Text("Loading...")
-        case .loaded(let restaurant):
-            VStack {
-                Text(restaurant.allCapsName)
-                LoadableImageView(viewModel: LoadableImageView.ViewModel(container: viewModel.container, imageURLString: restaurant.imageURL))
-                    .aspectRatio(contentMode: .fill)
-                    .frame(width: 320, height: 160)
-                    .clipped()
-                Button("Request restaurant", action: { viewModel.loadRestaurant(id: "1") })
-                //                restaurant.image
-                //                    .resizable()
-                //                    .aspectRatio(contentMode: .fill)
-                //                Text(restaurant.imageURL)
-            }
-        case .failed(let error):
-            Text("Error: \(error.localizedDescription)")
+        VStack {
+            Text(viewModel.output)
+                .padding()
+            TextField("email", text: $viewModel.email)
+            SecureField("password", text: $viewModel.password)
+            Button("Sign up", action: { viewModel.sigUp() })
         }
     }
 }
 
 class TestViewModel: ObservableObject {
     
-    @Published var restaurant: Loadable<RestaurantDTO>
+    @Published var email: String = ""
+    @Published var password: String = ""
+    @Published var output: String = ""
     
     let container: DIContainer
     private var anyCancellableBag = AnyCancellableBag()
@@ -50,12 +36,29 @@ class TestViewModel: ObservableObject {
         restaurant: Loadable<RestaurantDTO> = .notRequested
     ) {
         self.container = container
-        _restaurant = .init(wrappedValue: restaurant)
     }
     
-    func loadRestaurant(id: String) {
-        container.services.restaurantsService
-            .load(restaurant: loadableBinding(\.restaurant), id: id)
+    func sigUp() {
+        Auth.auth().createUser(withEmail: email, password: password) { [weak self] authResult, error in
+            guard let self = self else { return }
+            
+            if let error = error as NSError? {
+                switch AuthErrorCode(rawValue: error.code) {
+                case .emailAlreadyInUse:
+                    self.output = "email already in use"
+                case .weakPassword:
+                    self.output = "weak pass"
+                default:
+                    print(error.localizedDescription)
+                }
+            } else if let authResult = authResult {
+                print("logged in!")
+                let newUser = Auth.auth().currentUser
+                self.output = newUser?.uid ?? "" + (newUser?.email ?? "")
+            }
+            
+            
+        }
     }
     
 }
