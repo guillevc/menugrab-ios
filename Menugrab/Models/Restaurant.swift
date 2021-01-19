@@ -8,41 +8,29 @@
 import SwiftUI
 import MapKit
 
-struct Restaurant: Identifiable {
-    let id = UUID()
+struct Restaurant: Identifiable, Decodable {
+    let id: String
     let name: String
-    let image: Image
-    let coordinate = CLLocationCoordinate2D(latitude: 43.3834, longitude: -8.3943)
+    var imageURL: String
+    var coordinates: Coordinates = .init(latitude: 43.3834, longitude: -8.3943)
     let acceptingOrderTypes: [OrderType]
-    let menu: Menu
-    
+}
+
+extension Restaurant {
     var mapsURL: URL? {
         guard let nameWithPercentEncoding = name.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else { return nil }
-        let stringURL = "maps://?ll=\(coordinate.latitude),\(coordinate.longitude)&q=\(nameWithPercentEncoding)"
+        let stringURL = "maps://?ll=\(coordinates.latitude),\(coordinates.longitude)&q=\(nameWithPercentEncoding)"
         return URL(string: stringURL)
     }
 }
 
-//  MARK: - DTOs
-
-struct RestaurantDTO: Identifiable, Decodable {
-    let id: String
-    let name: String
-    let imageURL: String
-    let coordinates: CoordinatesDTO
-    let acceptingOrderTypes: [String]
-    let menu: MenuDTO
-    
-    var allCapsName: String {
-        name.uppercased()
-    }
-    
-    var image: Image {
-        Image("santung")
-    }
-}
-
-struct CoordinatesDTO: Decodable {
+struct Coordinates: Decodable {
     let latitude: Double
     let longitude: Double
+}
+
+extension Coordinates {
+    var locationCoordinate2D: CLLocationCoordinate2D {
+        CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+    }
 }

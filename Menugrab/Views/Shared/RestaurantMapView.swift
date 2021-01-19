@@ -14,11 +14,11 @@ struct RestaurantMapView: View {
     
     var body: some View {
         Map(coordinateRegion: $region, interactionModes: [], annotationItems: [restaurant]) { restaurant in
-            MapMarker(coordinate: restaurant.coordinate, tint: .myPrimaryDark)
+            MapMarker(coordinate: restaurant.coordinates.locationCoordinate2D, tint: .myPrimaryDark)
         }
         .onAppear {
             region = MKCoordinateRegion(
-                center: restaurant.coordinate,
+                center: restaurant.coordinates.locationCoordinate2D,
                 span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
             )
         }

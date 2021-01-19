@@ -13,16 +13,16 @@ struct LoadableImageView: View {
     var body: some View {
         switch viewModel.image {
         case .notRequested:
-            Text("")
+            Color.lightestGray
                 .onAppear {
                     viewModel.loadImage()
                 }
         case .isLoading:
-            Text("loading image...")
+            Color.lightestGray
         case .loaded(let image):
             Image(uiImage: image)
-//                .resizable()
-        default:
+                .resizable()
+        case .failed:
             Color.lightestGray
         }
     }

@@ -23,9 +23,8 @@ struct MenugrabApp: App {
     
     var body: some Scene {
         WindowGroup {
-//            HomeView()
-//                .environmentObject(Self.basket)
-            TestView(viewModel: TestViewModel(container: AppEnvironment.initialize().container))
+            HomeView(viewModel: HomeViewModel(container: AppEnvironment.initialize().container))
+                .environmentObject(Self.basket)
         }
     }
 }

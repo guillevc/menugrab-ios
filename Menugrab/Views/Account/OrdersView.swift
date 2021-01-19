@@ -70,7 +70,7 @@ fileprivate struct OrderCellView: View {
     
     var body: some View {
         HStack(spacing: 16) {
-            order.restaurant.image
+            Image("santung")
                 .resizable()
                 .aspectRatio(contentMode: .fill)
                 .frame(width: 90, height: 90)

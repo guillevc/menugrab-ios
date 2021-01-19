@@ -9,19 +9,19 @@ import Foundation
 import Combine
 
 protocol RestaurantsWebRepository: WebRepository {
-    func loadNearbyRestaurants() -> AnyPublisher<[RestaurantDTO], Error>
-    func loadRestaurant(id: String) -> AnyPublisher<RestaurantDTO, Error>
+    func loadNearbyRestaurants(latitude: Double?, longitude: Double?) -> AnyPublisher<[Restaurant], Error>
+    func loadRestaurant(id: String) -> AnyPublisher<Restaurant, Error>
 }
 
 struct RestaurantsWebRepositoryImpl: RestaurantsWebRepository {
     let session: URLSession
     let baseURL: String
     
-    func loadNearbyRestaurants() -> AnyPublisher<[RestaurantDTO], Error> {
-        call(endpoint: RestaurantsWebRepositoryAPI.nearbyRestaurants)
+    func loadNearbyRestaurants(latitude: Double?, longitude: Double?) -> AnyPublisher<[Restaurant], Error> {
+        call(endpoint: RestaurantsWebRepositoryAPI.nearbyRestaurants(latitude: latitude?.description, longitude: longitude?.description))
     }
     
-    func loadRestaurant(id: String) -> AnyPublisher<RestaurantDTO, Error> {
+    func loadRestaurant(id: String) -> AnyPublisher<Restaurant, Error> {
         call(endpoint: RestaurantsWebRepositoryAPI.restaurant(id: id))
     }
 }
@@ -29,15 +29,22 @@ struct RestaurantsWebRepositoryImpl: RestaurantsWebRepository {
 // MARK: - Endpoints
 
 fileprivate enum RestaurantsWebRepositoryAPI {
-    case nearbyRestaurants
+    case nearbyRestaurants(latitude: String?, longitude: String?)
     case restaurant(id: String)
 }
 
 extension RestaurantsWebRepositoryAPI: APICall {
     var path: String {
         switch self {
-        case .nearbyRestaurants:
-            return "/restaurants"
+        case .nearbyRestaurants(let latitude, let longitude):
+            let restaurantsUrl = "/restaurants"
+            guard let latitude = latitude,
+                  let longitude = longitude,
+                  var urlComponents = URLComponents(string: restaurantsUrl) else { return restaurantsUrl }
+            let latitudeQueryItem = URLQueryItem(name: "latitude", value: latitude)
+            let longitudeQueryItem = URLQueryItem(name: "longitude", value: longitude)
+            urlComponents.queryItems = [latitudeQueryItem, longitudeQueryItem]
+            return urlComponents.url?.absoluteString ?? restaurantsUrl
         case .restaurant(let id):
             return "/restaurants/\(id)"
         }

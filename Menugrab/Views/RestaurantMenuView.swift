@@ -16,6 +16,7 @@ struct RestaurantMenuView: View {
     @EnvironmentObject private var basket: Basket
     
     let restaurant: Restaurant
+    let menu = Menu.sampleMenu
     
     @State private var isHeaderVisible = false
     @State private var headerTopPadding: CGSize? = nil
@@ -57,7 +58,7 @@ struct RestaurantMenuView: View {
                         GeometryReader { geometry in
                             ZStack(alignment: .top) { () -> AnyView in
                                 updateNavbarVisibility(imageGeometry: geometry, topGeometry: topGeometry)
-                                return restaurant.image
+                                return Image("santung")
                                     .resizable()
                                     .scaledToFill()
                                     .frame(width: geometry.size.width, height: heightForHeaderImage(geometry))
@@ -72,7 +73,7 @@ struct RestaurantMenuView: View {
                                 .padding(.horizontal)
                                 .padding(.bottom)
                             VStack(alignment: .leading, spacing: 0) {
-                                ForEach(restaurant.menu.itemCategories, id: \.name) { itemCategory in
+                                ForEach(menu.itemCategories, id: \.name) { itemCategory in
                                     HStack {
                                         Spacer()
                                         Text(itemCategory.name.uppercased())
@@ -189,7 +190,7 @@ fileprivate struct OrderTypeSegmentedPickerView: View {
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(width: 18, height: 18)
-                    Text(type.rawValue)
+                    Text(type.label)
                         .myFont(size: 15, weight: isSelected ? .bold : .regular)
                     
                 }
@@ -233,7 +234,7 @@ fileprivate struct MenuItemView: View {
                 if let description = menuItem.description {
                     Text(description)
                         .myFont(size: 13, color: .darkGray)
-//                        .lineLimit(nil)
+                        //                        .lineLimit(nil)
                         .fixedSize(horizontal: false, vertical: true)
                 }
             }

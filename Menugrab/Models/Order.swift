@@ -7,9 +7,18 @@
 
 import SwiftUI
 
-enum OrderType: String, CaseIterable {
-    case table = "Table"
-    case pickup = "Pickup"
+enum OrderType: String, Decodable, CaseIterable {
+    case table = "ORDER_TYPE_TABLE"
+    case pickup = "ORDER_TYPE_PICKUP"
+    
+    var label: String {
+        switch self {
+        case .table:
+            return "Table"
+        case .pickup:
+            return "Pickup"
+        }
+    }
     
     var icon: Image {
         switch self {

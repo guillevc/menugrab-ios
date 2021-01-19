@@ -42,7 +42,7 @@ extension AppEnvironment {
     
     private static func configuredWebRepositoriesContainer(session: URLSession) -> WebRepositoriesContainer {
         .init(
-            restaurantsWebRepository: RestaurantsWebRepositoryImpl(session: session, baseURL: "https://5ffcedf6a77c50001706ccbe.mockapi.io/api/"),
+            restaurantsWebRepository: RestaurantsWebRepositoryImpl(session: session, baseURL: "http://192.168.0.11:3000/api"),
             imagesWebRepository: ImagesWebRepositoryImpl(session: session, baseURL: "")
         )
     }

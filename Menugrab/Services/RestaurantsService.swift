@@ -9,8 +9,8 @@ import Foundation
 import SwiftUI
 
 protocol RestaurantsService {
-    func loadNearby(restaurants: Binding<Loadable<[RestaurantDTO]>>)
-    func load(restaurant: Binding<Loadable<RestaurantDTO>>, id: String)
+    func loadNearby(restaurants: Binding<Loadable<[Restaurant]>>, coordinates: Coordinates?)
+    func load(restaurant: Binding<Loadable<Restaurant>>, id: String)
 }
 
 struct RestaurantsServiceImpl: RestaurantsService {
@@ -22,17 +22,17 @@ struct RestaurantsServiceImpl: RestaurantsService {
         self.webRepository = webRepository
     }
     
-    func loadNearby(restaurants: Binding<Loadable<[RestaurantDTO]>>) {
+    func loadNearby(restaurants: Binding<Loadable<[Restaurant]>>, coordinates: Coordinates?) {
         let anyCancellableBag = AnyCancellableBag()
         
         restaurants.wrappedValue.setIsLoading(bag: anyCancellableBag)
         
-        webRepository.loadNearbyRestaurants()
+        webRepository.loadNearbyRestaurants(latitude: coordinates?.latitude, longitude: coordinates?.longitude)
             .sinkToLoadable({ restaurants.wrappedValue = $0 })
             .store(in: anyCancellableBag)
     }
     
-    func load(restaurant: Binding<Loadable<RestaurantDTO>>, id: String) {
+    func load(restaurant: Binding<Loadable<Restaurant>>, id: String) {
         let anyCancellableBag = AnyCancellableBag()
         
         restaurant.wrappedValue.setIsLoading(bag: anyCancellableBag)
@@ -45,6 +45,6 @@ struct RestaurantsServiceImpl: RestaurantsService {
 }
 
 struct RestaurantsServiceStub: RestaurantsService {
-    func loadNearby(restaurants: Binding<Loadable<[RestaurantDTO]>>) { }
-    func load(restaurant: Binding<Loadable<RestaurantDTO>>, id: String) { }
+    func loadNearby(restaurants: Binding<Loadable<[Restaurant]>>, coordinates: Coordinates?) { }
+    func load(restaurant: Binding<Loadable<Restaurant>>, id: String) { }
 }

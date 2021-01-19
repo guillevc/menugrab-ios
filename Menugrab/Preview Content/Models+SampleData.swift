@@ -10,10 +10,10 @@ import Foundation
 
 extension Restaurant {
     static let sampleRestaurants: [Restaurant] = [
-        .init(name: "San Tung", image: Image("santung"), acceptingOrderTypes: [.table], menu: Menu(itemCategories: Menu.sampleMenuItemCategories)),
-        .init(name: "Hamburguesería Buenosaires", image: Image("buenosaires"), acceptingOrderTypes: [.table, .pickup], menu: Menu(itemCategories: [])),
-        .init(name: "La Favola", image: Image("favola"), acceptingOrderTypes: [.table], menu: Menu(itemCategories: [])),
-        .init(name: "Los Farolillos", image: Image("farolillos"), acceptingOrderTypes: [.pickup], menu: Menu(itemCategories: []))
+        .init(id: UUID().uuidString, name: "San Tung", imageURL: "https://i.imgur.com/QypqfcI.jpg", acceptingOrderTypes: [.table]),
+        .init(id: UUID().uuidString, name: "Hamburguesería Buenosaires", imageURL: "https://i.imgur.com/QypqfcI.jpg", acceptingOrderTypes: [.table, .pickup]),
+        .init(id: UUID().uuidString, name: "La Favola", imageURL: "https://i.imgur.com/QypqfcI.jpg", acceptingOrderTypes: [.table]),
+        .init(id: UUID().uuidString, name: "Los Farolillos", imageURL: "https://i.imgur.com/QypqfcI.jpg", acceptingOrderTypes: [.pickup])
     ]
 }
 
@@ -31,6 +31,8 @@ extension Order {
 }
 
 extension Menu {
+    static let sampleMenu = Menu(itemCategories: sampleMenuItemCategories)
+    
     static let sampleMenuItemCategories: [MenuItemCategory] = {
         [
             MenuItemCategory(

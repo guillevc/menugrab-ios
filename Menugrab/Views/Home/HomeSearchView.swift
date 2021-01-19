@@ -8,10 +8,10 @@
 import SwiftUI
 
 struct HomeSearchView: View {
-    
     @Environment(\.presentationMode) private var presentationMode
     
-    private let restaurants = Restaurant.sampleRestaurants
+    let container: DIContainer
+    let restaurants: [Restaurant]
     
     var body: some View {
         VStack(spacing: 0) {
@@ -29,7 +29,7 @@ struct HomeSearchView: View {
             ScrollView(showsIndicators: false) {
                 VStack(spacing: 0) {
                     ForEach(restaurants) { restaurant in
-                        RestaurantCellView(name: restaurant.name, image: restaurant.image, acceptingOrderTypes: restaurant.acceptingOrderTypes)
+                        RestaurantCellView(restaurant: restaurant, container: container)
                             .padding(.horizontal)
                             .padding(.vertical, 10)
                     }
@@ -45,7 +45,8 @@ struct HomeSearchView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             ForEach(["iPhone 11 Pro", "iPhone SE (2nd generation)"], id: \.self) { deviceName in
-                HomeSearchView().previewDevice(PreviewDevice(rawValue: deviceName))
+                HomeSearchView(container: .preview, restaurants: Restaurant.sampleRestaurants)
+                    .previewDevice(PreviewDevice(rawValue: deviceName))
                     .previewDisplayName(deviceName)
             }
         }

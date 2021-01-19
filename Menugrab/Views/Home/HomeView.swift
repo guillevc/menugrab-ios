@@ -8,21 +8,11 @@
 import SwiftUI
 
 struct HomeView: View {
-    
-    private static let allRestaurants = Restaurant.sampleRestaurants
-    
-    @State private var appliedFilter: OrderType?
-    @State private var showingLocationSelector = true
+    @ObservedObject private(set) var viewModel: HomeViewModel
+    @State private var showingLocationSelector = false
     @State private var showingActionSheet = false
     @State private var showingBasketSheet = false
-    
-    private var restaurants: [Restaurant] {
-        if let appliedFilter = appliedFilter {
-            return Self.allRestaurants.filter({ $0.acceptingOrderTypes.contains(appliedFilter) })
-        } else {
-            return Self.allRestaurants
-        }
-    }
+    @State private var showingHomeSearchViewSheet = false
     
     var body: some View {
         NavigationView {
@@ -61,37 +51,16 @@ struct HomeView: View {
                     .frame(height: Constants.customNavigationBarHeight)
                     Divider()
                         .light()
-                    ScrollView(showsIndicators: false) {
-                        VStack(spacing: 0) {
-                            NavigationLink(destination: HomeSearchView()) {
-                                RestaurantSearchInputView(type: .display(onSliderTapped: { showingActionSheet = true }))
-                                    .padding()
-                            }
-                            .buttonStyle(PlainButtonStyle())
-                            if let appliedFilter = appliedFilter {
-                                HStack {
-                                    RestaurantFilterAppliedTagView(type: appliedFilter, onRemoveTapped: { self.appliedFilter = nil })
-                                    Spacer()
-                                }
-                                .padding(.horizontal)
-                                .padding(.bottom)
-                            }
-                            HeaderView(text: "Favourites ⭐", destination: AllRestaurantsView(title: "All our favourites"))
-                                .padding(.horizontal)
-                                .padding(.bottom, -5)
-                            HCarouselView(restaurants: restaurants)
-                            HeaderView(text: "Nearby 📍", destination: AllRestaurantsView(title: "All restaurants"))
-                                .padding(.horizontal)
-                                .padding(.top, 10)
-                            ForEach(Array(restaurants.enumerated()), id: \.offset) { index, restaurant in
-                                NavigationLink(destination: RestaurantMenuView(restaurant: restaurant)) {
-                                    RestaurantCellView(name: restaurant.name, image: restaurant.image, acceptingOrderTypes: restaurant.acceptingOrderTypes)
-                                        .padding(.horizontal)
-                                        .padding(.top, 20)
-                                        .padding(.bottom, index == restaurants.count - 1 ? 20 : 0)
-                                }.buttonStyle(IdentityButtonStyle())
-                            }
-                        }
+                    switch viewModel.nearbyRestaurants {
+                    case .notRequested, .isLoading:
+                        nearbyRestaurantsLoadedView(restaurants: Restaurant.sampleRestaurants)
+                            .redacted(reason: .placeholder)
+                            .disabled(true)
+                    case .loaded(let restaurants):
+                        nearbyRestaurantsLoadedView(restaurants: restaurants)
+                    case .failed(let error):
+                        Text("Failed: \(error.localizedDescription)")
+                        Spacer()
                     }
                 }
                 if (showingLocationSelector) {
@@ -118,40 +87,81 @@ struct HomeView: View {
                 }
             }
             .navigationBarHidden(true)
-            .actionSheet(isPresented: $showingActionSheet) {
-                ActionSheet(title: Text("Filter restaurants"), message: nil, buttons: [
-                    .default(Text("Show pickup")) {
-                        appliedFilter = .pickup
-                        showingActionSheet = false
-                    },
-                    .default(Text("Show table service")) {
-                        appliedFilter = .table
-                        showingActionSheet = false
-                    },
-                    .default(Text("Show all")) {
-                        appliedFilter = nil
-                        showingActionSheet = false
-                    },
-                    .cancel()
-                ])
+            .sheet(isPresented: $showingBasketSheet) {
+                BasketView()
             }
         }
-        .navigationViewStyle(StackNavigationViewStyle())
-        .sheet(isPresented: $showingBasketSheet) {
-            BasketView()
+        .actionSheet(isPresented: $showingActionSheet) {
+            ActionSheet(title: Text("Filter restaurants"), message: nil, buttons: [
+                .default(Text("Show pickup")) {
+                    viewModel.appliedFilter = .pickup
+                    showingActionSheet = false
+                },
+                .default(Text("Show table service")) {
+                    viewModel.appliedFilter = .table
+                    showingActionSheet = false
+                },
+                .default(Text("Show all")) {
+                    viewModel.appliedFilter = nil
+                    showingActionSheet = false
+                },
+                .cancel()
+            ])
+        }
+        .fullScreenCover(isPresented: $showingHomeSearchViewSheet) {
+            HomeSearchView(container: viewModel.container, restaurants: viewModel.nearbyRestaurants.value ?? [])
+        }
+        .onAppear {
+            viewModel.loadNearbyRestaurants()
+        }
+    }
+    
+    private func nearbyRestaurantsLoadedView(restaurants: [Restaurant]) -> some View {
+        ScrollView(showsIndicators: false) {
+            VStack(spacing: 0) {
+                RestaurantSearchInputView(type: .display(onSliderTapped: { showingActionSheet = true }))
+                    .onTapGesture {
+                        showingHomeSearchViewSheet = true
+                    }
+                    .buttonStyle(PlainButtonStyle())
+                    .padding()
+                if let appliedFilter = viewModel.appliedFilter {
+                    HStack {
+                        RestaurantFilterAppliedTagView(type: appliedFilter, onRemoveTapped: { self.viewModel.appliedFilter = nil })
+                        Spacer()
+                    }
+                    .padding(.horizontal)
+                    .padding(.bottom)
+                }
+                HeaderView(text: "Favourites ⭐", destination: AllRestaurantsView(title: "All our favourites", restaurants: restaurants, container: viewModel.container))
+                    .padding(.horizontal)
+                    .padding(.bottom, -5)
+                HCarouselView(restaurants: restaurants, container: viewModel.container)
+                HeaderView(text: "Nearby 📍", destination: AllRestaurantsView(title: "All restaurants", restaurants: restaurants, container: viewModel.container))
+                    .padding(.horizontal)
+                    .padding(.top, 10)
+                ForEach(Array(restaurants.enumerated()), id: \.offset) { index, restaurant in
+                    NavigationLink(destination: RestaurantMenuView(restaurant: restaurant)) {
+                        RestaurantCellView(restaurant: restaurant, container: viewModel.container)
+                            .padding(.horizontal)
+                            .padding(.top, 20)
+                            .padding(.bottom, index == restaurants.count - 1 ? 20 : 0)
+                    }.buttonStyle(IdentityButtonStyle())
+                }
+            }
         }
     }
 }
 
 fileprivate struct HCarouselView: View {
-    
     let restaurants: [Restaurant]
+    let container: DIContainer
     
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             LazyHStack(spacing: 20) {
                 ForEach(Array(restaurants.enumerated()), id: \.offset) { index, restaurant in
-                    RestaurantCellView(name: restaurant.name, image: restaurant.image, acceptingOrderTypes: restaurant.acceptingOrderTypes)
+                    RestaurantCellView(restaurant: restaurant, container: container)
                         .frame(width: 275, height: 125, alignment: .center)
                         .padding(.trailing, index == restaurants.count - 1 ? 20 : 0)
                 }
@@ -265,11 +275,10 @@ fileprivate struct LocationSelectorItemView: View {
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
+struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            HomeView()
-                .previewDevice(PreviewDevice(rawValue: "iPhone SE (2nd generation)"))
+            HomeView(viewModel: HomeViewModel(container: .preview, nearbyRestaurants: Loadable.loaded(Restaurant.sampleRestaurants)))
             LocationSelectorView(onDismissSelector: nil, bottomPadding: 0)
                 .previewLayout(.sizeThatFits)
         }
