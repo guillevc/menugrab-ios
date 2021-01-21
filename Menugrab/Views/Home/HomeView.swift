@@ -51,16 +51,15 @@ struct HomeView: View {
                     .frame(height: Constants.customNavigationBarHeight)
                     Divider()
                         .light()
-                    switch viewModel.nearbyRestaurants {
-                    case .notRequested, .isLoading:
+                    if let restaurants = viewModel.nearbyRestaurants.value {
+                        nearbyRestaurantsLoadedView(restaurants: restaurants)
+                    } else if let error = viewModel.nearbyRestaurants.error {
+                        Text("Failed: \(error.localizedDescription)")
+                        Spacer()
+                    } else {
                         nearbyRestaurantsLoadedView(restaurants: Restaurant.sampleRestaurants)
                             .redacted(reason: .placeholder)
                             .disabled(true)
-                    case .loaded(let restaurants):
-                        nearbyRestaurantsLoadedView(restaurants: restaurants)
-                    case .failed(let error):
-                        Text("Failed: \(error.localizedDescription)")
-                        Spacer()
                     }
                 }
                 if (showingLocationSelector) {
@@ -141,7 +140,7 @@ struct HomeView: View {
                     .padding(.horizontal)
                     .padding(.top, 10)
                 ForEach(Array(restaurants.enumerated()), id: \.offset) { index, restaurant in
-                    NavigationLink(destination: RestaurantMenuView(restaurant: restaurant)) {
+                    NavigationLink(destination: RestaurantMenuView(viewModel: .init(container: viewModel.container, restaurant: restaurant))) {
                         RestaurantCellView(restaurant: restaurant, container: viewModel.container)
                             .padding(.horizontal)
                             .padding(.top, 20)

@@ -11,6 +11,7 @@ import Combine
 protocol RestaurantsWebRepository: WebRepository {
     func loadNearbyRestaurants(latitude: Double?, longitude: Double?) -> AnyPublisher<[Restaurant], Error>
     func loadRestaurant(id: String) -> AnyPublisher<Restaurant, Error>
+    func loadMenu(resturantId: String) -> AnyPublisher<Menu, Error>
 }
 
 struct RestaurantsWebRepositoryImpl: RestaurantsWebRepository {
@@ -24,6 +25,10 @@ struct RestaurantsWebRepositoryImpl: RestaurantsWebRepository {
     func loadRestaurant(id: String) -> AnyPublisher<Restaurant, Error> {
         call(endpoint: RestaurantsWebRepositoryAPI.restaurant(id: id))
     }
+    
+    func loadMenu(resturantId: String) -> AnyPublisher<Menu, Error> {
+        call(endpoint: RestaurantsWebRepositoryAPI.menu(restaurantId: resturantId))
+    }
 }
 
 // MARK: - Endpoints
@@ -31,6 +36,7 @@ struct RestaurantsWebRepositoryImpl: RestaurantsWebRepository {
 fileprivate enum RestaurantsWebRepositoryAPI {
     case nearbyRestaurants(latitude: String?, longitude: String?)
     case restaurant(id: String)
+    case menu(restaurantId: String)
 }
 
 extension RestaurantsWebRepositoryAPI: APICall {
@@ -47,26 +53,28 @@ extension RestaurantsWebRepositoryAPI: APICall {
             return urlComponents.url?.absoluteString ?? restaurantsUrl
         case .restaurant(let id):
             return "/restaurants/\(id)"
+        case .menu(let restaurantId):
+            return "/restaurants/\(restaurantId)/menu"
         }
     }
     
     var method: String {
         switch self {
-        case .nearbyRestaurants, .restaurant:
+        case .nearbyRestaurants, .restaurant, .menu:
             return "GET"
         }
     }
     
     var headers: [String : String]? {
         switch self {
-        case .nearbyRestaurants, .restaurant:
+        case .nearbyRestaurants, .restaurant, .menu:
             return ["Accept": "application/json"]
         }
     }
     
     func body() throws -> Data? {
         switch self {
-        case .nearbyRestaurants, .restaurant:
+        case .nearbyRestaurants, .restaurant, .menu:
             return nil
         }
     }

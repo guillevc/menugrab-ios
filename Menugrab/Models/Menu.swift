@@ -7,34 +7,16 @@
 
 import Foundation
 
-struct Menu {
-    let itemCategories: [MenuItemCategory]
+struct Menu: Decodable {
+    let menuItemCategories: [MenuItemCategory]
 }
 
-struct MenuItemCategory {
+struct MenuItemCategory: Decodable {
     let name: String
-    let items: [MenuItem]
+    let menuItems: [MenuItem]
 }
 
-struct MenuItem: Equatable {
-    let id = UUID()
-    let name: String
-    let description: String?
-    let price: Decimal
-}
-
-// MARK: - Menu DTOs
-
-struct MenuDTO: Decodable {
-    let itemCategories: [MenuItemCategoryDTO]
-}
-
-struct MenuItemCategoryDTO: Decodable {
-    let name: String
-    let items: [MenuItemDTO]
-}
-
-struct MenuItemDTO: Decodable {
+struct MenuItem: Equatable, Identifiable, Decodable {
     let id: String
     let name: String
     let description: String?

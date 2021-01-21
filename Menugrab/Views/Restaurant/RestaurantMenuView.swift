@@ -8,16 +8,12 @@
 import SwiftUI
 
 struct RestaurantMenuView: View {
-    
-    private static let initialImageHeight: CGFloat = 200
     fileprivate static let menuItemsHorizontalPadding: CGFloat = 16
+    private static let initialImageHeight: CGFloat = 200
     
     @Environment(\.presentationMode) private var presentationMode
-    @EnvironmentObject private var basket: Basket
     
-    let restaurant: Restaurant
-    let menu = Menu.sampleMenu
-    
+    @ObservedObject var viewModel: RestaurantMenuViewModel
     @State private var isHeaderVisible = false
     @State private var headerTopPadding: CGSize? = nil
     @State private var showingMoreInfoSheet = false
@@ -69,40 +65,22 @@ struct RestaurantMenuView: View {
                         }
                         .frame(height: Self.initialImageHeight)
                         VStack(spacing: 0) {
-                            RestaurantHeaderView(restaurant: restaurant, onMoreInfoButtonTapped: { showingMoreInfoSheet = true })
+                            RestaurantHeaderView(restaurant: viewModel.restaurant, onMoreInfoButtonTapped: { showingMoreInfoSheet = true })
                                 .padding(.horizontal)
                                 .padding(.bottom)
-                            VStack(alignment: .leading, spacing: 0) {
-                                ForEach(menu.itemCategories, id: \.name) { itemCategory in
-                                    HStack {
-                                        Spacer()
-                                        Text(itemCategory.name.uppercased())
-                                            .myFont(size: 13, color: .gray)
-                                        Spacer()
-                                    }
-                                    .padding(.bottom, 6)
-                                    .padding(.horizontal, Self.menuItemsHorizontalPadding)
-                                    Divider()
-                                        .padding(.horizontal, Self.menuItemsHorizontalPadding)
-                                        .padding(.bottom, 20)
-                                    VStack(alignment: .leading, spacing: 36) {
-                                        ForEach(itemCategory.items, id: \.name) { menuItem in
-                                            MenuItemView(menuItem: menuItem)
-                                        }
-                                    }
-                                    .padding(.bottom, 36)
-                                }
+                            if let menu = viewModel.menu.value {
+                                menuView(menu: menu)
+                            } else {
+                                EmptyView()
                             }
-                            .padding(.vertical)
-                            .padding(.bottom, 50)
                         }
                         .padding(.top, -Self.initialImageHeight/2)
                     }
                 }
-                if !basket.items.isEmpty {
+                if !viewModel.basket.items.isEmpty {
                     VStack {
                         Spacer()
-                        BasketFloatingButtonView(totalQuantity: basket.totalQuantity, totalPrice: basket.totalPrice)
+                        BasketFloatingButtonView(totalQuantity: viewModel.basket.totalQuantity, totalPrice: viewModel.basket.totalPrice)
                     }
                     .padding(.bottom)
                 }
@@ -116,7 +94,7 @@ struct RestaurantMenuView: View {
                         Spacer()
                     }
                     Spacer()
-                    Text(restaurant.name)
+                    Text(viewModel.restaurant.name)
                         .myFont(size: 17, weight: .medium, color: .myBlack)
                         .opacity(isHeaderVisible ? 1 : 0)
                     Spacer()
@@ -127,11 +105,42 @@ struct RestaurantMenuView: View {
             }
             .edgesIgnoringSafeArea(.top)
             .navigationBarHidden(true)
+            .onAppear {
+                withAnimation {
+                viewModel.loadMenu()
+                }
+            }
         }
         .navigationViewStyle(StackNavigationViewStyle())
         .sheet(isPresented: $showingMoreInfoSheet) {
-            RestaurantMoreInfoView(restaurant: restaurant)
+            RestaurantMoreInfoView(restaurant: viewModel.restaurant)
         }
+    }
+    
+    func menuView(menu: Menu) -> some View {
+        VStack(alignment: .leading, spacing: 0) {
+            ForEach(menu.menuItemCategories, id: \.name) { itemCategory in
+                HStack {
+                    Spacer()
+                    Text(itemCategory.name.uppercased())
+                        .myFont(size: 13, color: .gray)
+                    Spacer()
+                }
+                .padding(.bottom, 6)
+                .padding(.horizontal, Self.menuItemsHorizontalPadding)
+                Divider()
+                    .padding(.horizontal, Self.menuItemsHorizontalPadding)
+                    .padding(.bottom, 20)
+                VStack(alignment: .leading, spacing: 36) {
+                    ForEach(itemCategory.menuItems, id: \.name) { menuItem in
+                        MenuItemView(menuItem: menuItem)
+                    }
+                }
+                .padding(.bottom, 36)
+            }
+        }
+        .padding(.vertical)
+        .padding(.bottom, 50)
     }
 }
 
@@ -327,7 +336,7 @@ fileprivate struct BasketFloatingButtonView: View {
 
 struct RestaurantDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        RestaurantMenuView(restaurant: Restaurant.sampleRestaurants.first!)
+        RestaurantMenuView(viewModel: .init(container: .preview, restaurant: Restaurant.sampleRestaurants.first!, menu: Loadable.loaded(Menu.sampleMenu)))
             .environmentObject(Basket.sampleBasket)
             .previewDevice(PreviewDevice(rawValue: "iPhone 11 Pro"))
     }

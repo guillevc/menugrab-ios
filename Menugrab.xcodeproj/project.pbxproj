@@ -22,6 +22,7 @@
 		B34B4119259F559400C64D34 /* ZigZagBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B34B4118259F559400C64D34 /* ZigZagBackgroundView.swift */; };
 		B35B9D1E259D765100488D75 /* Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = B35B9D1D259D765100488D75 /* Menu.swift */; };
 		B367204825AD18D400926040 /* Date+.swift in Sources */ = {isa = PBXBuildFile; fileRef = B367204725AD18D400926040 /* Date+.swift */; };
+		B369DB2E25B90A6E000013A1 /* RestaurantMenuViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B369DB2D25B90A6E000013A1 /* RestaurantMenuViewModel.swift */; };
 		B36A6E8425AFB6CE00EAC483 /* AnyCancellableBag.swift in Sources */ = {isa = PBXBuildFile; fileRef = B36A6E8325AFB6CE00EAC483 /* AnyCancellableBag.swift */; };
 		B36A6E9025AFBF3800EAC483 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = B36A6E8F25AFBF3800EAC483 /* AppState.swift */; };
 		B36A6E9825AFBF9C00EAC483 /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = B36A6E9725AFBF9C00EAC483 /* Store.swift */; };
@@ -103,6 +104,7 @@
 		B34B4118259F559400C64D34 /* ZigZagBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZigZagBackgroundView.swift; sourceTree = "<group>"; };
 		B35B9D1D259D765100488D75 /* Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Menu.swift; sourceTree = "<group>"; };
 		B367204725AD18D400926040 /* Date+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+.swift"; sourceTree = "<group>"; };
+		B369DB2D25B90A6E000013A1 /* RestaurantMenuViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantMenuViewModel.swift; sourceTree = "<group>"; };
 		B36A6E8325AFB6CE00EAC483 /* AnyCancellableBag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyCancellableBag.swift; sourceTree = "<group>"; };
 		B36A6E8F25AFBF3800EAC483 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		B36A6E9725AFBF9C00EAC483 /* Store.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Store.swift; sourceTree = "<group>"; };
@@ -187,6 +189,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B369DB2925B909F4000013A1 /* Restaurant */ = {
+			isa = PBXGroup;
+			children = (
+				B3311748259D35740016619A /* RestaurantMenuView.swift */,
+				B369DB2D25B90A6E000013A1 /* RestaurantMenuViewModel.swift */,
+				B38687DC25A653540026B592 /* RestaurantMoreInfoView.swift */,
+			);
+			path = Restaurant;
+			sourceTree = "<group>";
+		};
 		B36A6E8E25AFBF2500EAC483 /* Injected */ = {
 			isa = PBXGroup;
 			children = (
@@ -210,6 +222,7 @@
 				B373A9E9259D167F0089FA60 /* View+.swift */,
 				B38B63CD259CE56A00378052 /* UINavigationController+.swift */,
 				B3AE2DBC25A78D9400E5ED60 /* LinkIfDestinationNotNull.swift */,
+				B331DF9525B1145800912AFC /* LoadableImageView.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -304,9 +317,8 @@
 			isa = PBXGroup;
 			children = (
 				B38E9DC125B77F3900B8C5E8 /* Home */,
+				B369DB2925B909F4000013A1 /* Restaurant */,
 				B3311740259D2EFC0016619A /* BasketView.swift */,
-				B3311748259D35740016619A /* RestaurantMenuView.swift */,
-				B38687DC25A653540026B592 /* RestaurantMoreInfoView.swift */,
 				B3A21E3A25A93CD70036E399 /* Account */,
 				B38B63C1259CE55C00378052 /* Shared */,
 				B373A9E8259D166D0089FA60 /* Helpers */,
@@ -320,7 +332,6 @@
 				B38B63C2259CE55C00378052 /* RestaurantSearchInputView.swift */,
 				B30AAB1C25B47EDC00EC9EBA /* RoundedRectangleSpecificCorners.swift */,
 				B3B0BCAC25A7F9580068C1EC /* CustomNavigationBarView.swift */,
-				B331DF9525B1145800912AFC /* LoadableImageView.swift */,
 				B38687E625A65AF70026B592 /* RestaurantMapView.swift */,
 				B38687E125A655E10026B592 /* RestaurantLocationSectionView.swift */,
 				B38B63C3259CE55C00378052 /* RestaurantCellView.swift */,
@@ -581,6 +592,7 @@
 				B39CB2EE25A4201000823800 /* Constants.swift in Sources */,
 				B3A21E3525A93C950036E399 /* OrderDetailsView.swift in Sources */,
 				B373A9EA259D167F0089FA60 /* View+.swift in Sources */,
+				B369DB2E25B90A6E000013A1 /* RestaurantMenuViewModel.swift in Sources */,
 				B331DF8C25B1069200912AFC /* ImagesService.swift in Sources */,
 				B3D9D26A25AFADB300F6DBDB /* Loadable.swift in Sources */,
 				B36A6E8425AFB6CE00EAC483 /* AnyCancellableBag.swift in Sources */,
