@@ -15,14 +15,19 @@ protocol APICall {
 }
 
 extension APICall {
-    func urlRequest(baseURL: String) throws -> URLRequest {
+    func urlRequest(baseURL: String, bearerToken: String?) throws -> URLRequest {
         guard let url = URL(string: baseURL + path) else {
-//            throw APIError.invalidURL
             throw APIError.invalidURL
         }
+        
+        var allHeaders = headers ?? [String: String]()
+        if let token = bearerToken {
+            allHeaders.updateValue("Bearer \(token)", forKey: "Authorization")
+        }
+        
         var request = URLRequest(url: url)
         request.httpMethod = method
-        request.allHTTPHeaderFields = headers
+        request.allHTTPHeaderFields = allHeaders
         request.httpBody = try body()
         return request
     }

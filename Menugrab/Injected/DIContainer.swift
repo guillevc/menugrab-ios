@@ -20,14 +20,16 @@ struct DIContainer: EnvironmentKey {
 struct ServicesContainer {
     let restaurantsService: RestaurantsService
     let imagesService: ImagesService
+    let usersService: UsersService
     
-    init(restaurantsService: RestaurantsService, imagesService: ImagesService) {
+    init(restaurantsService: RestaurantsService, imagesService: ImagesService, usersService: UsersService) {
         self.restaurantsService = restaurantsService
         self.imagesService = imagesService
+        self.usersService = usersService
     }
     
     static var stub: Self {
-        .init(restaurantsService: RestaurantsServiceStub(), imagesService: ImagesServiceStub())
+        .init(restaurantsService: RestaurantsServiceStub(), imagesService: ImagesServiceStub(), usersService: UsersServiceStub())
     }
 }
 

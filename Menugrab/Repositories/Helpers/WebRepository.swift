@@ -7,6 +7,7 @@
 
 import Foundation
 import Combine
+import FirebaseAuth
 
 protocol WebRepository {
     var session: URLSession { get }
@@ -14,33 +15,21 @@ protocol WebRepository {
 }
 
 extension WebRepository {
-    
     func call<T: Decodable>(endpoint: APICall, validHTTPStatusCodes: HTTPStatusCodes = .success) -> AnyPublisher<T, Error> {
-        do {
-//            assert(!Thread.isMainThread)
-            let request = try endpoint.urlRequest(baseURL: baseURL)
-            return session
-                .dataTaskPublisher(for: request)
-                .tryMap { // (data: Data, response: URLResponse)
-                    guard let statusCode = ($0.1 as? HTTPURLResponse)?.statusCode else {
-                        throw APIError.unexpectedResponse
-                    }
-                    guard validHTTPStatusCodes.contains(statusCode) else {
-                        throw APIError.httpCode(statusCode)
-                    }
-                    return $0.0
+        return Auth.auth().currentUserIdTokenPublisher()
+            .tryMap { try endpoint.urlRequest(baseURL: baseURL, bearerToken: $0) }
+            .flatMap { session.dataTaskPublisher(for: $0).mapError { $0 as Error } }
+            .tryMap { data, response in
+                guard let statusCode = (response as? HTTPURLResponse)?.statusCode else {
+                    throw APIError.unexpectedResponse
                 }
-                // extractUnderlyingError
-//                .mapError {
-//                    ($0.underlyingError as? Failure) ?? $0
-//                }
-                .decode(type: T.self, decoder: JSONDecoder())
-                .receive(on: DispatchQueue.main)
-                .eraseToAnyPublisher()
-                
-        } catch let error {
-            return Fail<T, Error>(error: error).eraseToAnyPublisher()
-        }
+                guard validHTTPStatusCodes.contains(statusCode) else {
+                    throw APIError.httpCode(statusCode)
+                }
+                return data
+            }
+            .decode(type: T.self, decoder: JSONDecoder())
+            .receive(on: DispatchQueue.main)
+            .eraseToAnyPublisher()
     }
-    
 }

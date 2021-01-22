@@ -50,7 +50,8 @@ extension AppEnvironment {
     private static func configuredServicesContainer(appState: Store<AppState>, webRepositories: WebRepositoriesContainer) -> ServicesContainer {
         .init(
             restaurantsService: RestaurantsServiceImpl(appState: appState, webRepository: webRepositories.restaurantsWebRepository),
-            imagesService: ImagesServiceImpl(appState: appState, webRepository: webRepositories.imagesWebRepository)
+            imagesService: ImagesServiceImpl(appState: appState, webRepository: webRepositories.imagesWebRepository),
+            usersService: UsersServiceImpl(appState: appState)
         )
     }
 }

@@ -65,11 +65,8 @@ extension RestaurantsWebRepositoryAPI: APICall {
         }
     }
     
-    var headers: [String : String]? {
-        switch self {
-        case .nearbyRestaurants, .restaurant, .menu:
-            return ["Accept": "application/json"]
-        }
+    var headers: [String: String]? {
+        return ["Accept": "application/json"]
     }
     
     func body() throws -> Data? {

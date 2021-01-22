@@ -25,6 +25,7 @@ extension APIError: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .invalidURL: return "Invalid URL"
+        case let .httpCode(code) where code == 401: return "Unauthorized"
         case let .httpCode(code): return "Unexpected HTTP code: \(code)"
         case .unexpectedResponse: return "Unexpected response from the server"
         case .imageProcessing: return "Unable to load image"
