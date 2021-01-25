@@ -50,7 +50,7 @@ struct Order {
     let type: OrderType
     let date: Date
     let state: OrderState
-    let user: User
+//    let user: User
     let restaurant: Restaurant
     let items: [BasketItem]
     

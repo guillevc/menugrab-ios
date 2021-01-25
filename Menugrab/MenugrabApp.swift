@@ -23,10 +23,10 @@ struct MenugrabApp: App {
     
     var body: some Scene {
         WindowGroup {
-//            HomeView(viewModel: HomeViewModel(container: AppEnvironment.initialize().container))
-//                .environmentObject(Self.basket)
-            AccountAuthenticationView(viewModel: AccountAuthenticationViewModel(container: AppEnvironment.initialize().container))
+            HomeView(viewModel: HomeViewModel(container: AppEnvironment.initialize().container))
                 .environmentObject(Self.basket)
+//            AuthenticationView(viewModel: AuthenticationViewModel(container: AppEnvironment.initialize().container))
+//                .environmentObject(Self.basket)
         }
     }
 }

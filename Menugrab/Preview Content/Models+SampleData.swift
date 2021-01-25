@@ -20,11 +20,11 @@ extension Restaurant {
 extension Order {
     
     static let sampleOrders: [Order] = {
-        let user = User(name: "Guille", email: "guille@asdsf.com", orders: [])
+//        let user = User(name: "Guille", email: "guille@asdsf.com", orders: [])
         return [
-            Order(type: .pickup, date: Date.init(), state: .completed, user: user, restaurant: Restaurant.sampleRestaurants[0], items: Basket.sampleBasketItems),
-            Order(type: .table, date: Date.init(), state: .pending, user: user, restaurant: Restaurant.sampleRestaurants[1], items: Basket.sampleBasketItems),
-            Order(type: .table, date: Date.init(), state: .completed, user: user, restaurant: Restaurant.sampleRestaurants[2], items: Basket.sampleBasketItems)
+            Order(type: .pickup, date: Date.init(), state: .completed, restaurant: Restaurant.sampleRestaurants[0], items: Basket.sampleBasketItems),
+            Order(type: .table, date: Date.init(), state: .pending, restaurant: Restaurant.sampleRestaurants[1], items: Basket.sampleBasketItems),
+            Order(type: .table, date: Date.init(), state: .completed, restaurant: Restaurant.sampleRestaurants[2], items: Basket.sampleBasketItems)
         ]
     }()
     
@@ -114,6 +114,6 @@ extension Basket {
     
 }
 
-extension User {
-    static let sampleUser = User(name: "Guillermo Varela", email: "guillermo.varela@email.com", orders: Order.sampleOrders)
-}
+//extension User {
+//    static let sampleUser = User(name: "Guillermo Varela", email: "guillermo.varela@email.com", orders: Order.sampleOrders)
+//}

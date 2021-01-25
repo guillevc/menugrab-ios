@@ -70,8 +70,9 @@
 		B3D5ADD325A26C4700F0E58C /* Order.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D5ADD225A26C4700F0E58C /* Order.swift */; };
 		B3D9D26A25AFADB300F6DBDB /* Loadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D9D26925AFADB300F6DBDB /* Loadable.swift */; };
 		B3E4797F25B6346200F61D27 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E4797E25B6346200F61D27 /* HomeViewModel.swift */; };
+		B3F9AA2B25BB96C0002D7C80 /* AuthenticationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3F9AA2A25BB96C0002D7C80 /* AuthenticationViewModel.swift */; };
 		B3FB495C25BA15FF007B4C97 /* UsersService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3FB495B25BA15FF007B4C97 /* UsersService.swift */; };
-		B3FB496125BA1C55007B4C97 /* AccountAuthenticationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3FB496025BA1C55007B4C97 /* AccountAuthenticationView.swift */; };
+		B3FB496125BA1C55007B4C97 /* AuthenticationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3FB496025BA1C55007B4C97 /* AuthenticationView.swift */; };
 		B3FB496925BA59A6007B4C97 /* FirebaseAuth+Publisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3FB496825BA59A6007B4C97 /* FirebaseAuth+Publisher.swift */; };
 /* End PBXBuildFile section */
 
@@ -164,8 +165,9 @@
 		B3D5ADD225A26C4700F0E58C /* Order.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Order.swift; sourceTree = "<group>"; };
 		B3D9D26925AFADB300F6DBDB /* Loadable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Loadable.swift; sourceTree = "<group>"; };
 		B3E4797E25B6346200F61D27 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		B3F9AA2A25BB96C0002D7C80 /* AuthenticationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationViewModel.swift; sourceTree = "<group>"; };
 		B3FB495B25BA15FF007B4C97 /* UsersService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersService.swift; sourceTree = "<group>"; };
-		B3FB496025BA1C55007B4C97 /* AccountAuthenticationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountAuthenticationView.swift; sourceTree = "<group>"; };
+		B3FB496025BA1C55007B4C97 /* AuthenticationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationView.swift; sourceTree = "<group>"; };
 		B3FB496825BA59A6007B4C97 /* FirebaseAuth+Publisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FirebaseAuth+Publisher.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -375,7 +377,8 @@
 		B3A21E3A25A93CD70036E399 /* Account */ = {
 			isa = PBXGroup;
 			children = (
-				B3FB496025BA1C55007B4C97 /* AccountAuthenticationView.swift */,
+				B3FB496025BA1C55007B4C97 /* AuthenticationView.swift */,
+				B3F9AA2A25BB96C0002D7C80 /* AuthenticationViewModel.swift */,
 				B3A21E2525A93C630036E399 /* AccountView.swift */,
 				B3A21E2A25A93C760036E399 /* AccountDetailsFormView.swift */,
 				B3A21E2F25A93C8A0036E399 /* OrdersView.swift */,
@@ -583,11 +586,12 @@
 				B3A21E3025A93C8A0036E399 /* OrdersView.swift in Sources */,
 				B373A9CD259CF87B0089FA60 /* Color+.swift in Sources */,
 				B3E4797F25B6346200F61D27 /* HomeViewModel.swift in Sources */,
-				B3FB496125BA1C55007B4C97 /* AccountAuthenticationView.swift in Sources */,
+				B3FB496125BA1C55007B4C97 /* AuthenticationView.swift in Sources */,
 				B30AAB1D25B47EDC00EC9EBA /* RoundedRectangleSpecificCorners.swift in Sources */,
 				B3D5ADD325A26C4700F0E58C /* Order.swift in Sources */,
 				B3FB496925BA59A6007B4C97 /* FirebaseAuth+Publisher.swift in Sources */,
 				B329FE68259F6EE100B404A7 /* SecondaryButtonView.swift in Sources */,
+				B3F9AA2B25BB96C0002D7C80 /* AuthenticationViewModel.swift in Sources */,
 				B3D0BF6525AE733300FF2B28 /* APICall.swift in Sources */,
 				B38687E225A655E10026B592 /* RestaurantLocationSectionView.swift in Sources */,
 				B3B0BCAD25A7F9580068C1EC /* CustomNavigationBarView.swift in Sources */,

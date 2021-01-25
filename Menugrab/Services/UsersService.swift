@@ -12,10 +12,10 @@ import Combine
 
 
 protocol UsersService {
-    func create(user: Binding<Loadable<FirebaseAuth.User>>, email: String, password: String)
-    func signIn(user: Binding<Loadable<FirebaseAuth.User>>, email: String, password: String)
+    var currentUser: User? { get }
+    func create(user: Binding<Loadable<User>>, email: String, password: String)
+    func signIn(user: Binding<Loadable<User>>, email: String, password: String)
     func signOut()
-    func isAuthenticated() -> Bool
 }
 
 struct UsersServiceImpl: UsersService {
@@ -25,17 +25,21 @@ struct UsersServiceImpl: UsersService {
         self.appState = appState
     }
     
-    func create(user: Binding<Loadable<FirebaseAuth.User>>, email: String, password: String) {
+    var currentUser: User? {
+        Auth.auth().currentUser
+    }
+    
+    func create(user: Binding<Loadable<User>>, email: String, password: String) {
         let anyCancellableBag = AnyCancellableBag()
         
         user.wrappedValue.setIsLoading(bag: anyCancellableBag)
 
         Deferred {
-            Future<FirebaseAuth.User, Error> { promise in
+            Future<User, Error> { promise in
                 Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
                     if let error = error as NSError? {
                         promise(.failure(error))
-                    } else if let newUser = Auth.auth().currentUser {
+                    } else if let newUser = authResult?.user {
                         promise(.success(newUser))
                     }
                 }
@@ -46,17 +50,17 @@ struct UsersServiceImpl: UsersService {
         .store(in: anyCancellableBag)
     }
     
-    func signIn(user: Binding<Loadable<FirebaseAuth.User>>, email: String, password: String) {
+    func signIn(user: Binding<Loadable<User>>, email: String, password: String) {
         let anyCancellableBag = AnyCancellableBag()
         
         user.wrappedValue.setIsLoading(bag: anyCancellableBag)
         
         Deferred {
-            Future<FirebaseAuth.User, Error> { promise in
+            Future<User, Error> { promise in
                 Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
                     if let error = error {
                         promise(.failure(error))
-                    } else if let user = Auth.auth().currentUser {
+                    } else if let user = authResult?.user {
                         promise(.success(user))
                     }
                 }
@@ -71,14 +75,32 @@ struct UsersServiceImpl: UsersService {
         try? Auth.auth().signOut()
     }
     
-    func isAuthenticated() -> Bool {
-        Auth.auth().currentUser != nil
+    func signInAnonymously(authResult: Binding<Loadable<AuthDataResult>>) {
+        let anyCancellableBag = AnyCancellableBag()
+        
+        authResult.wrappedValue.setIsLoading(bag: anyCancellableBag)
+        
+        Deferred {
+            Future<AuthDataResult, Error> { promise in
+                Auth.auth().signInAnonymously { authResult, error in
+                    if let error = error {
+                        promise(.failure(error))
+                    } else if let authResult = authResult {
+                        promise(.success(authResult))
+                    }
+                }
+            }
+        }
+        .receive(on: DispatchQueue.main)
+        .sinkToLoadable({ authResult.wrappedValue = $0 })
+        .store(in: anyCancellableBag)
     }
+    
 }
 
 struct UsersServiceStub: UsersService {
-    func create(user: Binding<Loadable<FirebaseAuth.User>>, email: String, password: String) { }
-    func signIn(user: Binding<Loadable<FirebaseAuth.User>>, email: String, password: String) { }
+    var currentUser: User? = nil
+    func create(user: Binding<Loadable<User>>, email: String, password: String) { }
+    func signIn(user: Binding<Loadable<User>>, email: String, password: String) { }
     func signOut() { }
-    func isAuthenticated() -> Bool { return true }
 }

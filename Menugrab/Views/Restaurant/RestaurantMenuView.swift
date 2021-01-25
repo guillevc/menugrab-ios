@@ -69,7 +69,29 @@ struct RestaurantMenuView: View {
                                 .padding(.horizontal)
                                 .padding(.bottom)
                             if let menu = viewModel.menu.value {
-                                menuView(menu: menu)
+                                VStack(alignment: .leading, spacing: 0) {
+                                    ForEach(menu.menuItemCategories, id: \.name) { itemCategory in
+                                        HStack {
+                                            Spacer()
+                                            Text(itemCategory.name.uppercased())
+                                                .myFont(size: 13, color: .gray)
+                                            Spacer()
+                                        }
+                                        .padding(.bottom, 6)
+                                        .padding(.horizontal, Self.menuItemsHorizontalPadding)
+                                        Divider()
+                                            .padding(.horizontal, Self.menuItemsHorizontalPadding)
+                                            .padding(.bottom, 20)
+                                        VStack(alignment: .leading, spacing: 36) {
+                                            ForEach(itemCategory.menuItems, id: \.name) { menuItem in
+                                                MenuItemView(menuItem: menuItem)
+                                            }
+                                        }
+                                        .padding(.bottom, 36)
+                                    }
+                                }
+                                .padding(.vertical)
+                                .padding(.bottom, 50)
                             } else {
                                 EmptyView()
                             }
@@ -115,32 +137,6 @@ struct RestaurantMenuView: View {
         .sheet(isPresented: $showingMoreInfoSheet) {
             RestaurantMoreInfoView(restaurant: viewModel.restaurant)
         }
-    }
-    
-    func menuView(menu: Menu) -> some View {
-        VStack(alignment: .leading, spacing: 0) {
-            ForEach(menu.menuItemCategories, id: \.name) { itemCategory in
-                HStack {
-                    Spacer()
-                    Text(itemCategory.name.uppercased())
-                        .myFont(size: 13, color: .gray)
-                    Spacer()
-                }
-                .padding(.bottom, 6)
-                .padding(.horizontal, Self.menuItemsHorizontalPadding)
-                Divider()
-                    .padding(.horizontal, Self.menuItemsHorizontalPadding)
-                    .padding(.bottom, 20)
-                VStack(alignment: .leading, spacing: 36) {
-                    ForEach(itemCategory.menuItems, id: \.name) { menuItem in
-                        MenuItemView(menuItem: menuItem)
-                    }
-                }
-                .padding(.bottom, 36)
-            }
-        }
-        .padding(.vertical)
-        .padding(.bottom, 50)
     }
 }
 
