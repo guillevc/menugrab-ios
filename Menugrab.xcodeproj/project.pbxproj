@@ -31,6 +31,8 @@
 		B38687DD25A653540026B592 /* RestaurantMoreInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38687DC25A653540026B592 /* RestaurantMoreInfoView.swift */; };
 		B38687E225A655E10026B592 /* RestaurantLocationSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38687E125A655E10026B592 /* RestaurantLocationSectionView.swift */; };
 		B38687E725A65AF70026B592 /* RestaurantMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38687E625A65AF70026B592 /* RestaurantMapView.swift */; };
+		B3880BDA25F98C2A006317BC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3880BD925F98C2A006317BC /* ContentView.swift */; };
+		B3880BDF25F98D1F006317BC /* ContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3880BDE25F98D1F006317BC /* ContentViewModel.swift */; };
 		B38B6371259CE45100378052 /* MenugrabApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38B6370259CE45100378052 /* MenugrabApp.swift */; };
 		B38B6375259CE45400378052 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B38B6374259CE45400378052 /* Assets.xcassets */; };
 		B38B6378259CE45400378052 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B38B6377259CE45400378052 /* Preview Assets.xcassets */; };
@@ -118,6 +120,8 @@
 		B38687DC25A653540026B592 /* RestaurantMoreInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantMoreInfoView.swift; sourceTree = "<group>"; };
 		B38687E125A655E10026B592 /* RestaurantLocationSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantLocationSectionView.swift; sourceTree = "<group>"; };
 		B38687E625A65AF70026B592 /* RestaurantMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantMapView.swift; sourceTree = "<group>"; };
+		B3880BD925F98C2A006317BC /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		B3880BDE25F98D1F006317BC /* ContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewModel.swift; sourceTree = "<group>"; };
 		B38B636D259CE45000378052 /* Menugrab.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Menugrab.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B38B6370259CE45100378052 /* MenugrabApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenugrabApp.swift; sourceTree = "<group>"; };
 		B38B6374259CE45400378052 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -324,6 +328,8 @@
 		B38B63BD259CE55C00378052 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				B3880BD925F98C2A006317BC /* ContentView.swift */,
+				B3880BDE25F98D1F006317BC /* ContentViewModel.swift */,
 				B38E9DC125B77F3900B8C5E8 /* Home */,
 				B369DB2925B909F4000013A1 /* Restaurant */,
 				B3311740259D2EFC0016619A /* BasketView.swift */,
@@ -596,6 +602,7 @@
 				B38687E225A655E10026B592 /* RestaurantLocationSectionView.swift in Sources */,
 				B3B0BCAD25A7F9580068C1EC /* CustomNavigationBarView.swift in Sources */,
 				B38B63B9259CE4F500378052 /* Restaurant.swift in Sources */,
+				B3880BDA25F98C2A006317BC /* ContentView.swift in Sources */,
 				B38B63C5259CE55C00378052 /* HomeView.swift in Sources */,
 				B38B6371259CE45100378052 /* MenugrabApp.swift in Sources */,
 				B3A21E2B25A93C760036E399 /* AccountDetailsFormView.swift in Sources */,
@@ -622,6 +629,7 @@
 				B36A6E9825AFBF9C00EAC483 /* Store.swift in Sources */,
 				B3C20B9425A3D64200B3B595 /* Decimal+Currency.swift in Sources */,
 				B3FB495C25BA15FF007B4C97 /* UsersService.swift in Sources */,
+				B3880BDF25F98D1F006317BC /* ContentViewModel.swift in Sources */,
 				B38B63C4259CE55C00378052 /* AllRestaurantsView.swift in Sources */,
 				B3AE503325B0BDD7008F9FF4 /* Publisher+SinkToLoadable.swift in Sources */,
 				B3311751259D57E80016619A /* IdentityButtonStyle.swift in Sources */,
@@ -953,7 +961,7 @@
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 7.4.0;
+				minimumVersion = 7.8.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

@@ -116,7 +116,11 @@ struct AuthenticationView: View {
                     .padding(.bottom, bottomPadding)
                     .animation(.none)
                 case .loaded:
-                    EmptyView()
+                    if let email = viewModel.user.value?.email {
+                        Text("Logged in as \(email)")
+                    } else {
+                        Text("Logged in with nil email")
+                    }
                 case let .failed(error):
                     VStack {
                         Text(error.localizedDescription)

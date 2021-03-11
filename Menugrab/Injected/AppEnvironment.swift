@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import FirebaseAuth
 
 struct AppEnvironment {
     let container: DIContainer
@@ -24,6 +25,7 @@ extension AppEnvironment {
         
         return .init(
             container: .init(
+                appState: appState,
                 services: configuredServicesContainer(appState: appState, webRepositories: configuredWebRepositoriesContainer(session: urlSession))
             )
         )
@@ -42,7 +44,7 @@ extension AppEnvironment {
     
     private static func configuredWebRepositoriesContainer(session: URLSession) -> WebRepositoriesContainer {
         .init(
-            restaurantsWebRepository: RestaurantsWebRepositoryImpl(session: session, baseURL: "http://192.168.0.11:3000/api"),
+            restaurantsWebRepository: RestaurantsWebRepositoryImpl(session: session, baseURL: "http://192.168.2.12:3000/api"),
             imagesWebRepository: ImagesWebRepositoryImpl(session: session, baseURL: "")
         )
     }

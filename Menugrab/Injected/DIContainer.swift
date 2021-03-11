@@ -10,10 +10,11 @@ import SwiftUI
 
 struct DIContainer: EnvironmentKey {
     
+    let appState: Store<AppState>
     let services: ServicesContainer
     
     static var defaultValue: Self {
-        Self(services: .stub)
+        Self(appState: Store(AppState()), services: .stub)
     }
 }
 
@@ -41,7 +42,7 @@ struct WebRepositoriesContainer {
 #if DEBUG
 extension DIContainer {
     static var preview: Self {
-        .init(services: .stub)
+        .init(appState: Store(AppState.preview), services: .stub)
     }
 }
 #endif

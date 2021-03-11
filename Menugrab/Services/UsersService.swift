@@ -12,10 +12,10 @@ import Combine
 
 
 protocol UsersService {
-    var currentUser: User? { get }
     func create(user: Binding<Loadable<User>>, email: String, password: String)
     func signIn(user: Binding<Loadable<User>>, email: String, password: String)
     func signOut()
+    func registerFirebaseAuthListeners()
 }
 
 struct UsersServiceImpl: UsersService {
@@ -23,10 +23,6 @@ struct UsersServiceImpl: UsersService {
     
     init(appState: Store<AppState>) {
         self.appState = appState
-    }
-    
-    var currentUser: User? {
-        Auth.auth().currentUser
     }
     
     func create(user: Binding<Loadable<User>>, email: String, password: String) {
@@ -96,11 +92,16 @@ struct UsersServiceImpl: UsersService {
         .store(in: anyCancellableBag)
     }
     
+    func registerFirebaseAuthListeners() {
+        Auth.auth().addStateDidChangeListener { (_, user) in
+            appState.value.currentUser = user
+        }
+    }
 }
 
 struct UsersServiceStub: UsersService {
-    var currentUser: User? = nil
     func create(user: Binding<Loadable<User>>, email: String, password: String) { }
     func signIn(user: Binding<Loadable<User>>, email: String, password: String) { }
     func signOut() { }
+    func registerFirebaseAuthListeners() { }
 }

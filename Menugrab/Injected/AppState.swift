@@ -7,6 +7,14 @@
 
 import Foundation
 
-struct AppState {
-    
+struct AppState: Equatable {
+    var currentUser: User?
 }
+
+#if DEBUG
+extension AppState {
+    static var preview: Self {
+        .init(currentUser: nil)
+    }
+}
+#endif
