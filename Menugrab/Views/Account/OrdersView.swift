@@ -10,21 +10,20 @@ import SwiftUI
 struct OrdersView: View {
     @Environment(\.presentationMode) private var presentationMode
     
-    let orders: [Order]
+    var viewModel: OrdersViewModel
     
     var inProgressOrders: [Order] {
-        orders.filter({ $0.isInProgress })
+        viewModel.orders.value?.filter({ $0.isInProgress }) ?? []
     }
     
     var completedOrders: [Order] {
-        orders.filter({ !$0.isInProgress })
+        viewModel.orders.value?.filter({ !$0.isInProgress }) ?? []
     }
     
     var body: some View {
         VStack(spacing: 0) {
             CustomNavigationBarView(title: "My orders", type: .default, onDismiss: { presentationMode.wrappedValue.dismiss() })
                 .background(Color.white)
-            OrderView(order: orders.first!)
             ScrollView {
                 VStack(spacing: 18) {
                     OrderStateHeaderView(text: "In progress")
@@ -90,17 +89,8 @@ fileprivate struct OrderCellView: View {
     }
 }
 
-fileprivate struct OrderView: View {
-    let order: Order
-    var body: some View {
-        HStack {
-            
-        }
-    }
-}
-
 struct OrdersView_Previews: PreviewProvider {
     static var previews: some View {
-        OrdersView(orders: Order.sampleOrders)
+        OrdersView(viewModel: .init(container: .preview, orders: Loadable.loaded(Order.sampleOrders)))
     }
 }

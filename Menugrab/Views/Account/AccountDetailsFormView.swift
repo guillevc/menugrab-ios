@@ -10,23 +10,31 @@ import SwiftUI
 struct AccountDetailsFormView: View {
     @Environment(\.presentationMode) private var presentationMode
     
-    @State private var name: String = "Guillermo Varela"
-    @State private var email: String = "guillermo@varela.com"
-    @State private var newPassword: String = ""
-    @State private var newPasswordRepeat: String = ""
-    
+    @ObservedObject var viewModel: AccountDetailsFormViewModel
+   
     var body: some View {
         VStack(spacing: 0) {
-            CustomNavigationBarView(title: "My profile", type: .default, onDismiss: { presentationMode.wrappedValue.dismiss() }, rightButtonType: .save, onRightButtonTapped: { presentationMode.wrappedValue.dismiss() })
-                .background(Color.white)
-                .padding(.bottom, Constants.formBigSpacing)
-            FormFieldView(type: .name, value: $name)
+            CustomNavigationBarView(
+                title: "My profile",
+                type: .default,
+                onDismiss: {
+                    presentationMode.wrappedValue.dismiss()
+                },
+                rightButtonType: .save,
+                onRightButtonTapped: {
+                    viewModel.updateUser()
+                    presentationMode.wrappedValue.dismiss()
+                }
+            )
+            .background(Color.white)
+            .padding(.bottom, Constants.formBigSpacing)
+            FormFieldView(type: .name, value: $viewModel.name)
                 .padding(.bottom, Constants.formSmallSpacing)
-            FormFieldView(type: .email, value: $email)
+            FormFieldView(type: .email, value: $viewModel.email)
                 .padding(.bottom, Constants.formBigSpacing)
-            FormFieldView(type: .newPassword, value: $newPassword)
+            FormFieldView(type: .newPassword, value: $viewModel.newPassword)
                 .padding(.bottom, Constants.formSmallSpacing)
-            FormFieldView(type: .newPasswordRepeat, value: $newPasswordRepeat)
+            FormFieldView(type: .newPasswordRepeat, value: $viewModel.newPasswordRepeat)
             Spacer()
         }
         .background(Color.backgroundGray)
@@ -104,6 +112,6 @@ fileprivate struct FormFieldView: View {
 
 struct AccountDetailsView_Previews: PreviewProvider {
     static var previews: some View {
-        AccountDetailsFormView()
+        AccountDetailsFormView(viewModel: .init(container: .preview))
     }
 }

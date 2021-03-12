@@ -15,6 +15,7 @@ protocol UsersService {
     func create(user: Binding<Loadable<User>>, email: String, password: String)
     func signIn(user: Binding<Loadable<User>>, email: String, password: String)
     func signOut()
+    func updateUser(displayName: String, email: String, password: String)
     func registerFirebaseAuthListeners()
 }
 
@@ -92,6 +93,15 @@ struct UsersServiceImpl: UsersService {
         .store(in: anyCancellableBag)
     }
     
+    func updateUser(displayName: String, email: String, password: String) {
+        guard let currentUser = appState.value.currentUser else { return }
+        let createProfileChangeRequest = currentUser.createProfileChangeRequest()
+        createProfileChangeRequest.displayName = displayName
+        createProfileChangeRequest.commitChanges(completion: nil)
+        currentUser.updateEmail(to: email, completion: nil)
+        currentUser.updatePassword(to: password, completion: nil)
+    }
+    
     func registerFirebaseAuthListeners() {
         Auth.auth().addStateDidChangeListener { (_, user) in
             appState.value.currentUser = user
@@ -103,5 +113,6 @@ struct UsersServiceStub: UsersService {
     func create(user: Binding<Loadable<User>>, email: String, password: String) { }
     func signIn(user: Binding<Loadable<User>>, email: String, password: String) { }
     func signOut() { }
+    func updateUser(displayName: String, email: String, password: String) { }
     func registerFirebaseAuthListeners() { }
 }

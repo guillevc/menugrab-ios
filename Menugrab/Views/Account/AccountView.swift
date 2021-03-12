@@ -9,6 +9,7 @@ import SwiftUI
 
 struct AccountView: View {
     @Environment(\.presentationMode) private var presentationMode
+    @ObservedObject var viewModel: AccountViewModel
     
     var body: some View {
         VStack(spacing: 0) {
@@ -17,14 +18,16 @@ struct AccountView: View {
                 .padding(.bottom, Constants.formBigSpacing)
             AccountItemView(mainImageSystemName: "folder", actionImageSystemName: "chevron.right", text: "Orders")
                 .padding(.bottom, Constants.formSmallSpacing)
-            NavigationLink(destination: AccountDetailsFormView()) {
+            NavigationLink(destination: AccountDetailsFormView(viewModel: .init(container: viewModel.container))) {
                 AccountItemView(mainImageSystemName: "person.crop.square.fill.and.at.rectangle", actionImageSystemName: "chevron.right", text: "Profile")
             }
             .padding(.bottom, Constants.formBigSpacing)
             AccountItemView(mainImageSystemName: nil, actionImageSystemName: "chevron.right", text: "About")
                 .padding(.bottom, Constants.formBigSpacing)
-            AccountItemView(mainImageSystemName: nil, actionImageSystemName: nil, text: "Log out")
-                .padding(.bottom, Constants.formBigSpacing)
+            Button(action: { viewModel.signOut() }) {
+                AccountItemView(mainImageSystemName: nil, actionImageSystemName: nil, text: "Log out")
+                    .padding(.bottom, Constants.formBigSpacing)
+            }
             Spacer()
         }
         .background(Color.backgroundGray)
@@ -62,6 +65,6 @@ fileprivate struct AccountItemView: View {
 
 struct AccountView_Previews: PreviewProvider {
     static var previews: some View {
-        AccountView()
+        AccountView(viewModel: AccountViewModel(container: .preview))
     }
 }
