@@ -30,10 +30,10 @@ enum OrderType: String, Decodable, CaseIterable {
     }
 }
 
-enum OrderState {
-    case pending
-    case accepted
-    case completed
+enum OrderState: String, Decodable, CaseIterable {
+    case pending = "ORDER_STATE_PENDING"
+    case accepted = "ORDER_STATE_ACCEPTED"
+    case completed = "ORDER_STATE_COMPLETED"
     
     var isInProgress: Bool {
         switch self {
@@ -45,24 +45,26 @@ enum OrderState {
     }
 }
 
-struct Order {
-    let id = UUID()
-    let type: OrderType
+struct Order: Identifiable, Decodable {
+    let id: String
+    let orderType: OrderType
     let date: Date
-    let state: OrderState
+    let orderState: OrderState
 //    let user: User
     let restaurant: Restaurant
-    let items: [BasketItem]
+//    let menuItems: [BasketItem]
     
     var totalQuantity: Int {
-        items.reduce(0) { $0 + $1.quantity }
+        5
+//        menuItems.reduce(0) { $0 + $1.quantity }
     }
-    
+
     var totalPrice: Decimal {
-        items.reduce(Decimal.currency(0)) { $0.advanced(by: $1.totalPrice) }
+        10
+//        menuItems.reduce(Decimal.currency(0)) { $0.advanced(by: $1.totalPrice) }
     }
     
     var isInProgress: Bool {
-        state.isInProgress
+        orderState.isInProgress
     }
 }

@@ -12,14 +12,12 @@ final class ContentViewModel: NSObject, ObservableObject {
     let container: DIContainer
     private var anyCancellableBag = AnyCancellableBag()
     
-    
     var currentUserUpdate: AnyPublisher<User?, Never> {
         container.appState.updates(for: \.currentUser)
     }
     
     init(
-        container: DIContainer,
-        user: Loadable<User> = .notRequested
+        container: DIContainer
     ) {
         self.container = container
     }

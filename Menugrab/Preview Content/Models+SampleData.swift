@@ -22,9 +22,9 @@ extension Order {
     static let sampleOrders: [Order] = {
 //        let user = User(name: "Guille", email: "guille@asdsf.com", orders: [])
         return [
-            Order(type: .pickup, date: Date.init(), state: .completed, restaurant: Restaurant.sampleRestaurants[0], items: Basket.sampleBasketItems),
-            Order(type: .table, date: Date.init(), state: .pending, restaurant: Restaurant.sampleRestaurants[1], items: Basket.sampleBasketItems),
-            Order(type: .table, date: Date.init(), state: .completed, restaurant: Restaurant.sampleRestaurants[2], items: Basket.sampleBasketItems)
+            Order(id: "123", orderType: .pickup, date: Date.init(), orderState: .completed, restaurant: Restaurant.sampleRestaurants[0]),
+            Order(id: "456", orderType: .table, date: Date.init(), orderState: .pending, restaurant: Restaurant.sampleRestaurants[1]),
+            Order(id: "789", orderType: .table, date: Date.init(), orderState: .completed, restaurant: Restaurant.sampleRestaurants[2])
         ]
     }()
     

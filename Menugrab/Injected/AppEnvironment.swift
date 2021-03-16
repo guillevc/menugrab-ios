@@ -43,17 +43,22 @@ extension AppEnvironment {
     }
     
     private static func configuredWebRepositoriesContainer(session: URLSession) -> WebRepositoriesContainer {
-        .init(
-            restaurantsWebRepository: RestaurantsWebRepositoryImpl(session: session, baseURL: "http://192.168.2.12:3000/api"),
+        let apiBaseURL = "http://192.168.2.10:3000/api"
+        let jsonDecoder = JSONDecoder()
+        jsonDecoder.dateDecodingStrategy = .iso8601
+        return .init(
+            restaurantsWebRepository: RestaurantsWebRepositoryImpl(session: session, baseURL: apiBaseURL, jsonDecoder: jsonDecoder),
+            ordersWebRepository: OrdersWebRepositoryImpl(session: session, baseURL: apiBaseURL, jsonDecoder: jsonDecoder),
             imagesWebRepository: ImagesWebRepositoryImpl(session: session, baseURL: "")
         )
     }
     
     private static func configuredServicesContainer(appState: Store<AppState>, webRepositories: WebRepositoriesContainer) -> ServicesContainer {
         .init(
+            usersService: UsersServiceImpl(appState: appState),
             restaurantsService: RestaurantsServiceImpl(appState: appState, webRepository: webRepositories.restaurantsWebRepository),
-            imagesService: ImagesServiceImpl(appState: appState, webRepository: webRepositories.imagesWebRepository),
-            usersService: UsersServiceImpl(appState: appState)
+            ordersService: OrdersServiceImpl(appState: appState, webRepository: webRepositories.ordersWebRepository),
+            imagesService: ImagesServiceImpl(appState: appState, webRepository: webRepositories.imagesWebRepository)
         )
     }
 }

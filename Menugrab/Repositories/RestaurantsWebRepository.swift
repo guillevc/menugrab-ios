@@ -17,6 +17,7 @@ protocol RestaurantsWebRepository: WebRepository {
 struct RestaurantsWebRepositoryImpl: RestaurantsWebRepository {
     let session: URLSession
     let baseURL: String
+    let jsonDecoder: JSONDecoder
     
     func loadNearbyRestaurants(latitude: Double?, longitude: Double?) -> AnyPublisher<[Restaurant], Error> {
         call(endpoint: RestaurantsWebRepositoryAPI.nearbyRestaurants(latitude: latitude?.description, longitude: longitude?.description))

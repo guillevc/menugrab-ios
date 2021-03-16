@@ -12,8 +12,6 @@ final class AuthenticationViewModel: NSObject, ObservableObject {
     @Published var email: String = ""
     @Published var password: String = ""
     
-    @Published var restaurants: Loadable<[Restaurant]> = .notRequested
-    
     let container: DIContainer
     private var anyCancellableBag = AnyCancellableBag()
     
@@ -37,9 +35,5 @@ final class AuthenticationViewModel: NSObject, ObservableObject {
     
     func signOut() {
         container.services.usersService.signOut()
-    }
-    
-    func testRestaurantRequest() {
-        container.services.restaurantsService.loadNearby(restaurants: loadableBinding(\.restaurants), coordinates: nil)
     }
 }

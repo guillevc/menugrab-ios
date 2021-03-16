@@ -69,7 +69,7 @@ class Basket: ObservableObject {
     
 }
 
-class BasketItem: ObservableObject {
+class BasketItem: Decodable, ObservableObject {
     
     let menuItem: MenuItem
     @Published var quantity: Int
@@ -83,4 +83,17 @@ class BasketItem: ObservableObject {
         menuItem.price * Decimal(quantity)
     }
     
+    // MARK: - Decodable
+    
+    required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        menuItem = try container.decode(MenuItem.self, forKey: .menuItem)
+        quantity = try container.decode(Int.self, forKey: .quantity)
+    }
+    
+    enum CodingKeys: CodingKey {
+        case menuItem
+        case quantity
+    }
+
 }

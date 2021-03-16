@@ -12,6 +12,7 @@ import FirebaseAuth
 protocol WebRepository {
     var session: URLSession { get }
     var baseURL: String { get }
+    var jsonDecoder: JSONDecoder { get }
 }
 
 extension WebRepository {
@@ -26,9 +27,11 @@ extension WebRepository {
                 guard validHTTPStatusCodes.contains(statusCode) else {
                     throw APIError.httpCode(statusCode)
                 }
+                
                 return data
             }
-            .decode(type: T.self, decoder: JSONDecoder())
+            
+            .decode(type: T.self, decoder: jsonDecoder)
             .receive(on: DispatchQueue.main)
             .eraseToAnyPublisher()
     }

@@ -10,7 +10,7 @@ import SwiftUI
 struct OrdersView: View {
     @Environment(\.presentationMode) private var presentationMode
     
-    var viewModel: OrdersViewModel
+    @ObservedObject var viewModel: OrdersViewModel
     
     var inProgressOrders: [Order] {
         viewModel.orders.value?.filter({ $0.isInProgress }) ?? []
@@ -45,11 +45,15 @@ struct OrdersView: View {
                         }
                     }
                 }
+                Text(viewModel.orders.error?.localizedDescription ?? "")
             }
             Spacer()
         }
         .navigationBarHidden(true)
         .navigationViewStyle(StackNavigationViewStyle())
+        .onAppear {
+            viewModel.loadUserOrders()
+        }
     }
 }
 
@@ -78,7 +82,7 @@ fileprivate struct OrderCellView: View {
                 Text(order.restaurant.name)
                     .myFont(size: 15, weight: .medium)
                     .padding(.bottom, 6)
-                Text("\(order.totalQuantity) • \(order.totalPrice.formattedAmount ?? "-") €")
+                Text("\(order.totalQuantity) \(order.totalQuantity > 1 ? "items" : "item") ‒ \(order.totalPrice.formattedAmount ?? "-") €")
                     .myFont(size: 13, color: .darkGray)
                     .padding(.bottom, 4)
                 Text(order.date.formatted())

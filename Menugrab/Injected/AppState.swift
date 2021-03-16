@@ -14,7 +14,7 @@ struct AppState: Equatable {
 #if DEBUG
 extension AppState {
     static var preview: Self {
-        .init(currentUser: nil)
+        .init()
     }
 }
 #endif
