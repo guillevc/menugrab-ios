@@ -52,19 +52,26 @@ struct Order: Identifiable, Decodable {
     let orderState: OrderState
 //    let user: User
     let restaurant: Restaurant
-//    let menuItems: [BasketItem]
+    let orderItems: [OrderItem]
     
     var totalQuantity: Int {
-        5
-//        menuItems.reduce(0) { $0 + $1.quantity }
+        orderItems.reduce(0) { $0 + $1.quantity }
     }
 
     var totalPrice: Decimal {
-        10
-//        menuItems.reduce(Decimal.currency(0)) { $0.advanced(by: $1.totalPrice) }
+        orderItems.reduce(Decimal.currency(0)) { $0.advanced(by: $1.totalPrice) }
     }
     
     var isInProgress: Bool {
         orderState.isInProgress
+    }
+}
+
+struct OrderItem: Decodable {
+    let menuItem: MenuItem
+    let quantity: Int
+    
+    var totalPrice: Decimal {
+        menuItem.price * Decimal(quantity)
     }
 }

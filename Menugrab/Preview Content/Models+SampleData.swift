@@ -18,13 +18,20 @@ extension Restaurant {
 }
 
 extension Order {
+    static let sampleOrderItems: [OrderItem] = [
+        .init(menuItem: Menu.sampleMenuItemCategories[0].menuItems[0], quantity: 5),
+        .init(menuItem: Menu.sampleMenuItemCategories[0].menuItems[1], quantity: 1),
+        .init(menuItem: Menu.sampleMenuItemCategories[1].menuItems[0], quantity: 3),
+        .init(menuItem: Menu.sampleMenuItemCategories[2].menuItems[1], quantity: 2),
+        .init(menuItem: Menu.sampleMenuItemCategories[2].menuItems[2], quantity: 1)
+    ]
     
     static let sampleOrders: [Order] = {
 //        let user = User(name: "Guille", email: "guille@asdsf.com", orders: [])
         return [
-            Order(id: "123", orderType: .pickup, date: Date.init(), orderState: .completed, restaurant: Restaurant.sampleRestaurants[0]),
-            Order(id: "456", orderType: .table, date: Date.init(), orderState: .pending, restaurant: Restaurant.sampleRestaurants[1]),
-            Order(id: "789", orderType: .table, date: Date.init(), orderState: .completed, restaurant: Restaurant.sampleRestaurants[2])
+            Order(id: "123", orderType: .pickup, date: Date.init(), orderState: .completed, restaurant: Restaurant.sampleRestaurants[0], orderItems: sampleOrderItems),
+            Order(id: "456", orderType: .table, date: Date.init(), orderState: .pending, restaurant: Restaurant.sampleRestaurants[1], orderItems: sampleOrderItems),
+            Order(id: "789", orderType: .table, date: Date.init(), orderState: .completed, restaurant: Restaurant.sampleRestaurants[2], orderItems: sampleOrderItems)
         ]
     }()
     
@@ -94,8 +101,28 @@ extension Menu {
             )
         ]
     }()
+    
+    static let sampleMenuItems: [MenuItem] = [
+        MenuItem(
+            id: UUID().uuidString,
+            name: "Rice noodles with spicey sauce",
+            description: nil,
+            price: Decimal.currency(6.25)
+        ),
+        MenuItem(
+            id: UUID().uuidString,
+            name: "Sweet and sour chicken with lemon and chinese bread",
+            description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sagittis elementum augue, non commodo elit. Aliquam faucibus purus eget diam accumsan, quis fermentum mauris.",
+            price: Decimal.currency(7)
+        ),
+        MenuItem(
+            id: UUID().uuidString,
+            name: "Peking Roasted Duck",
+            description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur et nibh lacus. In dapibus ac purus in placerat. Morbi eu purus quis mauris varius accumsan in facilisis eros. Vivamus ac mattis magna. Mauris vel rutrum lectus. Phasellus nunc ipsum, aliquet nec posuere interdum, porta vel lorem. Sed nec hendrerit libero.",
+            price: Decimal.currency(19.50)
+        )
+    ]
 }
-
 extension Basket {
     
     static let sampleBasketItems: [BasketItem] = {
