@@ -27,11 +27,12 @@ extension Order {
     ]
     
     static let sampleOrders: [Order] = {
-//        let user = User(name: "Guille", email: "guille@asdsf.com", orders: [])
         return [
             Order(id: "123", orderType: .pickup, date: Date.init(), orderState: .completed, restaurant: Restaurant.sampleRestaurants[0], orderItems: sampleOrderItems),
             Order(id: "456", orderType: .table, date: Date.init(), orderState: .pending, restaurant: Restaurant.sampleRestaurants[1], orderItems: sampleOrderItems),
-            Order(id: "789", orderType: .table, date: Date.init(), orderState: .completed, restaurant: Restaurant.sampleRestaurants[2], orderItems: sampleOrderItems)
+            Order(id: "789", orderType: .table, date: Date.init(), orderState: .completed, restaurant: Restaurant.sampleRestaurants[2], orderItems: sampleOrderItems),
+            Order(id: "101112", orderType: .table, date: Date.init(), orderState: .completed, restaurant: Restaurant.sampleRestaurants[2], orderItems: sampleOrderItems),
+            Order(id: "131415", orderType: .table, date: Date.init(), orderState: .completed, restaurant: Restaurant.sampleRestaurants[2], orderItems: sampleOrderItems)
         ]
     }()
     

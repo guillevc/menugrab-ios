@@ -12,40 +12,19 @@ struct OrdersView: View {
     
     @ObservedObject var viewModel: OrdersViewModel
     
-    var inProgressOrders: [Order] {
-        viewModel.orders.value?.filter({ $0.isInProgress }) ?? []
-    }
-    
-    var completedOrders: [Order] {
-        viewModel.orders.value?.filter({ !$0.isInProgress }) ?? []
-    }
-    
     var body: some View {
         VStack(spacing: 0) {
             CustomNavigationBarView(title: "My orders", type: .default, onDismiss: { presentationMode.wrappedValue.dismiss() })
                 .background(Color.white)
-            ScrollView {
-                VStack(spacing: 18) {
-                    OrderStateHeaderView(text: "In progress")
-                        .padding(.horizontal)
-                    ForEach(inProgressOrders, id: \.id) { order in
-                        NavigationLink(destination: OrderDetailsView(order: order)) {
-                            OrderCellView(order: order)
-                                .padding(.horizontal)
-                        }
-                    }
-                    Divider()
-                        .padding(.horizontal)
-                    OrderStateHeaderView(text: "Completed")
-                        .padding(.horizontal)
-                    ForEach(completedOrders, id: \.id) { order in
-                        NavigationLink(destination: OrderDetailsView(order: order)) {
-                            OrderCellView(order: order)
-                                .padding(.horizontal)
-                        }
-                    }
-                }
-                Text(viewModel.orders.error?.localizedDescription ?? "")
+            if let orders = viewModel.orders.value {
+                ordersLoadedView(orders: orders)
+            } else if let error = viewModel.orders.error {
+                Text("Failed: \(error.localizedDescription)")
+                Spacer()
+            } else {
+                ordersLoadedView(orders: Order.sampleOrders)
+                    .redacted(reason: .placeholder)
+                    .disabled(true)
             }
             Spacer()
         }
@@ -55,26 +34,39 @@ struct OrdersView: View {
             viewModel.loadUserOrders()
         }
     }
-}
-
-fileprivate struct OrderStateHeaderView: View {
-    let text: String
-    var body: some View {
-        HStack {
-            Text(text)
-                .myFont(size: 17, weight: .medium)
-            Spacer()
+    
+    private func ordersLoadedView(orders: [Order]) -> some View {
+        let inProgressOrders = orders.filter({ $0.isInProgress })
+        let completedOrders = orders.filter({ !$0.isInProgress })
+        
+        return ScrollView {
+            VStack(spacing: 18) {
+                OrderStateHeaderView(text: "In progress")
+                    .padding(.horizontal)
+                ForEach(inProgressOrders, id: \.id) { order in
+                    NavigationLink(destination: OrderDetailsView(order: order)) {
+                        orderCellView(order: order)
+                            .padding(.horizontal)
+                    }
+                }
+                Divider()
+                    .padding(.horizontal)
+                OrderStateHeaderView(text: "Completed")
+                    .padding(.horizontal)
+                ForEach(completedOrders, id: \.id) { order in
+                    NavigationLink(destination: OrderDetailsView(order: order)) {
+                        orderCellView(order: order)
+                            .padding(.horizontal)
+                    }
+                }
+            }
+            Text(viewModel.orders.error?.localizedDescription ?? "")
         }
     }
-}
-
-fileprivate struct OrderCellView: View {
-    let order: Order
     
-    var body: some View {
+    private func orderCellView(order: Order) -> some View {
         HStack(spacing: 16) {
-            Image("santung")
-                .resizable()
+            LoadableImageView(viewModel: .init(container: viewModel.container, imageURLString: order.restaurant.imageURL))
                 .aspectRatio(contentMode: .fill)
                 .frame(width: 90, height: 90)
                 .clipped()
@@ -88,6 +80,17 @@ fileprivate struct OrderCellView: View {
                 Text(order.date.formatted())
                     .myFont(size: 13, color: .darkGray)
             }
+            Spacer()
+        }
+    }
+}
+
+fileprivate struct OrderStateHeaderView: View {
+    let text: String
+    var body: some View {
+        HStack {
+            Text(text)
+                .myFont(size: 17, weight: .medium)
             Spacer()
         }
     }

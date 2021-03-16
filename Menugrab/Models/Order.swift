@@ -34,12 +34,13 @@ enum OrderState: String, Decodable, CaseIterable {
     case pending = "ORDER_STATE_PENDING"
     case accepted = "ORDER_STATE_ACCEPTED"
     case completed = "ORDER_STATE_COMPLETED"
+    case canceled = "ORDER_STATE_CANCELED"
     
     var isInProgress: Bool {
         switch self {
         case .pending, .accepted:
             return true
-        case .completed:
+        case .completed, .canceled:
             return false
         }
     }
@@ -50,7 +51,6 @@ struct Order: Identifiable, Decodable {
     let orderType: OrderType
     let date: Date
     let orderState: OrderState
-//    let user: User
     let restaurant: Restaurant
     let orderItems: [OrderItem]
     
