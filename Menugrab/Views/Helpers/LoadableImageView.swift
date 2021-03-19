@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct LoadableImageView: View {
-    @ObservedObject private(set) var viewModel: ViewModel
+    @EnvironmentObject var viewModel: ViewModel
     
     var body: some View {
         switch viewModel.image {
@@ -56,6 +56,6 @@ struct LoadableImageView_Previews: PreviewProvider {
     static let previewImageURLString = "https://i.imgur.com/QypqfcI.jpeg"
     
     static var previews: some View {
-        LoadableImageView(viewModel: LoadableImageView.ViewModel(container: .preview, imageURLString: previewImageURLString))
+        LoadableImageView().environmentObject(LoadableImageView.ViewModel.init(container: .preview, imageURLString: previewImageURLString))
     }
 }

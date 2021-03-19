@@ -16,7 +16,7 @@ struct AccountView: View {
             CustomNavigationBarView(title: "Account", type: .default, onDismiss: { presentationMode.wrappedValue.dismiss() })
                 .background(Color.white)
                 .padding(.bottom, Constants.formBigSpacing)
-            NavigationLink(destination: OrdersView(viewModel: .init(container: viewModel.container))) {
+            NavigationLink(destination: OrdersView().environmentObject(OrdersViewModel(container: viewModel.container))) {
                 AccountItemView(mainImageSystemName: "folder", actionImageSystemName: "chevron.right", text: "Orders")
                     .padding(.bottom, Constants.formSmallSpacing)
             }
@@ -24,8 +24,10 @@ struct AccountView: View {
                 AccountItemView(mainImageSystemName: "person.crop.square.fill.and.at.rectangle", actionImageSystemName: "chevron.right", text: "Profile")
             }
             .padding(.bottom, Constants.formBigSpacing)
-            AccountItemView(mainImageSystemName: nil, actionImageSystemName: "chevron.right", text: "About")
-                .padding(.bottom, Constants.formBigSpacing)
+            NavigationLink(destination: AboutView().environmentObject(AboutViewModel(isBlue: false))) {
+                AccountItemView(mainImageSystemName: nil, actionImageSystemName: "chevron.right", text: "About")
+                    .padding(.bottom, Constants.formBigSpacing)
+            }
             Button(action: { viewModel.signOut() }) {
                 AccountItemView(mainImageSystemName: nil, actionImageSystemName: nil, text: "Log out")
                     .padding(.bottom, Constants.formBigSpacing)

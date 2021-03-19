@@ -18,6 +18,7 @@ struct OrderDetailsView: View {
                 .background(Color.white)
             Spacer()
         }
+        .navigationBarHidden(true)
     }
 }
 

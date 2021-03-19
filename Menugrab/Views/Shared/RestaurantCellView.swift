@@ -13,7 +13,8 @@ struct RestaurantCellView: View {
     
     var body: some View {
         ZStack {
-            LoadableImageView(viewModel: LoadableImageView.ViewModel(container: container, imageURLString: restaurant.imageURL))
+            LoadableImageView()
+                .environmentObject(LoadableImageView.ViewModel(container: container, imageURLString: restaurant.imageURL))
                 .aspectRatio(contentMode: .fill)
                 .frame(minWidth: 0, idealWidth: 320, maxWidth: .infinity, minHeight: 0, idealHeight: 160, maxHeight: .infinity, alignment: .center)
                 .clipShape(RoundedRectangle(cornerRadius: 12))
