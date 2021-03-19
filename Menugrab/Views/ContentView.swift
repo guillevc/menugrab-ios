@@ -14,9 +14,8 @@ struct ContentView: View {
     var body: some View {
         ZStack { () -> AnyView in
             if isUserAuthenticated {
-//                return HomeView(viewModel: HomeViewModel(container: viewModel.container))
-//                    .eraseToAnyView()
-                return OrdersView(viewModel: .init(container: viewModel.container)).eraseToAnyView()
+                return HomeView(viewModel: HomeViewModel(container: viewModel.container))
+                    .eraseToAnyView()
             } else {
                 return AuthenticationView(viewModel: AuthenticationViewModel(container: viewModel.container))
                     .eraseToAnyView()

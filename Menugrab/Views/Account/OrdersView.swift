@@ -16,23 +16,26 @@ struct OrdersView: View {
         VStack(spacing: 0) {
             CustomNavigationBarView(title: "My orders", type: .default, onDismiss: { presentationMode.wrappedValue.dismiss() })
                 .background(Color.white)
-            if let orders = viewModel.orders.value {
-                ordersLoadedView(orders: orders)
-            } else if let error = viewModel.orders.error {
-                Text("Failed: \(error.localizedDescription)")
-                Spacer()
-            } else {
+            switch viewModel.orders {
+            case .notRequested:
+                Text("NOT REQUESTED")
+                    .onAppear {
+                        viewModel.loadUserOrders()
+                    }
+                
+            case .isLoading:
                 ordersLoadedView(orders: Order.sampleOrders)
                     .redacted(reason: .placeholder)
                     .disabled(true)
+            case let .loaded(orders):
+                ordersLoadedView(orders: orders)
+            case let .failed(error):
+                Text("Failed: \(error.localizedDescription)")
             }
             Spacer()
         }
         .navigationBarHidden(true)
         .navigationViewStyle(StackNavigationViewStyle())
-        .onAppear {
-            viewModel.loadUserOrders()
-        }
     }
     
     private func ordersLoadedView(orders: [Order]) -> some View {

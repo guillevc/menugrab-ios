@@ -12,8 +12,7 @@ final class AccountViewModel: NSObject, ObservableObject {
     private var anyCancellableBag = AnyCancellableBag()
     
     init(
-        container: DIContainer,
-        user: Loadable<User> = .notRequested
+        container: DIContainer
     ) {
         self.container = container
     }

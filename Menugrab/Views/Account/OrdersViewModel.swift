@@ -10,14 +10,6 @@ import Foundation
 final class OrdersViewModel: NSObject, ObservableObject {
     @Published var orders: Loadable<[Order]>
     
-    var inProgressOrders: [Order] {
-        orders.value?.filter({ $0.isInProgress }) ?? []
-    }
-    
-    var completedOrders: [Order] {
-        orders.value?.filter({ !$0.isInProgress }) ?? []
-    }
-    
     let container: DIContainer
     private var anyCancellableBag = AnyCancellableBag()
     

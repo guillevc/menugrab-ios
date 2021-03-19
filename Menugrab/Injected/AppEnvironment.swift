@@ -43,7 +43,7 @@ extension AppEnvironment {
     }
     
     private static func configuredWebRepositoriesContainer(session: URLSession) -> WebRepositoriesContainer {
-        let apiBaseURL = "http://192.168.2.10:3000/api"
+        let apiBaseURL = "http://192.168.0.20:3000/api"
         let jsonDecoder = JSONDecoder()
         jsonDecoder.dateDecodingStrategy = .iso8601
         return .init(
