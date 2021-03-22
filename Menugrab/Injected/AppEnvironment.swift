@@ -19,14 +19,17 @@ struct AppEnvironment {
 // MARK: - Initializers
 
 extension AppEnvironment {
+    private static let apiBaseURL = "http://192.168.2.10:3000/api"
+    
     static func initialize() -> Self {
         let appState = Store<AppState>(AppState())
         let urlSession = configuredURLSession()
+        let jsonDecoder = configuredJSONDecoder()
         
         return .init(
             container: .init(
                 appState: appState,
-                services: configuredServicesContainer(appState: appState, webRepositories: configuredWebRepositoriesContainer(session: urlSession))
+                services: configuredServicesContainer(appState: appState, webRepositories: configuredWebRepositoriesContainer(session: urlSession, jsonDecoder: jsonDecoder))
             )
         )
     }
@@ -42,13 +45,16 @@ extension AppEnvironment {
         return .init(configuration: configuration)
     }
     
-    private static func configuredWebRepositoriesContainer(session: URLSession) -> WebRepositoriesContainer {
-        let apiBaseURL = "http://192.168.0.20:3000/api"
+    private static func configuredJSONDecoder() -> JSONDecoder {
         let jsonDecoder = JSONDecoder()
         jsonDecoder.dateDecodingStrategy = .iso8601
-        return .init(
-            restaurantsWebRepository: RestaurantsWebRepositoryImpl(session: session, baseURL: apiBaseURL, jsonDecoder: jsonDecoder),
-            ordersWebRepository: OrdersWebRepositoryImpl(session: session, baseURL: apiBaseURL, jsonDecoder: jsonDecoder),
+        return jsonDecoder
+    }
+    
+    private static func configuredWebRepositoriesContainer(session: URLSession, jsonDecoder: JSONDecoder) -> WebRepositoriesContainer {
+        .init(
+            restaurantsWebRepository: RestaurantsWebRepositoryImpl(session: session, baseURL: Self.apiBaseURL, jsonDecoder: jsonDecoder),
+            ordersWebRepository: OrdersWebRepositoryImpl(session: session, baseURL: Self.apiBaseURL, jsonDecoder: jsonDecoder),
             imagesWebRepository: ImagesWebRepositoryImpl(session: session, baseURL: "")
         )
     }
