@@ -21,12 +21,10 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 struct MenugrabApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     
-    private static let basket = Basket.sampleBasket
-    
     var body: some Scene {
         WindowGroup {
             ContentView(viewModel: ContentViewModel(container: appDelegate.container))
-                .environmentObject(Self.basket)
+                .environmentObject(Basket(restaurant: Restaurant.sampleRestaurants.first!, orderType: .pickup))
         }
     }
 }

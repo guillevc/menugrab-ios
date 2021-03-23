@@ -9,7 +9,7 @@ import SwiftUI
 
 struct OrdersView: View {
     @Environment(\.presentationMode) private var presentationMode
-    @EnvironmentObject var viewModel: OrdersViewModel
+    @StateObject var viewModel: OrdersViewModel
     
     var body: some View {
         VStack(spacing: 0) {
@@ -68,8 +68,7 @@ struct OrdersView: View {
     
     private func orderCellView(order: Order) -> some View {
         HStack(spacing: 16) {
-            LoadableImageView()
-                .environmentObject(LoadableImageView.ViewModel(container: viewModel.container, imageURLString: order.restaurant.imageURL))
+            LoadableImageView(viewModel: .init(container: viewModel.container, imageURLString: order.restaurant.imageURL))
                 .aspectRatio(contentMode: .fill)
                 .frame(width: 90, height: 90)
                 .clipped()
@@ -101,6 +100,6 @@ fileprivate struct OrderStateHeaderView: View {
 
 struct OrdersView_Previews: PreviewProvider {
     static var previews: some View {
-        OrdersView(viewModel: .init()).environmentObject(OrdersViewModel.init(container: .preview))
+        OrdersView(viewModel: .init(container: .preview))
     }
 }

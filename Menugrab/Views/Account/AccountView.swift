@@ -9,14 +9,14 @@ import SwiftUI
 
 struct AccountView: View {
     @Environment(\.presentationMode) private var presentationMode
-    @ObservedObject var viewModel: AccountViewModel
+    @StateObject var viewModel: AccountViewModel
     
     var body: some View {
         VStack(spacing: 0) {
             CustomNavigationBarView(title: "Account", type: .default, onDismiss: { presentationMode.wrappedValue.dismiss() })
                 .background(Color.white)
                 .padding(.bottom, Constants.formBigSpacing)
-            NavigationLink(destination: OrdersView().environmentObject(OrdersViewModel(container: viewModel.container))) {
+            NavigationLink(destination: OrdersView(viewModel: .init(container: viewModel.container))) {
                 AccountItemView(mainImageSystemName: "folder", actionImageSystemName: "chevron.right", text: "Orders")
                     .padding(.bottom, Constants.formSmallSpacing)
             }

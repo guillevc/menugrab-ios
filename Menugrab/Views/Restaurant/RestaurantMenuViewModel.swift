@@ -8,32 +8,25 @@
 import Foundation
 
 final class RestaurantMenuViewModel: NSObject, ObservableObject {
-    var restaurant: Restaurant? = nil
-    @Published var menu: Loadable<Menu> = .notRequested
-    @Published var basket: Basket = Basket.sampleBasket
+    let restaurant: Restaurant
+    @Published var menu: Loadable<Menu>
+//    @Published var basket: Basket = Basket.sampleBasket
     
-    var container: DIContainer? = nil
+    let container: DIContainer
     private var anyCancellableBag = AnyCancellableBag()
     
-    func setup(container: DIContainer, restaurant: Restaurant, menu: Loadable<Menu> = .notRequested) {
+    init(
+        container: DIContainer,
+        restaurant: Restaurant,
+        menu: Loadable<Menu> = .notRequested
+    ) {
         self.container = container
         self.restaurant = restaurant
         _menu = .init(wrappedValue: menu)
     }
     
     func loadMenu() {
-        guard let restaurantsService = container?.services.restaurantsService, let restaurantId = restaurant?.id else { return }
-        restaurantsService
-            .load(menu: loadableBinding(\.menu), restaurantId: restaurantId)
+        container.services.restaurantsService
+            .load(menu: loadableBinding(\.menu), restaurantId: restaurant.id)
     }
 }
-
-#if DEBUG
-extension RestaurantMenuViewModel {
-    static var preview: Self {
-        let viewModel = Self.init()
-        viewModel.setup(container: .preview, restaurant: Restaurant.sampleRestaurants.first!, menu: Loadable.loaded(Menu.sampleMenu))
-        return viewModel
-    }
-}
-#endif

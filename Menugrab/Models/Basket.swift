@@ -12,13 +12,17 @@ class Basket: ObservableObject {
     
     private var subscriptions = Set<AnyCancellable>()
     
-    let restaurant: Restaurant
-    let orderType: OrderType
+    var restaurant: Restaurant
+    var orderType: OrderType
 
     @Published private(set) var items: [BasketItem] {
         didSet {
             subscribeToItemsChanges()
         }
+    }
+    
+    var isEmpty: Bool {
+        items.isEmpty
     }
     
     var totalQuantity: Int {
@@ -36,12 +40,10 @@ class Basket: ObservableObject {
         subscribeToItemsChanges()
     }
     
-    private func subscribeToItemsChanges() {
-        for item in items {
-            item.objectWillChange
-                .sink(receiveValue: { _ in self.objectWillChange.send() })
-                .store(in: &subscriptions)
-        }
+    func initialize(restaurant: Restaurant, orderType: OrderType) {
+        self.restaurant = restaurant
+        self.orderType = orderType
+        self.items.removeAll()
     }
     
     func quantityOfMenuItem(_ menuItem: MenuItem) -> Int {
@@ -64,6 +66,18 @@ class Basket: ObservableObject {
             if basketItem.quantity == 0 {
                 items.remove(at: basketItemIndex)
             }
+        }
+    }
+    
+    func empty() {
+        items.removeAll()
+    }
+    
+    private func subscribeToItemsChanges() {
+        for item in items {
+            item.objectWillChange
+                .sink(receiveValue: { _ in self.objectWillChange.send() })
+                .store(in: &subscriptions)
         }
     }
     

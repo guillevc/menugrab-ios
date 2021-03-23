@@ -47,7 +47,7 @@ extension Menu {
                 name: "Drinks",
                 menuItems: [
                     MenuItem(
-                        id: UUID().uuidString,
+                        id: "awa",
                         name: "Bottle of water (50cl)",
                         description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
                         price: Decimal.currency(1.30)
