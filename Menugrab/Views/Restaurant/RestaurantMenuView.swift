@@ -65,7 +65,7 @@ struct RestaurantMenuView: View {
                         }
                         .frame(height: Self.initialImageHeight)
                         VStack(spacing: 0) {
-                            RestaurantHeaderView(restaurant: viewModel.restaurant, onMoreInfoButtonTapped: { showingMoreInfoSheet = true })
+                            RestaurantHeaderView(restaurant: viewModel.restaurant ?? Restaurant.sampleRestaurants.first!, onMoreInfoButtonTapped: { showingMoreInfoSheet = true })
                                 .padding(.horizontal)
                                 .padding(.bottom)
                             if let menu = viewModel.menu.value {
@@ -103,6 +103,9 @@ struct RestaurantMenuView: View {
                     VStack {
                         Spacer()
                         BasketFloatingButtonView(totalQuantity: viewModel.basket.totalQuantity, totalPrice: viewModel.basket.totalPrice)
+                            .onTapGesture {
+                                viewModel.container?.appState.value.number = 1
+                            }
                     }
                     .padding(.bottom)
                 }
@@ -116,7 +119,7 @@ struct RestaurantMenuView: View {
                         Spacer()
                     }
                     Spacer()
-                    Text(viewModel.restaurant.name)
+                    Text(viewModel.restaurant?.name ?? "")
                         .myFont(size: 17, weight: .medium, color: .myBlack)
                         .opacity(isHeaderVisible ? 1 : 0)
                     Spacer()
@@ -129,13 +132,13 @@ struct RestaurantMenuView: View {
             .navigationBarHidden(true)
             .onAppear {
                 withAnimation {
-                viewModel.loadMenu()
+                    viewModel.loadMenu()
                 }
             }
         }
         .navigationViewStyle(StackNavigationViewStyle())
         .sheet(isPresented: $showingMoreInfoSheet) {
-            RestaurantMoreInfoView(restaurant: viewModel.restaurant)
+            RestaurantMoreInfoView(restaurant: viewModel.restaurant ?? Restaurant.sampleRestaurants.first!)
         }
     }
 }
@@ -332,7 +335,7 @@ fileprivate struct BasketFloatingButtonView: View {
 
 struct RestaurantDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        RestaurantMenuView(viewModel: .init(container: .preview, restaurant: Restaurant.sampleRestaurants.first!, menu: Loadable.loaded(Menu.sampleMenu)))
+        RestaurantMenuView(viewModel: .preview)
             .environmentObject(Basket.sampleBasket)
             .previewDevice(PreviewDevice(rawValue: "iPhone 11 Pro"))
     }

@@ -13,6 +13,11 @@ struct HomeView: View {
     @State private var showingActionSheet = false
     @State private var showingBasketSheet = false
     @State private var showingHomeSearchViewSheet = false
+    @State private var basketButtonDisabled = false
+    
+    // RestaurantMenuView navigation
+    @State private var restaurantMenuViewNavigationTag: String?
+    @StateObject private var restaurantMenuViewModel = RestaurantMenuViewModel()
     
     var body: some View {
         NavigationView {
@@ -31,6 +36,7 @@ struct HomeView: View {
                                     .font(.system(size: 23))
                                     .foregroundColor(.myBlack)
                             }
+                            .disabled(basketButtonDisabled)
                         }
                         Button(action: {
                             withAnimation(.linear(duration: 0.15)) {
@@ -113,6 +119,7 @@ struct HomeView: View {
         .onAppear {
             viewModel.loadNearbyRestaurants()
         }
+        .navigationViewStyle(DoubleColumnNavigationViewStyle())
     }
     
     private func nearbyRestaurantsLoadedView(restaurants: [Restaurant]) -> some View {
@@ -140,11 +147,16 @@ struct HomeView: View {
                     .padding(.horizontal)
                     .padding(.top, 10)
                 ForEach(Array(restaurants.enumerated()), id: \.offset) { index, restaurant in
-                    NavigationLink(destination: RestaurantMenuView(viewModel: .init(container: viewModel.container, restaurant: restaurant))) {
-                        RestaurantCellView(restaurant: restaurant, container: viewModel.container)
-                            .padding(.horizontal)
-                            .padding(.top, 20)
-                            .padding(.bottom, index == restaurants.count - 1 ? 20 : 0)
+                    NavigationLink(destination: RestaurantMenuView(viewModel: restaurantMenuViewModel), tag: restaurant.id, selection: $restaurantMenuViewNavigationTag) {
+                        Button(action: {
+                            restaurantMenuViewModel.setup(container: viewModel.container, restaurant: restaurant)
+                            restaurantMenuViewNavigationTag = restaurant.id
+                        }) {
+                            RestaurantCellView(restaurant: restaurant, container: viewModel.container)
+                                .padding(.horizontal)
+                                .padding(.top, 20)
+                                .padding(.bottom, index == restaurants.count - 1 ? 20 : 0)
+                        }.buttonStyle(IdentityButtonStyle())
                     }.buttonStyle(IdentityButtonStyle())
                 }
             }

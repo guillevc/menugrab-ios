@@ -9,6 +9,7 @@ import Foundation
 
 struct AppState: Equatable {
     var currentUser: User?
+    var number = 0
 }
 
 #if DEBUG
