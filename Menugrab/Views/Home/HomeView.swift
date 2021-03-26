@@ -229,7 +229,7 @@ fileprivate struct LocationSelectorView: View {
             Color.white
                 .shadow(radius: 20)
         )
-        .clipShape(RoundedRectangleSpecificCorners(radius: 18, corners: [.topLeft, .topRight]))
+        .clipShape(RoundedRectangleSpecificCorners(radius: 22, corners: [.topLeft, .topRight]))
         
     }
 }

@@ -128,10 +128,9 @@ struct RestaurantMenuView: View {
             .edgesIgnoringSafeArea(.top)
             .navigationBarHidden(true)
             .onAppear {
-                withAnimation {
-                    viewModel.loadMenu()
-                }
+                viewModel.loadMenu()
             }
+            .animation(.linear(duration: 0.1), value: viewModel.menu.value == nil)
         }
         .navigationViewStyle(StackNavigationViewStyle())
         .sheet(isPresented: $showingMoreInfoSheet) {
@@ -184,8 +183,8 @@ fileprivate struct RestaurantHeaderView: View {
         .padding(.horizontal, 26)
         .background(
             Color.white
-                .cornerRadius(14)
-                .shadow(color: Color.black.opacity(0.15), radius: 8)
+                .cornerRadius(22)
+                .shadow(color: Color.black.opacity(0.12), radius: 24)
         )
     }
 }
