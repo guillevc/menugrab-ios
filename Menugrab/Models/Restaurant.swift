@@ -8,7 +8,7 @@
 import SwiftUI
 import MapKit
 
-struct Restaurant: Identifiable, Decodable {
+struct Restaurant: Identifiable, Decodable, Equatable {
     let id: String
     let name: String
     var imageURL: String
@@ -24,12 +24,10 @@ extension Restaurant {
     }
 }
 
-struct Coordinates: Decodable {
+struct Coordinates: Decodable, Equatable {
     let latitude: Double
     let longitude: Double
-}
-
-extension Coordinates {
+    
     var locationCoordinate2D: CLLocationCoordinate2D {
         CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
     }

@@ -14,7 +14,7 @@ struct DIContainer: EnvironmentKey {
     let services: ServicesContainer
     
     static var defaultValue: Self {
-        Self(appState: Store(AppState()), services: .stub)
+        Self(appState: Store(AppState.defaultValue), services: .stub)
     }
 }
 

@@ -13,7 +13,6 @@ struct RestaurantMenuView: View {
     
     @Environment(\.presentationMode) private var presentationMode
     
-    @EnvironmentObject private var basket: Basket
     @StateObject var viewModel: RestaurantMenuViewModel
     @State private var isHeaderVisible = false
     @State private var headerTopPadding: CGSize? = nil
@@ -85,7 +84,7 @@ struct RestaurantMenuView: View {
                                             .padding(.bottom, 20)
                                         VStack(alignment: .leading, spacing: 36) {
                                             ForEach(itemCategory.menuItems, id: \.name) { menuItem in
-                                                MenuItemView(menuItem: menuItem)
+                                                MenuItemView(basket: viewModel.basket, menuItem: menuItem, onIncrementQuantityTapped: { viewModel.incrementBasketQuantityOfMenuItem($0) }, onDecrementQuantityTapped: { viewModel.decrementBasketQuantityOfMenuItem($0) })
                                             }
                                         }
                                         .padding(.bottom, 36)
@@ -100,13 +99,10 @@ struct RestaurantMenuView: View {
                         .padding(.top, -Self.initialImageHeight/2)
                     }
                 }
-                if !basket.items.isEmpty {
+                if let basketRestaurant = viewModel.basket.restaurant, basketRestaurant == viewModel.restaurant, viewModel.basket.isValid {
                     VStack {
                         Spacer()
-                        BasketFloatingButtonView(totalQuantity: basket.totalQuantity, totalPrice: basket.totalPrice)
-                            .onTapGesture {
-                                viewModel.container.appState.value.number = 1
-                            }
+                        BasketFloatingButtonView(totalQuantity: viewModel.basket.totalQuantity, totalPrice: viewModel.basket.totalPrice)
                     }
                     .padding(.bottom)
                 }
@@ -140,6 +136,14 @@ struct RestaurantMenuView: View {
         .navigationViewStyle(StackNavigationViewStyle())
         .sheet(isPresented: $showingMoreInfoSheet) {
             RestaurantMoreInfoView(restaurant: viewModel.restaurant)
+        }
+        .alert(isPresented: $viewModel.showingExistingBasketAlert) {
+            Alert(
+                title: Text("Do you want to clear your current basket?"),
+                message: Text("Adding an item from this restaurant will clear your basket and you will lose all items added from \(viewModel.basket.restaurant?.name ?? "-")"),
+                primaryButton: .default(Text("Add"), action: { viewModel.onExistingBasketAlertAccepted() }),
+                secondaryButton: .cancel { viewModel.onExistingBasketAlertCanceled() }
+            )
         }
     }
 }
@@ -224,9 +228,10 @@ fileprivate struct MenuItemView: View {
     private static let controlFrameWidth: CGFloat = 90
     private static let inBasketMarkWidth: CGFloat = 3
     
-    @EnvironmentObject private var basket: Basket
-    
+    let basket: Basket
     let menuItem: MenuItem
+    let onIncrementQuantityTapped: (MenuItem) -> ()
+    let onDecrementQuantityTapped: (MenuItem) -> ()
     
     private var quantityInBasket: Int {
         basket.quantityOfMenuItem(menuItem)
@@ -253,14 +258,20 @@ fileprivate struct MenuItemView: View {
                     .myFont(size: 15, weight: .bold)
                 if quantityInBasket > 0 {
                     HStack(spacing: 4) {
-                        ModifyQuantityButton(action: { basket.decrementQuantityOfMenuItem(menuItem) }, type: .remove)
+                        ModifyQuantityButton(
+                            action: { onDecrementQuantityTapped(menuItem) },
+                            type: .remove
+                        )
                         Text(String(quantityInBasket))
                             .myFont(size: 15, weight: .medium)
                             .frame(width: 22)
-                        ModifyQuantityButton(action: { basket.incrementQuantityOfMenuItem(menuItem) }, type: .add)
+                        ModifyQuantityButton(
+                            action: { onIncrementQuantityTapped(menuItem) },
+                            type: .add
+                        )
                     }
                 } else {
-                    Button(action: { basket.incrementQuantityOfMenuItem(menuItem) }) {
+                    Button(action: { onIncrementQuantityTapped(menuItem) }) {
                         Text("ADD")
                             .myFont(size: 15, weight: .bold, color: .myPrimary)
                             .padding(.vertical, 5)
@@ -336,8 +347,7 @@ fileprivate struct BasketFloatingButtonView: View {
 
 struct RestaurantDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        RestaurantMenuView(viewModel: .init(container: .preview, restaurant: Restaurant.sampleRestaurants.first!))
-            .environmentObject(Basket.sampleBasket)
+        RestaurantMenuView(viewModel: .init(container: .preview, restaurant: Restaurant.sampleRestaurants.first!, menu: .loaded(Menu.sampleMenu)))
             .previewDevice(PreviewDevice(rawValue: "iPhone 11 Pro"))
     }
 }

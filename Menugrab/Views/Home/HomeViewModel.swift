@@ -23,6 +23,7 @@ final class HomeViewModel: ObservableObject {
             print("TODO")
         }
     }
+    @Published var basketIsValid = false
     
     let container: DIContainer
     private var anyCancellableBag = AnyCancellableBag()
@@ -33,6 +34,11 @@ final class HomeViewModel: ObservableObject {
     ) {
         self.container = container
         _nearbyRestaurants = .init(wrappedValue: nearbyRestaurants)
+        container.appState.sink { [weak self] appState in
+            guard let self = self else { return }
+            self.basketIsValid = appState.basket.isValid
+        }
+        .store(in: anyCancellableBag)
     }
     
     func loadNearbyRestaurants() {

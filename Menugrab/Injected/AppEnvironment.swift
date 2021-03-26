@@ -22,7 +22,7 @@ extension AppEnvironment {
     private static let apiBaseURL = "http://192.168.2.10:3000/api"
     
     static func initialize() -> Self {
-        let appState = Store<AppState>(AppState())
+        let appState = Store<AppState>(AppState.defaultValue)
         let urlSession = configuredURLSession()
         let jsonDecoder = configuredJSONDecoder()
         

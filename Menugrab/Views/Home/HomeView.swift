@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct HomeView: View {
-    @EnvironmentObject private var basket: Basket
     @StateObject var viewModel: HomeViewModel
     @State private var showingLocationSelector = false
     @State private var showingActionSheet = false
@@ -30,9 +29,9 @@ struct HomeView: View {
                             Button(action: { showingBasketSheet = true }) {
                                 Image(systemName: "cart")
                                     .font(.system(size: 23))
-                                    .foregroundColor(basket.isEmpty ? .lightGray : .myBlack)
+                                    .foregroundColor(viewModel.basketIsValid ? .myBlack : .lightGray)
                             }
-                            .disabled(basket.isEmpty)
+                            .disabled(!viewModel.basketIsValid)
                         }
                         Button(action: {
                             withAnimation(.linear(duration: 0.15)) {
@@ -89,7 +88,7 @@ struct HomeView: View {
             }
             .navigationBarHidden(true)
             .sheet(isPresented: $showingBasketSheet) {
-                BasketView()
+                BasketView(viewModel: .init(container: viewModel.container))
             }
         }
         .actionSheet(isPresented: $showingActionSheet) {
@@ -278,12 +277,12 @@ fileprivate struct LocationSelectorItemView: View {
     }
 }
 
-struct HomeView_Previews: PreviewProvider {
-    static var previews: some View {
-        Group {
-            HomeView(viewModel: HomeViewModel(container: .preview, nearbyRestaurants: Loadable.loaded(Restaurant.sampleRestaurants)))
-            LocationSelectorView(onDismissSelector: nil, bottomPadding: 0)
-                .previewLayout(.sizeThatFits)
-        }
-    }
-}
+//struct HomeView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        Group {
+//            HomeView(viewModel: HomeViewModel(container: .preview, nearbyRestaurants: Loadable.loaded(Restaurant.sampleRestaurants)))
+//            LocationSelectorView(onDismissSelector: nil, bottomPadding: 0)
+//                .previewLayout(.sizeThatFits)
+//        }
+//    }
+//}
