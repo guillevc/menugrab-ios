@@ -103,7 +103,7 @@ struct RestaurantMenuView: View {
                         Spacer()
                         BasketFloatingButtonView(totalQuantity: viewModel.basket.totalQuantity, totalPrice: viewModel.basket.totalPrice)
                     }
-                    .padding(.bottom)
+                    .padding(.bottom, 24)
                 }
                 ZStack {
                     HStack {

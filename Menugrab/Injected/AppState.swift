@@ -19,7 +19,7 @@ struct AppState: Equatable {
 #if DEBUG
 extension AppState {
     static var preview: Self {
-        .defaultValue
+        Self(currentUser: nil, basket: .sampleBasket)
     }
 }
 #endif

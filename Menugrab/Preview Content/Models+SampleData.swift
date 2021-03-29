@@ -125,7 +125,6 @@ extension Menu {
     ]
 }
 extension Basket {
-    
     static let sampleBasketItems: [BasketItem] = {
         [
             .init(menuItem: Menu.sampleMenuItemCategories[0].menuItems[0], quantity: 5),
@@ -139,9 +138,4 @@ extension Basket {
     static let sampleBasket: Basket = {
         Basket(restaurant: Restaurant.sampleRestaurants[0], orderType: .pickup, items: Basket.sampleBasketItems)
     }()
-    
 }
-
-//extension User {
-//    static let sampleUser = User(name: "Guillermo Varela", email: "guillermo.varela@email.com", orders: Order.sampleOrders)
-//}

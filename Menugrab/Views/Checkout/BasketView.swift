@@ -148,9 +148,9 @@ fileprivate struct OrderItemsView: View {
     }
 }
 
-//struct BasketView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        BasketView()
-//            .environmentObject(Basket.sampleBasket)
-//    }
-//}
+struct BasketView_Previews: PreviewProvider {
+    static var previews: some View {
+        BasketView(viewModel: .init(container: .preview))
+            .previewDevice(.init(rawValue: "iPhone 11 Pro"))
+    }
+}

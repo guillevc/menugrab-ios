@@ -277,12 +277,12 @@ fileprivate struct LocationSelectorItemView: View {
     }
 }
 
-//struct HomeView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        Group {
-//            HomeView(viewModel: HomeViewModel(container: .preview, nearbyRestaurants: Loadable.loaded(Restaurant.sampleRestaurants)))
-//            LocationSelectorView(onDismissSelector: nil, bottomPadding: 0)
-//                .previewLayout(.sizeThatFits)
-//        }
-//    }
-//}
+struct HomeView_Previews: PreviewProvider {
+    static var previews: some View {
+        Group {
+            HomeView(viewModel: .init(container: .preview, nearbyRestaurants: Loadable.loaded(Restaurant.sampleRestaurants)))
+            LocationSelectorView(onDismissSelector: nil, bottomPadding: 0)
+                .previewLayout(.sizeThatFits)
+        }
+    }
+}
