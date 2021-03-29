@@ -11,8 +11,9 @@ import MapKit
 struct Restaurant: Identifiable, Decodable, Equatable {
     let id: String
     let name: String
-    var imageURL: String
-    var coordinates: Coordinates = .init(latitude: 43.3834, longitude: -8.3943)
+    let imageURL: String
+    let coordinates: Coordinates
+    let address: String
     let acceptingOrderTypes: [OrderType]
 }
 

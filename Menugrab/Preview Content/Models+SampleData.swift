@@ -10,10 +10,10 @@ import Foundation
 
 extension Restaurant {
     static let sampleRestaurants: [Restaurant] = [
-        .init(id: UUID().uuidString, name: "San Tung", imageURL: "https://i.imgur.com/QypqfcI.jpg", acceptingOrderTypes: [.table]),
-        .init(id: UUID().uuidString, name: "Hamburguesería Buenosaires", imageURL: "https://i.imgur.com/QypqfcI.jpg", acceptingOrderTypes: [.table, .pickup]),
-        .init(id: UUID().uuidString, name: "La Favola", imageURL: "https://i.imgur.com/QypqfcI.jpg", acceptingOrderTypes: [.table]),
-        .init(id: UUID().uuidString, name: "Los Farolillos", imageURL: "https://i.imgur.com/QypqfcI.jpg", acceptingOrderTypes: [.pickup])
+        .init(id: UUID().uuidString, name: "San Tung", imageURL: "https://i.imgur.com/QypqfcI.jpg", coordinates: .init(latitude: 43.3834, longitude: -8.3943), address: "Sample address, A Coruña", acceptingOrderTypes: [.table]),
+        .init(id: UUID().uuidString, name: "Hamburguesería Buenosaires", imageURL: "https://i.imgur.com/QypqfcI.jpg", coordinates: .init(latitude: 43.3834, longitude: -8.3943), address: "Sample address, A Coruña", acceptingOrderTypes: [.table, .pickup]),
+        .init(id: UUID().uuidString, name: "La Favola", imageURL: "https://i.imgur.com/QypqfcI.jpg", coordinates: .init(latitude: 43.3834, longitude: -8.3943), address: "Sample address, A Coruña", acceptingOrderTypes: [.table]),
+        .init(id: UUID().uuidString, name: "Los Farolillos", imageURL: "https://i.imgur.com/QypqfcI.jpg", coordinates: .init(latitude: 43.3834, longitude: -8.3943), address: "Sample address, A Coruña", acceptingOrderTypes: [.pickup])
     ]
 }
 

@@ -32,7 +32,7 @@ struct RestaurantLocationSectionView: View {
                         }
                     }
                 }
-                Text("Wolf Crater, 897, Marsh")
+                Text(restaurant.address)
                     .myFont(size: 13, color: .gray)
                 Text("3 km away")
                     .myFont(size: 13, color: .gray)
