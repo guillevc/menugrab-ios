@@ -54,9 +54,8 @@ struct RestaurantMenuView: View {
                         GeometryReader { geometry in
                             ZStack(alignment: .top) { () -> AnyView in
                                 updateNavbarVisibility(imageGeometry: geometry, topGeometry: topGeometry)
-                                return Image("santung")
-                                    .resizable()
-                                    .scaledToFill()
+                                return LoadableImageView(viewModel: .init(container: viewModel.container, imageURLString: viewModel.restaurant.imageURL))
+                                    .aspectRatio(contentMode: .fill)
                                     .frame(width: geometry.size.width, height: heightForHeaderImage(geometry))
                                     .clipped()
                                     .offset(x: 0, y: offsetForHeaderImage(geometry))
@@ -111,7 +110,7 @@ struct RestaurantMenuView: View {
                         Button(action: { presentationMode.wrappedValue.dismiss() }) {
                             Image(systemName: "arrow.left")
                                 .font(.system(size: 20))
-                                .foregroundColor(.myBlack)
+                                .foregroundColor(.black)
                         }
                         Spacer()
                     }
