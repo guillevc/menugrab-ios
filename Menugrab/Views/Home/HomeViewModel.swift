@@ -42,7 +42,8 @@ final class HomeViewModel: ObservableObject {
     }
     
     func loadNearbyRestaurants() {
+        // TODO: user coordinates
         container.services.restaurantsService
-            .loadNearby(restaurants: loadableBinding(\.nearbyRestaurants), coordinates: nil)
+            .loadNearby(restaurants: loadableBinding(\.nearbyRestaurants), coordinates: .init(latitude: 43.3728824, longitude: -8.4064193))
     }
 }

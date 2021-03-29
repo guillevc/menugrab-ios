@@ -157,7 +157,7 @@ fileprivate struct RestaurantHeaderView: View {
                 .myFont(size: 23, weight: .bold)
             OrderTypeSegmentedPickerView()
             HStack(spacing: 16) {
-                Text("13 km away")
+                Text("\(restaurant.formattedDistance ?? "-") away")
                     .myFont(size: 13)
                 Button(action: { onMoreInfoButtonTapped?() }) {
                     HStack(spacing: 4) {

@@ -40,7 +40,7 @@ struct RestaurantCellView: View {
                             }
                         }
                         Spacer()
-                        Text("8 km away")
+                        Text("\(restaurant.formattedDistance ?? "-") away")
                             .myFont(size: 13)
                     }
                     .padding(.horizontal)

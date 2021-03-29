@@ -34,7 +34,7 @@ struct RestaurantLocationSectionView: View {
                 }
                 Text(restaurant.address)
                     .myFont(size: 13, color: .gray)
-                Text("3 km away")
+                Text("\(restaurant.formattedDistance ?? "-") away")
                     .myFont(size: 13, color: .gray)
             }
             if type == .button {

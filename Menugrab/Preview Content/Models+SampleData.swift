@@ -10,10 +10,10 @@ import Foundation
 
 extension Restaurant {
     static let sampleRestaurants: [Restaurant] = [
-        .init(id: UUID().uuidString, name: "San Tung", imageURL: "https://i.imgur.com/QypqfcI.jpg", coordinates: .init(latitude: 43.3834, longitude: -8.3943), address: "Sample address, A Coruña", acceptingOrderTypes: [.table]),
-        .init(id: UUID().uuidString, name: "Hamburguesería Buenosaires", imageURL: "https://i.imgur.com/QypqfcI.jpg", coordinates: .init(latitude: 43.3834, longitude: -8.3943), address: "Sample address, A Coruña", acceptingOrderTypes: [.table, .pickup]),
-        .init(id: UUID().uuidString, name: "La Favola", imageURL: "https://i.imgur.com/QypqfcI.jpg", coordinates: .init(latitude: 43.3834, longitude: -8.3943), address: "Sample address, A Coruña", acceptingOrderTypes: [.table]),
-        .init(id: UUID().uuidString, name: "Los Farolillos", imageURL: "https://i.imgur.com/QypqfcI.jpg", coordinates: .init(latitude: 43.3834, longitude: -8.3943), address: "Sample address, A Coruña", acceptingOrderTypes: [.pickup])
+        .init(id: UUID().uuidString, name: "San Tung", imageURL: "https://i.imgur.com/QypqfcI.jpg", coordinates: .init(latitude: 43.3834, longitude: -8.3943), address: "Sample address, A Coruña", acceptingOrderTypes: [.table], distance: 1.23),
+        .init(id: UUID().uuidString, name: "Hamburguesería Buenosaires", imageURL: "https://i.imgur.com/QypqfcI.jpg", coordinates: .init(latitude: 43.3834, longitude: -8.3943), address: "Sample address, A Coruña", acceptingOrderTypes: [.table, .pickup], distance: 0.014),
+        .init(id: UUID().uuidString, name: "La Favola", imageURL: "https://i.imgur.com/QypqfcI.jpg", coordinates: .init(latitude: 43.3834, longitude: -8.3943), address: "Sample address, A Coruña", acceptingOrderTypes: [.table], distance: 0.774),
+        .init(id: UUID().uuidString, name: "Los Farolillos", imageURL: "https://i.imgur.com/QypqfcI.jpg", coordinates: .init(latitude: 43.3834, longitude: -8.3943), address: "Sample address, A Coruña", acceptingOrderTypes: [.pickup], distance: 2.4)
     ]
 }
 
