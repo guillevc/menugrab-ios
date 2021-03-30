@@ -23,16 +23,18 @@ struct ServicesContainer {
     let restaurantsService: RestaurantsService
     let ordersService: OrdersService
     let imagesService: ImagesService
+    let userPermissionsService: UserPermissionsService
     
-    init(usersService: UsersService, restaurantsService: RestaurantsService, ordersService: OrdersService, imagesService: ImagesService) {
+    init(usersService: UsersService, restaurantsService: RestaurantsService, ordersService: OrdersService, imagesService: ImagesService, userPermissionsService: UserPermissionsService) {
         self.usersService = usersService
         self.restaurantsService = restaurantsService
         self.ordersService = ordersService
         self.imagesService = imagesService
+        self.userPermissionsService = userPermissionsService
     }
     
     static var stub: Self {
-        .init(usersService: UsersServiceStub(), restaurantsService: RestaurantsServiceStub(), ordersService: OrdersServiceStub(), imagesService: ImagesServiceStub())
+        .init(usersService: UsersServiceStub(), restaurantsService: RestaurantsServiceStub(), ordersService: OrdersServiceStub(), imagesService: ImagesServiceStub(), userPermissionsService: UserPermissionsServiceStub())
     }
 }
 

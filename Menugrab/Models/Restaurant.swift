@@ -46,4 +46,14 @@ struct Coordinates: Decodable, Equatable {
     var locationCoordinate2D: CLLocationCoordinate2D {
         CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
     }
+    
+    init(latitude: Double, longitude: Double) {
+        self.latitude = latitude
+        self.longitude = longitude
+    }
+    
+    init(clLocationCoordinate2D: CLLocationCoordinate2D) {
+        self.latitude = clLocationCoordinate2D.latitude
+        self.longitude = clLocationCoordinate2D.longitude
+    }
 }

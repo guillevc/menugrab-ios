@@ -65,7 +65,8 @@ extension AppEnvironment {
             usersService: UsersServiceImpl(appState: appState),
             restaurantsService: RestaurantsServiceImpl(appState: appState, webRepository: webRepositories.restaurantsWebRepository),
             ordersService: OrdersServiceImpl(appState: appState, webRepository: webRepositories.ordersWebRepository),
-            imagesService: ImagesServiceImpl(appState: appState, webRepository: webRepositories.imagesWebRepository)
+            imagesService: ImagesServiceImpl(appState: appState, webRepository: webRepositories.imagesWebRepository),
+            userPermissionsService: UserPermissionsServiceImpl(appState: appState)
         )
     }
 }

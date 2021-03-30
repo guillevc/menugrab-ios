@@ -21,6 +21,9 @@ struct ContentView: View {
                     .eraseToAnyView()
             }
         }
+        .onAppear {
+            viewModel.container.services.userPermissionsService.request(permission: .location)
+        }
         .onReceive(viewModel.currentUserUpdate) { self.isUserAuthenticated = $0 != nil }
     }
 }

@@ -6,15 +6,31 @@
 //
 
 import Foundation
+import CoreLocation
 
 struct AppState: Equatable {
+    struct Permissions: Equatable {
+        var location: Permission.Status = .unknown
+    }
+    
+    static func permissionKeyPath(for permission: Permission) -> WritableKeyPath<AppState, Permission.Status> {
+        let pathToPermissions = \AppState.permissions
+        switch permission {
+        case .location:
+            return pathToPermissions.appending(path: \.location)
+        }
+    }
+    
     var currentUser: User?
+    var location: CLLocation?
     var basket: Basket
+    var permissions = Permissions()
     
     static var defaultValue: Self {
         Self(currentUser: nil, basket: Basket(orderType: .pickup))
     }
 }
+
 
 #if DEBUG
 extension AppState {

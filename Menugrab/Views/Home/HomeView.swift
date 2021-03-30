@@ -9,10 +9,15 @@ import SwiftUI
 
 struct HomeView: View {
     @StateObject var viewModel: HomeViewModel
+    
     @State private var showingLocationSelector = false
     @State private var showingActionSheet = false
     @State private var showingBasketSheet = false
     @State private var showingHomeSearchViewSheet = false
+    
+    private var locationSelectorButtonText: String {
+        viewModel.container.appState[\.location] == nil ? "Select location" : "Current location"
+    }
 
     var body: some View {
         NavigationView {
@@ -39,7 +44,7 @@ struct HomeView: View {
                             }
                         }, label: {
                             HStack(spacing: 5) {
-                                Text("Current location")
+                                Text(locationSelectorButtonText)
                                     .myFont(size: 17, weight: .bold)
                                 Image(systemName: "chevron.down")
                                     .font(.system(size: 17))
@@ -66,6 +71,7 @@ struct HomeView: View {
                 if (showingLocationSelector) {
                     let onDismissSelector = {
                         withAnimation(.linear(duration: 0.2)) {
+                            viewModel.requestLocationPermission()
                             showingLocationSelector = false
                         }
                     }
@@ -112,6 +118,7 @@ struct HomeView: View {
             HomeSearchView(container: viewModel.container, restaurants: viewModel.nearbyRestaurants.value ?? [])
         }
         .onAppear {
+            viewModel.resolveLocationPermissionStatus()
             viewModel.loadNearbyRestaurants()
         }
         .navigationViewStyle(DoubleColumnNavigationViewStyle())
@@ -212,10 +219,14 @@ fileprivate struct LocationSelectorView: View {
                 }
                 .padding()
             }
-            LocationSelectorItemView(type: .currentLocation, isSelected: true)
+            Button(
+                action: { onDismissSelector?() }) {
+                LocationSelectorItemView(type: .currentLocation, isSelected: true)
+                    .padding()
+            }
+            LocationSelectorItemView(type: .custom(name: "Manually added address"), isSelected: false)
                 .padding()
-            LocationSelectorItemView(type: .custom(name: "Avenida de arteixo"), isSelected: false)
-                .padding()
+                .opacity(0.3)
             Divider()
                 .light()
                 .padding(.horizontal)
@@ -223,6 +234,8 @@ fileprivate struct LocationSelectorView: View {
                 Image(systemName: "plus")
             }
             .padding()
+            .opacity(0.3)
+            .disabled(true)
         }
         .padding(.bottom, bottomPadding)
         .background(
@@ -244,17 +257,19 @@ fileprivate struct LocationSelectorItemView: View {
     let isSelected: Bool
     
     private var text: String {
-        if case let .custom(customText) = type {
-            return customText
-        } else {
+        switch type {
+        case let .custom(text):
+            return text
+        case .currentLocation:
             return "Current location"
         }
     }
     
     private var imageSystemName: String {
-        if case .custom(_) = type {
+        switch type {
+        case .custom:
             return "mappin.and.ellipse"
-        } else {
+        case .currentLocation:
             return "location"
         }
     }
