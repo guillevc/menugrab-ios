@@ -24,7 +24,6 @@ struct MenugrabApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView(viewModel: ContentViewModel(container: appDelegate.container))
-//                .environmentObject(Basket(restaurant: Restaurant.sampleRestaurants.first!, orderType: .pickup))
         }
     }
 }

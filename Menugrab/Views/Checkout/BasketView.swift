@@ -47,7 +47,7 @@ struct BasketView: View {
                                     .aspectRatio(contentMode: .fit)
                                     .scaledToFit()
                                     .frame(width: 25, height: 25)
-                                Text(basket.orderType == .pickup ? "Pick up the order at the restaurant" : "table number")
+                                Text(basket.orderType == .pickup ? "Pick up the order at the restaurant" : "You will receive the order at your table")
                                     .myFont(size: 15)
                                 Spacer()
                             }
@@ -55,22 +55,23 @@ struct BasketView: View {
                             Divider()
                                 .light()
                                 .padding(.horizontal)
-                            RestaurantLocationSectionView(restaurant: restaurant, type: .text)
-                                .padding()
-                            Divider()
-                                .light()
-                                .padding(.horizontal)
+                            if basket.orderType == .pickup {
+                                RestaurantLocationSectionView(restaurant: restaurant, type: .text)
+                                    .padding()
+                                Divider()
+                                    .light()
+                                    .padding(.horizontal)
+                            }
                             HStack(spacing: 10) {
                                 Image(systemName: "clock")
                                     .font(.system(size: 20))
-                                Text("You will notified with an estimate time to collect your order")
+                                Text(basket.orderType == .pickup ? "You will notified with an estimate time to collect your order" : "You will notified with an estimate time of arrival")
                                     .myFont(size: 15)
                                 Spacer()
                             }
                             .padding()
-                            Divider()
-                                .light()
-                                .padding(.horizontal)
+                            Color.backgroundGray
+                                .frame(height: 8)
                             OrderItemsView(basket: basket, restaurant: restaurant, onNavigateToRestaurant: navigateToRestaurantAction)
                                 .padding()
                             ZStack {
@@ -134,7 +135,7 @@ fileprivate struct OrderItemsView: View {
             HStack(spacing: 16) {
                 Spacer().frame(width: Self.quantityFrameWidth)
                 Button(action: { onNavigateToRestaurant(restaurant) }) {
-                    SecondaryButtonView(text: "Add more items", size: .medium) {
+                    SecondaryButtonView(text: "Add more items") {
                         Image(systemName: "plus")
                             .font(.system(size: 15))
                     }
@@ -148,7 +149,7 @@ fileprivate struct OrderItemsView: View {
                 Spacer().frame(width: Self.quantityFrameWidth)
                 Text("Total")
                 Spacer()
-                //                Text("\(basket.totalPrice.formattedAmount ?? "-") €")
+                Text("\(basket.totalPrice.formattedAmount ?? "-") €")
             }
             .myFont(size: 17, weight: .medium)
         }
