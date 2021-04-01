@@ -21,24 +21,26 @@ struct BasketView: View {
                     CustomNavigationBarView(title: "Your basket", type: .sheet, onDismiss: { presentationMode.wrappedValue.dismiss() })
                     ScrollView(showsIndicators: false) {
                         VStack(spacing: 0) {
-                            HStack {
-                                Text(restaurant.name)
-                                    .myFont(size: 23, weight: .bold)
-                                    .background(
-                                        VStack {
-                                            Spacer()
-                                            Color.myPrimaryLighter
-                                                .frame(height: 5)
-                                                .offset(x: 0, y: -7)
-                                        }
-                                    )
-                                Image(systemName: "chevron.right")
-                                    .font(.system(size: 17))
-                                    .foregroundColor(.myPrimary)
-                                
+                            Button(action: { navigateToRestaurantAction(restaurant) }) {
+                                HStack {
+                                    Text(restaurant.name)
+                                        .myFont(size: 23, weight: .bold)
+                                        .background(
+                                            VStack {
+                                                Spacer()
+                                                Color.myPrimaryLighter
+                                                    .frame(height: 5)
+                                                    .offset(x: 0, y: -7)
+                                            }
+                                        )
+                                    Image(systemName: "chevron.right")
+                                        .font(.system(size: 17))
+                                        .foregroundColor(.myPrimary)
+                                    
+                                }
+                                .padding(.horizontal, 5)
+                                .padding(.vertical)
                             }
-                            .padding(.horizontal, 5)
-                            .padding(.vertical)
                             HStack(spacing: 10) {
                                 basket.orderType.icon
                                     .resizable()
@@ -112,8 +114,10 @@ fileprivate struct OrderItemsView: View {
                 Text("Your order")
                     .myFont(size: 17, weight: .medium)
                 Spacer()
-                Text("See the menu")
-                    .myFont(size: 13, weight: .medium, color: .gray)
+                Button(action: { onNavigateToRestaurant(restaurant) }) {
+                    Text("See the menu")
+                        .myFont(size: 13, weight: .medium, color: .gray)
+                }
             }
             ForEach(basket.items, id: \.menuItem.name) { basketItem in
                 HStack(spacing: 16) {
@@ -130,9 +134,9 @@ fileprivate struct OrderItemsView: View {
             HStack(spacing: 16) {
                 Spacer().frame(width: Self.quantityFrameWidth)
                 Button(action: { onNavigateToRestaurant(restaurant) }) {
-                    SecondaryButtonView(text: "Add more items") {
+                    SecondaryButtonView(text: "Add more items", size: .medium) {
                         Image(systemName: "plus")
-                            .font(.system(size: 17))
+                            .font(.system(size: 15))
                     }
                 }
                 Spacer()

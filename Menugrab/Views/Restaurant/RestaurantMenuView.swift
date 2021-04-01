@@ -7,6 +7,15 @@
 
 import SwiftUI
 
+fileprivate enum ActiveSheet: Identifiable {
+    case moreInfo
+    case basket
+    
+    var id: Int {
+        hashValue
+    }
+}
+
 struct RestaurantMenuView: View {
     fileprivate static let menuItemsHorizontalPadding: CGFloat = 16
     private static let initialImageHeight: CGFloat = 200
@@ -16,8 +25,7 @@ struct RestaurantMenuView: View {
     @StateObject var viewModel: RestaurantMenuViewModel
     @State private var isHeaderVisible = false
     @State private var headerTopPadding: CGSize? = nil
-    @State private var showingMoreInfoSheet = false
-    @State private var showingBasketSheet = false
+    @State private var activeSheet: ActiveSheet? = nil
     
     private func scrollOffset(_ geometry: GeometryProxy) -> CGFloat {
         geometry.frame(in: .global).minY
@@ -65,7 +73,7 @@ struct RestaurantMenuView: View {
                         }
                         .frame(height: Self.initialImageHeight)
                         VStack(spacing: 0) {
-                            RestaurantHeaderView(restaurant: viewModel.restaurant, onMoreInfoButtonTapped: { showingMoreInfoSheet = true })
+                            RestaurantHeaderView(restaurant: viewModel.restaurant, onMoreInfoButtonTapped: { activeSheet = .moreInfo })
                                 .padding(.horizontal)
                                 .padding(.bottom)
                             if let menu = viewModel.menu.value {
@@ -102,7 +110,10 @@ struct RestaurantMenuView: View {
                 if let basketRestaurant = viewModel.basket.restaurant, basketRestaurant == viewModel.restaurant, viewModel.basket.isValid {
                     VStack {
                         Spacer()
-                        BasketFloatingButtonView(totalQuantity: viewModel.basket.totalQuantity, totalPrice: viewModel.basket.totalPrice, showingBasketSheet: $showingBasketSheet)
+                        Button(action: { activeSheet = .basket }) {
+                            BasketFloatingButtonView(totalQuantity: viewModel.basket.totalQuantity, totalPrice: viewModel.basket.totalPrice)
+                        }
+                        .buttonStyle(PlainButtonStyle())
                     }
                     .padding(.bottom, 24)
                 }
@@ -133,16 +144,19 @@ struct RestaurantMenuView: View {
             .animation(.linear(duration: 0.1), value: viewModel.menu.value == nil)
         }
         .navigationViewStyle(StackNavigationViewStyle())
-        .sheet(isPresented: $showingMoreInfoSheet) {
-            RestaurantMoreInfoView(restaurant: viewModel.restaurant)
-        }
-        .sheet(isPresented: $showingBasketSheet) {
-            BasketView(
-                viewModel: .init(container: viewModel.container),
-                navigateToRestaurantAction: { _ in 
-                    showingBasketSheet = false
-                }
-            )
+        .sheet(item: $activeSheet) { item in
+            switch item {
+            case .moreInfo:
+                RestaurantMoreInfoView(restaurant: viewModel.restaurant)
+            case .basket:
+                BasketView(
+                    viewModel: .init(container: viewModel.container),
+                    navigateToRestaurantAction: { _ in
+                        activeSheet = nil
+                    }
+                )
+            }
+            
         }
         .alert(isPresented: $viewModel.showingExistingBasketAlert) {
             Alert(
@@ -327,7 +341,6 @@ private struct ModifyQuantityButton: View {
 fileprivate struct BasketFloatingButtonView: View {
     let totalQuantity: Int
     let totalPrice: Decimal
-    @Binding var showingBasketSheet: Bool
     
     var body: some View {
         HStack(spacing: 12) {
@@ -338,10 +351,9 @@ fileprivate struct BasketFloatingButtonView: View {
                     Color.myPrimaryDarker
                         .cornerRadius(4)
                 )
-            Button(action: { showingBasketSheet = true }) {
-                Text("View basket")
-                    .myFont(size: 17, weight: .bold)
-            }
+            Text("View basket")
+                .myFont(size: 17, weight: .bold)
+            
             Spacer()
             Text("\(totalPrice.formattedAmount ?? "-") €")
                 .myFont(size: 17, weight: .bold)

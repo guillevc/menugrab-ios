@@ -7,12 +7,28 @@
 
 import SwiftUI
 
+enum SecondaryButtonViewSize {
+    case big
+    case medium
+}
+
 struct SecondaryButtonView<Icon: View>: View {
     let text: String
+    let size: SecondaryButtonViewSize
     let icon: Icon
     
-    init(text: String, @ViewBuilder icon: @escaping () -> Icon) {
+    var textSize: CGFloat {
+        switch size {
+        case .big:
+            return 15
+        case .medium:
+            return 13
+        }
+    }
+    
+    init(text: String, size: SecondaryButtonViewSize = .big, @ViewBuilder icon: @escaping () -> Icon) {
         self.text = text
+        self.size = size
         self.icon = icon()
     }
     
@@ -21,7 +37,7 @@ struct SecondaryButtonView<Icon: View>: View {
             icon
                 .foregroundColor(.myPrimary)
             Text(text)
-                .myFont(size: 15, weight: .medium, color: .myPrimary)
+                .myFont(size: textSize, weight: .medium, color: .myPrimary)
         }
         .padding(.vertical, 8)
         .padding(.horizontal)

@@ -12,6 +12,7 @@ final class RestaurantMenuViewModel: NSObject, ObservableObject {
     let restaurant: Restaurant
     @Published var menu: Loadable<Menu>
     @Published var basket: Basket
+    @Published var currentOrderType = OrderType.pickup
     @Published var showingExistingBasketAlert = false
     var pendingMenuItemIncrement: MenuItem? = nil
     
