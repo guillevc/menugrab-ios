@@ -22,7 +22,7 @@ final class OrdersViewModel: NSObject, ObservableObject {
     }
     
     func loadUserOrders() {
-        guard let userId = container.appState.value.currentUser?.uid else { return }
+        guard let userId = container.appState[\.currentUser]?.uid else { return }
         
         container.services.ordersService
             .loadByUserId(orders: loadableBinding(\.orders), userId: userId)

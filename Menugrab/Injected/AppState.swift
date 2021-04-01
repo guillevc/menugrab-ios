@@ -9,6 +9,19 @@ import Foundation
 import CoreLocation
 
 struct AppState: Equatable {
+    var currentUser: User?
+    var location: CLLocation?
+    var basket: Basket
+    var permissions = Permissions()
+    
+    static var defaultValue: Self {
+        Self(currentUser: nil, basket: Basket(orderType: .pickup))
+    }
+}
+
+// MARK: - Permissions
+
+extension AppState {
     struct Permissions: Equatable {
         var location: Permission.Status = .unknown
     }
@@ -20,17 +33,7 @@ struct AppState: Equatable {
             return pathToPermissions.appending(path: \.location)
         }
     }
-    
-    var currentUser: User?
-    var location: CLLocation?
-    var basket: Basket
-    var permissions = Permissions()
-    
-    static var defaultValue: Self {
-        Self(currentUser: nil, basket: Basket(orderType: .pickup))
-    }
 }
-
 
 #if DEBUG
 extension AppState {

@@ -14,6 +14,7 @@ struct HomeView: View {
     @State private var showingActionSheet = false
     @State private var showingBasketSheet = false
     @State private var showingHomeSearchViewSheet = false
+    @State private var selectedRestaurantId: String? = nil
     
     private var locationSelectorButtonText: String {
         viewModel.container.appState[\.location] == nil ? "Select location" : "Current location"
@@ -94,7 +95,13 @@ struct HomeView: View {
             }
             .navigationBarHidden(true)
             .sheet(isPresented: $showingBasketSheet) {
-                BasketView(viewModel: .init(container: viewModel.container))
+                BasketView(
+                    viewModel: .init(container: viewModel.container),
+                    navigateToRestaurantAction: { restaurant in
+                        showingBasketSheet = false
+                        selectedRestaurantId = restaurant.id
+                    }
+                )
             }
         }
         .actionSheet(isPresented: $showingActionSheet) {
@@ -149,7 +156,7 @@ struct HomeView: View {
                     .padding(.horizontal)
                     .padding(.top, 10)
                 ForEach(Array(restaurants.enumerated()), id: \.offset) { index, restaurant in
-                    NavigationLink(destination: RestaurantMenuView(viewModel: .init(container: viewModel.container, restaurant: restaurant))) {
+                    NavigationLink(destination: RestaurantMenuView(viewModel: .init(container: viewModel.container, restaurant: restaurant)), tag: restaurant.id, selection: $selectedRestaurantId) {
                         RestaurantCellView(restaurant: restaurant, container: viewModel.container)
                             .padding(.horizontal)
                             .padding(.top, 20)

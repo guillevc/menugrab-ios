@@ -26,7 +26,7 @@ final class RestaurantMenuViewModel: NSObject, ObservableObject {
         self.container = container
         self.restaurant = restaurant
         _menu = .init(wrappedValue: menu)
-        _basket = .init(wrappedValue: container.appState.value.basket)
+        _basket = .init(wrappedValue: container.appState[\.basket])
         super.init()
         container.appState.updates(for: \.basket)
             .assign(to: \.basket, on: self)
@@ -51,7 +51,7 @@ final class RestaurantMenuViewModel: NSObject, ObservableObject {
     }
     
     func decrementBasketQuantityOfMenuItem(_ menuItem:  MenuItem) {
-        container.appState.value.basket.decrementQuantityOfMenuItem(menuItem)
+        container.appState[\.basket].decrementQuantityOfMenuItem(menuItem)
     }
     
     func onExistingBasketAlertAccepted() {

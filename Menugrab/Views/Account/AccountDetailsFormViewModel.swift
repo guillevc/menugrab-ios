@@ -20,7 +20,7 @@ final class AccountDetailsFormViewModel: NSObject, ObservableObject {
         container: DIContainer
     ) {
         self.container = container
-        let currentUser = container.appState.value.currentUser
+        let currentUser = container.appState[\.currentUser]
         self.name = currentUser?.displayName ?? ""
         self.email = currentUser?.email ?? ""
     }

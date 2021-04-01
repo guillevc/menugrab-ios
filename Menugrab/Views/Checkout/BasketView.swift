@@ -11,12 +11,11 @@ struct BasketView: View {
     @Environment(\.presentationMode) private var presentationMode
     
     @StateObject var viewModel: BasketViewModel
-    private var basket: Basket {
-        viewModel.container.appState.value.basket
-    }
+    var navigateToRestaurantAction: (Restaurant) -> ()
     
     var body: some View {
         GeometryReader { geometry in
+            let basket = viewModel.container.appState[\.basket]
             if let restaurant = basket.restaurant {
                 VStack(spacing: 0) {
                     CustomNavigationBarView(title: "Your basket", type: .sheet, onDismiss: { presentationMode.wrappedValue.dismiss() })
@@ -70,7 +69,7 @@ struct BasketView: View {
                             Divider()
                                 .light()
                                 .padding(.horizontal)
-                            OrderItemsView(basket: basket)
+                            OrderItemsView(basket: basket, restaurant: restaurant, onNavigateToRestaurant: navigateToRestaurantAction)
                                 .padding()
                             ZStack {
                                 ZigZagBackgroundView(color: .backgroundGray, numberOfTriangles: 20, triangleHeight: 10)
@@ -104,6 +103,8 @@ struct BasketView: View {
 fileprivate struct OrderItemsView: View {
     private static let quantityFrameWidth: CGFloat = 26
     let basket: Basket
+    let restaurant: Restaurant
+    let onNavigateToRestaurant: (Restaurant) -> ()
     
     var body: some View {
         VStack(spacing: 8) {
@@ -128,9 +129,11 @@ fileprivate struct OrderItemsView: View {
             }
             HStack(spacing: 16) {
                 Spacer().frame(width: Self.quantityFrameWidth)
-                SecondaryButtonView(text: "Add more items") {
-                    Image(systemName: "plus")
-                        .font(.system(size: 17))
+                Button(action: { onNavigateToRestaurant(restaurant) }) {
+                    SecondaryButtonView(text: "Add more items") {
+                        Image(systemName: "plus")
+                            .font(.system(size: 17))
+                    }
                 }
                 Spacer()
             }
@@ -150,7 +153,7 @@ fileprivate struct OrderItemsView: View {
 
 struct BasketView_Previews: PreviewProvider {
     static var previews: some View {
-        BasketView(viewModel: .init(container: .preview))
+        BasketView(viewModel: .init(container: .preview), navigateToRestaurantAction: { _ in })
             .previewDevice(.init(rawValue: "iPhone 11 Pro"))
     }
 }

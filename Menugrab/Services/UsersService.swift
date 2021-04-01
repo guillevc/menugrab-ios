@@ -94,7 +94,7 @@ struct UsersServiceImpl: UsersService {
     }
     
     func updateUser(displayName: String, email: String, password: String) {
-        guard let currentUser = appState.value.currentUser else { return }
+        guard let currentUser = appState[\.currentUser] else { return }
         let createProfileChangeRequest = currentUser.createProfileChangeRequest()
         createProfileChangeRequest.displayName = displayName
         createProfileChangeRequest.commitChanges(completion: nil)
@@ -104,7 +104,7 @@ struct UsersServiceImpl: UsersService {
     
     func registerFirebaseAuthListeners() {
         Auth.auth().addStateDidChangeListener { (_, user) in
-            appState.value.currentUser = user
+            appState[\.currentUser] = user
         }
     }
 }
