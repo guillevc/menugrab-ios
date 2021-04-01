@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-enum OrderType: String, Decodable, CaseIterable {
+enum OrderType: String, Decodable, Encodable, CaseIterable {
     case table = "ORDER_TYPE_TABLE"
     case pickup = "ORDER_TYPE_PICKUP"
     
@@ -74,4 +74,26 @@ struct OrderItem: Decodable {
     var totalPrice: Decimal {
         menuItem.price * Decimal(quantity)
     }
+}
+
+// MARK: - DTOs
+
+struct CreateOrderDTO: Encodable {
+    let restaurantId: String
+    let orderType: OrderType
+    let items: [CreateOrderItemDTO]
+    
+    init?(from basket: Basket) {
+        guard let restaurant = basket.restaurant else { return nil }
+        restaurantId = restaurant.id
+        orderType = basket.orderType
+        items = basket.items.map {
+            return CreateOrderItemDTO(menuItemId: $0.menuItem.id, quantity: $0.quantity)
+        }
+    }
+}
+
+struct CreateOrderItemDTO: Encodable {
+    let menuItemId: String
+    let quantity: Int
 }

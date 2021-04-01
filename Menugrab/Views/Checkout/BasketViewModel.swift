@@ -10,10 +10,18 @@ import Foundation
 final class BasketViewModel: NSObject, ObservableObject {
     let container: DIContainer
     private var anyCancellableBag = AnyCancellableBag()
+    @Published var createdOrder: Loadable<Order>
     
     init(
-        container: DIContainer
+        container: DIContainer,
+        createdOrder: Loadable<Order> = .notRequested
     ) {
         self.container = container
+        _createdOrder = .init(wrappedValue: createdOrder)
+    }
+    
+    func createOrderFromCurrentBasket() {
+        let basket = container.appState[\.basket]
+        container.services.ordersService.create(order: loadableBinding(\.createdOrder), from: basket)
     }
 }

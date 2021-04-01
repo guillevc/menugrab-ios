@@ -10,6 +10,7 @@ import SwiftUI
 
 protocol OrdersService {
     func loadByUserId(orders: Binding<Loadable<[Order]>>, userId: String)
+    func create(order: Binding<Loadable<Order>>, from basket: Basket)
 }
 
 struct OrdersServiceImpl: OrdersService {
@@ -30,8 +31,20 @@ struct OrdersServiceImpl: OrdersService {
             .sinkToLoadable({ orders.wrappedValue = $0 })
             .store(in: anyCancellableBag)
     }
+    
+    func create(order: Binding<Loadable<Order>>, from basket: Basket) {
+        guard let createOrderDTO = CreateOrderDTO.init(from: basket) else { return }
+        let anyCancellableBag = AnyCancellableBag()
+        
+        order.wrappedValue.setIsLoading(bag: anyCancellableBag)
+        
+        webRepository.createOrder(createOrderDTO: createOrderDTO)
+            .sinkToLoadable({ order.wrappedValue = $0 })
+            .store(in: anyCancellableBag)
+    }
 }
 
 struct OrdersServiceStub: OrdersService {
     func loadByUserId(orders: Binding<Loadable<[Order]>>, userId: String) { }
+    func create(order: Binding<Loadable<Order>>, from basket: Basket) { }
 }

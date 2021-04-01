@@ -76,14 +76,16 @@ struct BasketView: View {
                                 .padding()
                             ZStack {
                                 ZigZagBackgroundView(color: .backgroundGray, numberOfTriangles: 20, triangleHeight: 10)
-                                Color.myPrimary
-                                    .cornerRadius(16)
-                                    .frame(width: 325, height: 50, alignment: .center)
-                                    .overlay(
-                                        Text("Check out")
-                                            .myFont(size: 17, weight: .bold)
-                                    )
-                                    .padding(.top, 40)
+                                Button(action: { viewModel.createOrderFromCurrentBasket() }) {
+                                    Color.myPrimary
+                                        .cornerRadius(16)
+                                        .frame(width: 325, height: 50, alignment: .center)
+                                        .overlay(
+                                            Text("Check out")
+                                                .myFont(size: 17, weight: .bold)
+                                        )
+                                        .padding(.top, 40)
+                                }
                             }
                             .padding(.bottom, geometry.safeAreaInsets.bottom)
                             .background(Color.backgroundGray)

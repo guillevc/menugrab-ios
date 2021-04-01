@@ -10,6 +10,7 @@ import Combine
 
 protocol OrdersWebRepository: WebRepository {
     func loadOrdersByUserId(userId: String) -> AnyPublisher<[Order], Error>
+    func createOrder(createOrderDTO: CreateOrderDTO) -> AnyPublisher<Order, Error>
 }
 
 struct OrdersWebRepositoryImpl: OrdersWebRepository {
@@ -20,12 +21,17 @@ struct OrdersWebRepositoryImpl: OrdersWebRepository {
     func loadOrdersByUserId(userId: String) -> AnyPublisher<[Order], Error> {
         call(endpoint: OrdersWebRepositoryAPI.ordersByUserId(userId: userId))
     }
+    
+    func createOrder(createOrderDTO: CreateOrderDTO) -> AnyPublisher<Order, Error> {
+        call(endpoint: OrdersWebRepositoryAPI.createOrder(createOrderDTO: createOrderDTO))
+    }
 }
 
 // MARK: - Endpoints
 
 fileprivate enum OrdersWebRepositoryAPI {
     case ordersByUserId(userId: String)
+    case createOrder(createOrderDTO: CreateOrderDTO)
 }
 
 extension OrdersWebRepositoryAPI: APICall {
@@ -33,6 +39,8 @@ extension OrdersWebRepositoryAPI: APICall {
         switch self {
         case .ordersByUserId(let userId):
             return "/users/\(userId)/orders"
+        case .createOrder:
+            return "/orders"
         }
     }
     
@@ -40,17 +48,24 @@ extension OrdersWebRepositoryAPI: APICall {
         switch self {
         case .ordersByUserId:
             return "GET"
+        case .createOrder:
+            return "POST"
         }
     }
     
     var headers: [String: String]? {
-        return ["Accept": "application/json"]
+        [
+            "Accept": "application/json",
+            "Content-Type": "application/json"
+        ]
     }
     
     func body() throws -> Data? {
         switch self {
         case .ordersByUserId:
             return nil
+        case .createOrder(let createOrderDTO):
+            return try JSONEncoder().encode(createOrderDTO)
         }
     }
 }
