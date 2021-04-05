@@ -96,7 +96,14 @@ struct HomeView: View {
             .navigationBarHidden(true)
             .sheet(isPresented: $showingBasketSheet) {
                 BasketView(
-                    viewModel: .init(container: viewModel.container),
+                    viewModel: .init(
+                        container: viewModel.container,
+                        navigateToCompletedOrderAction: { newOrder in
+                            showingBasketSheet = false
+                            // TODO: show order
+                            print(newOrder.id)
+                        }
+                    ),
                     navigateToRestaurantAction: { restaurant in
                         showingBasketSheet = false
                         selectedRestaurantId = restaurant.id

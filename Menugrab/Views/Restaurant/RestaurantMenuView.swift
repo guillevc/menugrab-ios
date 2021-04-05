@@ -150,7 +150,15 @@ struct RestaurantMenuView: View {
                 RestaurantMoreInfoView(restaurant: viewModel.restaurant)
             case .basket:
                 BasketView(
-                    viewModel: .init(container: viewModel.container),
+                    viewModel: .init(
+                        container: viewModel.container,
+                        navigateToCompletedOrderAction: { newOrder in
+                            activeSheet = nil
+                            presentationMode.wrappedValue.dismiss()
+                            // TODO: show order
+                            print(newOrder.id)
+                        }
+                    ),
                     navigateToRestaurantAction: { _ in
                         activeSheet = nil
                     }

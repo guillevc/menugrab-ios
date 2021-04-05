@@ -125,7 +125,7 @@ extension Menu {
     ]
 }
 extension Basket {
-    static let sampleBasketItems: [BasketItem] = {
+    static let sampleBasketItems: [OrderItem] = {
         [
             .init(menuItem: Menu.sampleMenuItemCategories[0].menuItems[0], quantity: 5),
             .init(menuItem: Menu.sampleMenuItemCategories[0].menuItems[1], quantity: 1),

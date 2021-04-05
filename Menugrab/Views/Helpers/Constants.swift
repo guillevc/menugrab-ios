@@ -12,4 +12,6 @@ enum Constants {
     
     static let formBigSpacing: CGFloat = 30
     static let formSmallSpacing: CGFloat = 1
+    
+    static let orderItemsListSpacing: CGFloat = 8
 }

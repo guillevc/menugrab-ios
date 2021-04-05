@@ -11,7 +11,7 @@ import Combine
 struct Basket: Equatable {
     var restaurant: Restaurant?
     var orderType: OrderType
-    var items: [BasketItem] = []
+    var items: [OrderItem] = []
     
     var isValid: Bool {
         restaurant != nil && !items.isEmpty
@@ -33,7 +33,7 @@ struct Basket: Equatable {
         if let basketItemIndex = items.firstIndex(where: { $0.menuItem == menuItem }) {
             items[basketItemIndex].quantity += 1
         } else {
-            let newBasketItem = BasketItem(menuItem: menuItem)
+            let newBasketItem = OrderItem(menuItem: menuItem)
             items.append(newBasketItem)
         }
     }
@@ -49,21 +49,5 @@ struct Basket: Equatable {
     
     mutating func removeAllItems() {
         items.removeAll()
-    }
-}
-
-
-
-struct BasketItem: Equatable {
-    let menuItem: MenuItem
-    var quantity: Int
-    
-    init(menuItem: MenuItem, quantity: Int = 1) {
-        self.menuItem = menuItem
-        self.quantity = quantity
-    }
-    
-    var totalPrice: Decimal {
-        menuItem.price * Decimal(quantity)
     }
 }

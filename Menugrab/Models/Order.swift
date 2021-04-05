@@ -46,7 +46,7 @@ enum OrderState: String, Decodable, CaseIterable {
     }
 }
 
-struct Order: Identifiable, Decodable {
+struct Order: Identifiable, Decodable, Equatable {
     let id: String
     let orderType: OrderType
     let date: Date
@@ -67,12 +67,17 @@ struct Order: Identifiable, Decodable {
     }
 }
 
-struct OrderItem: Decodable {
+struct OrderItem: Equatable, Decodable {
     let menuItem: MenuItem
-    let quantity: Int
+    var quantity: Int
     
     var totalPrice: Decimal {
         menuItem.price * Decimal(quantity)
+    }
+    
+    init(menuItem: MenuItem, quantity: Int = 1) {
+        self.menuItem = menuItem
+        self.quantity = quantity
     }
 }
 

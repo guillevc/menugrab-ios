@@ -11,7 +11,7 @@ struct BasketView: View {
     @Environment(\.presentationMode) private var presentationMode
     
     @StateObject var viewModel: BasketViewModel
-    var navigateToRestaurantAction: (Restaurant) -> ()
+    let navigateToRestaurantAction: (Restaurant) -> ()
     
     var body: some View {
         GeometryReader { geometry in
@@ -22,22 +22,7 @@ struct BasketView: View {
                     ScrollView(showsIndicators: false) {
                         VStack(spacing: 0) {
                             Button(action: { navigateToRestaurantAction(restaurant) }) {
-                                HStack {
-                                    Text(restaurant.name)
-                                        .myFont(size: 23, weight: .bold)
-                                        .background(
-                                            VStack {
-                                                Spacer()
-                                                Color.myPrimaryLighter
-                                                    .frame(height: 5)
-                                                    .offset(x: 0, y: -7)
-                                            }
-                                        )
-                                    Image(systemName: "chevron.right")
-                                        .font(.system(size: 17))
-                                        .foregroundColor(.myPrimary)
-                                    
-                                }
+                                RestaurantNameTitleView(restaurantName: restaurant.name)
                                 .padding(.horizontal, 5)
                                 .padding(.vertical)
                             }
@@ -112,7 +97,7 @@ fileprivate struct OrderItemsView: View {
     let onNavigateToRestaurant: (Restaurant) -> ()
     
     var body: some View {
-        VStack(spacing: 8) {
+        VStack(spacing: Constants.orderItemsListSpacing) {
             HStack {
                 Text("Your order")
                     .myFont(size: 17, weight: .medium)
@@ -123,16 +108,7 @@ fileprivate struct OrderItemsView: View {
                 }
             }
             ForEach(basket.items, id: \.menuItem.name) { basketItem in
-                HStack(spacing: 16) {
-                    Text("\(basketItem.quantity)x")
-                        .myFont(size: 15)
-                        .frame(width: Self.quantityFrameWidth, alignment: .trailing)
-                    Text(basketItem.menuItem.name)
-                        .myFont(size: 15)
-                    Spacer()
-                    Text("\(basketItem.totalPrice.formattedAmount ?? "-") €")
-                        .myFont(size: 15)
-                }
+                OrderItemView(orderItem: basketItem, quantityFrameWidth: Self.quantityFrameWidth)
             }
             HStack(spacing: 16) {
                 Spacer().frame(width: Self.quantityFrameWidth)
@@ -147,20 +123,14 @@ fileprivate struct OrderItemsView: View {
             .padding(.vertical, 6)
             Divider()
                 .light()
-            HStack(spacing: 16) {
-                Spacer().frame(width: Self.quantityFrameWidth)
-                Text("Total")
-                Spacer()
-                Text("\(basket.totalPrice.formattedAmount ?? "-") €")
-            }
-            .myFont(size: 17, weight: .medium)
+            OrderItemsTotalPriceView(totalPrice: basket.totalPrice, quantityFrameWidth: Self.quantityFrameWidth)
         }
     }
 }
 
 struct BasketView_Previews: PreviewProvider {
     static var previews: some View {
-        BasketView(viewModel: .init(container: .preview), navigateToRestaurantAction: { _ in })
+        BasketView(viewModel: .init(container: .preview, navigateToCompletedOrderAction: { _ in }), navigateToRestaurantAction: { _ in })
             .previewDevice(.init(rawValue: "iPhone 11 Pro"))
     }
 }

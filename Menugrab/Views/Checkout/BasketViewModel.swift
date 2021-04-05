@@ -9,19 +9,29 @@ import Foundation
 
 final class BasketViewModel: NSObject, ObservableObject {
     let container: DIContainer
+    let navigateToCompletedOrderAction: (Order) -> ()
     private var anyCancellableBag = AnyCancellableBag()
-    @Published var createdOrder: Loadable<Order>
     
     init(
         container: DIContainer,
-        createdOrder: Loadable<Order> = .notRequested
+        navigateToCompletedOrderAction: @escaping (Order) -> ()
     ) {
         self.container = container
-        _createdOrder = .init(wrappedValue: createdOrder)
+        self.navigateToCompletedOrderAction = navigateToCompletedOrderAction
     }
     
     func createOrderFromCurrentBasket() {
         let basket = container.appState[\.basket]
-        container.services.ordersService.create(order: loadableBinding(\.createdOrder), from: basket)
+        container.services.ordersService.createOrder(from: basket)?
+            .sink(receiveCompletion: { subscriptionCompletion in
+                if case let .failure(error) = subscriptionCompletion {
+                    // TODO: handle order error
+                    print(error.localizedDescription)
+                }
+            }, receiveValue: { order in
+                self.container.appState[\.basket].removeAllItems()
+                self.navigateToCompletedOrderAction(order)
+            })
+            .store(in: anyCancellableBag)
     }
 }
