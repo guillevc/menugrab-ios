@@ -23,6 +23,8 @@ struct RestaurantMenuView: View {
     @Environment(\.presentationMode) private var presentationMode
     
     @StateObject var viewModel: RestaurantMenuViewModel
+    let navigateToCompletedOrderAction: (Order) -> ()
+    
     @State private var isHeaderVisible = false
     @State private var headerTopPadding: CGSize? = nil
     @State private var activeSheet: ActiveSheet? = nil
@@ -155,8 +157,7 @@ struct RestaurantMenuView: View {
                         navigateToCompletedOrderAction: { newOrder in
                             activeSheet = nil
                             presentationMode.wrappedValue.dismiss()
-                            // TODO: show order
-                            print(newOrder.id)
+                            self.navigateToCompletedOrderAction(newOrder)
                         }
                     ),
                     navigateToRestaurantAction: { _ in
@@ -377,7 +378,14 @@ fileprivate struct BasketFloatingButtonView: View {
 
 struct RestaurantDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        RestaurantMenuView(viewModel: .init(container: .preview, restaurant: Restaurant.sampleRestaurants.first!, menu: .loaded(Menu.sampleMenu)))
-            .previewDevice(PreviewDevice(rawValue: "iPhone 11 Pro"))
+        RestaurantMenuView(
+            viewModel: .init(
+                container: .preview,
+                restaurant: Restaurant.sampleRestaurants.first!,
+                menu: .loaded(Menu.sampleMenu)
+            ),
+            navigateToCompletedOrderAction: { _ in }
+        )
+        .previewDevice(PreviewDevice(rawValue: "iPhone 11 Pro"))
     }
 }

@@ -7,14 +7,28 @@
 
 import SwiftUI
 
+fileprivate enum FullScreenCoverItem: Identifiable {
+    case search
+    case orderDetails(order: Order)
+    
+    var id: String {
+        switch self {
+        case .search:
+            return "search"
+        case let .orderDetails(order):
+            return "orderDetails[\(order.id)]"
+        }
+    }
+}
+
 struct HomeView: View {
     @StateObject var viewModel: HomeViewModel
     
     @State private var showingLocationSelector = false
     @State private var showingActionSheet = false
     @State private var showingBasketSheet = false
-    @State private var showingHomeSearchViewSheet = false
     @State private var selectedRestaurantId: String? = nil
+    @State private var activeFullScreenCover: FullScreenCoverItem? = nil
     
     private var locationSelectorButtonText: String {
         viewModel.container.appState[\.location] == nil ? "Select location" : "Current location"
@@ -100,8 +114,9 @@ struct HomeView: View {
                         container: viewModel.container,
                         navigateToCompletedOrderAction: { newOrder in
                             showingBasketSheet = false
-                            // TODO: show order
-                            print(newOrder.id)
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
+                                activeFullScreenCover = .orderDetails(order: newOrder)
+                            }
                         }
                     ),
                     navigateToRestaurantAction: { restaurant in
@@ -128,8 +143,13 @@ struct HomeView: View {
                 .cancel()
             ])
         }
-        .fullScreenCover(isPresented: $showingHomeSearchViewSheet) {
-            HomeSearchView(container: viewModel.container, restaurants: viewModel.nearbyRestaurants.value ?? [])
+        .fullScreenCover(item: $activeFullScreenCover) { item in
+            switch item {
+            case .search:
+                HomeSearchView(container: viewModel.container, restaurants: viewModel.nearbyRestaurants.value ?? [])
+            case let .orderDetails(createdOrder):
+                OrderDetailsView(order: createdOrder)
+            }
         }
         .onAppear {
             viewModel.resolveLocationPermissionStatus()
@@ -143,7 +163,7 @@ struct HomeView: View {
             VStack(spacing: 0) {
                 RestaurantSearchInputView(type: .display(onSliderTapped: { showingActionSheet = true }))
                     .onTapGesture {
-                        showingHomeSearchViewSheet = true
+                        activeFullScreenCover = .search
                     }
                     .buttonStyle(PlainButtonStyle())
                     .padding()
@@ -163,7 +183,20 @@ struct HomeView: View {
                     .padding(.horizontal)
                     .padding(.top, 10)
                 ForEach(Array(restaurants.enumerated()), id: \.offset) { index, restaurant in
-                    NavigationLink(destination: RestaurantMenuView(viewModel: .init(container: viewModel.container, restaurant: restaurant)), tag: restaurant.id, selection: $selectedRestaurantId) {
+                    NavigationLink(
+                        destination: RestaurantMenuView(
+                            viewModel: .init(
+                                container: viewModel.container,
+                                restaurant: restaurant
+                            ),
+                            navigateToCompletedOrderAction: { newOrder in
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
+                                    activeFullScreenCover = .orderDetails(order: newOrder)
+                                }
+                            }
+                        ),
+                        tag: restaurant.id, selection: $selectedRestaurantId
+                    ) {
                         RestaurantCellView(restaurant: restaurant, container: viewModel.container)
                             .padding(.horizontal)
                             .padding(.top, 20)

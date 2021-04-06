@@ -11,7 +11,7 @@ import Combine
 struct Basket: Equatable {
     var restaurant: Restaurant?
     var orderType: OrderType
-    var items: [OrderItem] = []
+    private(set) var items: [OrderItem] = []
     
     var isValid: Bool {
         restaurant != nil && !items.isEmpty
