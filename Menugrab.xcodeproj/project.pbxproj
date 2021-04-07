@@ -22,6 +22,13 @@
 		B33D527625AE5B7C003ADD1A /* Models+SampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B33D527525AE5B7C003ADD1A /* Models+SampleData.swift */; };
 		B344A5D525FBFD4B005E6F6F /* OrdersService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B344A5D425FBFD4B005E6F6F /* OrdersService.swift */; };
 		B344A5DA25FBFE95005E6F6F /* OrdersWebRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B344A5D925FBFE95005E6F6F /* OrdersWebRepository.swift */; };
+		B3495BA3261E6A210057580E /* MenugrabAppClipApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3495BA2261E6A210057580E /* MenugrabAppClipApp.swift */; };
+		B3495BA5261E6A210057580E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3495BA4261E6A210057580E /* ContentView.swift */; };
+		B3495BA7261E6A270057580E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B3495BA6261E6A270057580E /* Assets.xcassets */; };
+		B3495BAA261E6A270057580E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B3495BA9261E6A270057580E /* Preview Assets.xcassets */; };
+		B3495BB6261E6A270057580E /* MenugrabAppClipTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3495BB5261E6A270057580E /* MenugrabAppClipTests.swift */; };
+		B3495BC1261E6A270057580E /* MenugrabAppClipUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3495BC0261E6A270057580E /* MenugrabAppClipUITests.swift */; };
+		B3495BC5261E6A270057580E /* MenugrabAppClip.app in Embed App Clips */ = {isa = PBXBuildFile; fileRef = B3495BA0261E6A210057580E /* MenugrabAppClip.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		B34B4119259F559400C64D34 /* ZigZagBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B34B4118259F559400C64D34 /* ZigZagBackgroundView.swift */; };
 		B35129962612579200BC6AAB /* UserPermissionsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B35129952612579200BC6AAB /* UserPermissionsService.swift */; };
 		B35B9D1E259D765100488D75 /* Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = B35B9D1D259D765100488D75 /* Menu.swift */; };
@@ -92,6 +99,27 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		B3495BB2261E6A270057580E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B38B6365259CE45000378052 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B3495B9F261E6A210057580E;
+			remoteInfo = MenugrabAppClip;
+		};
+		B3495BBD261E6A270057580E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B38B6365259CE45000378052 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B3495B9F261E6A210057580E;
+			remoteInfo = MenugrabAppClip;
+		};
+		B3495BC3261E6A270057580E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B38B6365259CE45000378052 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B3495B9F261E6A210057580E;
+			remoteInfo = MenugrabAppClip;
+		};
 		B38B637F259CE45400378052 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = B38B6365259CE45000378052 /* Project object */;
@@ -108,6 +136,20 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		B3495BC6261E6A270057580E /* Embed App Clips */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/AppClips";
+			dstSubfolderSpec = 16;
+			files = (
+				B3495BC5261E6A270057580E /* MenugrabAppClip.app in Embed App Clips */,
+			);
+			name = "Embed App Clips";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		B30AAB1C25B47EDC00EC9EBA /* RoundedRectangleSpecificCorners.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedRectangleSpecificCorners.swift; sourceTree = "<group>"; };
 		B3147BF025B51D87007EF4D7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -123,6 +165,19 @@
 		B33D527525AE5B7C003ADD1A /* Models+SampleData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Models+SampleData.swift"; sourceTree = "<group>"; };
 		B344A5D425FBFD4B005E6F6F /* OrdersService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdersService.swift; sourceTree = "<group>"; };
 		B344A5D925FBFE95005E6F6F /* OrdersWebRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdersWebRepository.swift; sourceTree = "<group>"; };
+		B3495BA0261E6A210057580E /* MenugrabAppClip.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MenugrabAppClip.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B3495BA2261E6A210057580E /* MenugrabAppClipApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenugrabAppClipApp.swift; sourceTree = "<group>"; };
+		B3495BA4261E6A210057580E /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		B3495BA6261E6A270057580E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		B3495BA9261E6A270057580E /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		B3495BAB261E6A270057580E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B3495BAC261E6A270057580E /* MenugrabAppClip.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MenugrabAppClip.entitlements; sourceTree = "<group>"; };
+		B3495BB1261E6A270057580E /* MenugrabAppClipTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MenugrabAppClipTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		B3495BB5261E6A270057580E /* MenugrabAppClipTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenugrabAppClipTests.swift; sourceTree = "<group>"; };
+		B3495BB7261E6A270057580E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B3495BBC261E6A270057580E /* MenugrabAppClipUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MenugrabAppClipUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		B3495BC0261E6A270057580E /* MenugrabAppClipUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenugrabAppClipUITests.swift; sourceTree = "<group>"; };
+		B3495BC2261E6A270057580E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B34B4118259F559400C64D34 /* ZigZagBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZigZagBackgroundView.swift; sourceTree = "<group>"; };
 		B35129952612579200BC6AAB /* UserPermissionsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPermissionsService.swift; sourceTree = "<group>"; };
 		B35B9D1D259D765100488D75 /* Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Menu.swift; sourceTree = "<group>"; };
@@ -202,6 +257,27 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		B3495B9D261E6A210057580E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B3495BAE261E6A270057580E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B3495BB9261E6A270057580E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B38B636A259CE45000378052 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -227,6 +303,45 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B3495BA1261E6A210057580E /* MenugrabAppClip */ = {
+			isa = PBXGroup;
+			children = (
+				B3495BA2261E6A210057580E /* MenugrabAppClipApp.swift */,
+				B3495BA4261E6A210057580E /* ContentView.swift */,
+				B3495BA6261E6A270057580E /* Assets.xcassets */,
+				B3495BAB261E6A270057580E /* Info.plist */,
+				B3495BAC261E6A270057580E /* MenugrabAppClip.entitlements */,
+				B3495BA8261E6A270057580E /* Preview Content */,
+			);
+			path = MenugrabAppClip;
+			sourceTree = "<group>";
+		};
+		B3495BA8261E6A270057580E /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				B3495BA9261E6A270057580E /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		B3495BB4261E6A270057580E /* MenugrabAppClipTests */ = {
+			isa = PBXGroup;
+			children = (
+				B3495BB5261E6A270057580E /* MenugrabAppClipTests.swift */,
+				B3495BB7261E6A270057580E /* Info.plist */,
+			);
+			path = MenugrabAppClipTests;
+			sourceTree = "<group>";
+		};
+		B3495BBF261E6A270057580E /* MenugrabAppClipUITests */ = {
+			isa = PBXGroup;
+			children = (
+				B3495BC0261E6A270057580E /* MenugrabAppClipUITests.swift */,
+				B3495BC2261E6A270057580E /* Info.plist */,
+			);
+			path = MenugrabAppClipUITests;
+			sourceTree = "<group>";
+		};
 		B369DB2925B909F4000013A1 /* Restaurant */ = {
 			isa = PBXGroup;
 			children = (
@@ -271,6 +386,9 @@
 				B38B636F259CE45000378052 /* Menugrab */,
 				B38B6381259CE45400378052 /* MenugrabTests */,
 				B38B638C259CE45400378052 /* MenugrabUITests */,
+				B3495BA1261E6A210057580E /* MenugrabAppClip */,
+				B3495BB4261E6A270057580E /* MenugrabAppClipTests */,
+				B3495BBF261E6A270057580E /* MenugrabAppClipUITests */,
 				B38B636E259CE45000378052 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -281,6 +399,9 @@
 				B38B636D259CE45000378052 /* Menugrab.app */,
 				B38B637E259CE45400378052 /* MenugrabTests.xctest */,
 				B38B6389259CE45400378052 /* MenugrabUITests.xctest */,
+				B3495BA0261E6A210057580E /* MenugrabAppClip.app */,
+				B3495BB1261E6A270057580E /* MenugrabAppClipTests.xctest */,
+				B3495BBC261E6A270057580E /* MenugrabAppClipUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -486,6 +607,59 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		B3495B9F261E6A210057580E /* MenugrabAppClip */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B3495BCD261E6A270057580E /* Build configuration list for PBXNativeTarget "MenugrabAppClip" */;
+			buildPhases = (
+				B3495B9C261E6A210057580E /* Sources */,
+				B3495B9D261E6A210057580E /* Frameworks */,
+				B3495B9E261E6A210057580E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MenugrabAppClip;
+			productName = MenugrabAppClip;
+			productReference = B3495BA0261E6A210057580E /* MenugrabAppClip.app */;
+			productType = "com.apple.product-type.application.on-demand-install-capable";
+		};
+		B3495BB0261E6A270057580E /* MenugrabAppClipTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B3495BCE261E6A270057580E /* Build configuration list for PBXNativeTarget "MenugrabAppClipTests" */;
+			buildPhases = (
+				B3495BAD261E6A270057580E /* Sources */,
+				B3495BAE261E6A270057580E /* Frameworks */,
+				B3495BAF261E6A270057580E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B3495BB3261E6A270057580E /* PBXTargetDependency */,
+			);
+			name = MenugrabAppClipTests;
+			productName = MenugrabAppClipTests;
+			productReference = B3495BB1261E6A270057580E /* MenugrabAppClipTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		B3495BBB261E6A270057580E /* MenugrabAppClipUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B3495BCF261E6A270057580E /* Build configuration list for PBXNativeTarget "MenugrabAppClipUITests" */;
+			buildPhases = (
+				B3495BB8261E6A270057580E /* Sources */,
+				B3495BB9261E6A270057580E /* Frameworks */,
+				B3495BBA261E6A270057580E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B3495BBE261E6A270057580E /* PBXTargetDependency */,
+			);
+			name = MenugrabAppClipUITests;
+			productName = MenugrabAppClipUITests;
+			productReference = B3495BBC261E6A270057580E /* MenugrabAppClipUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 		B38B636C259CE45000378052 /* Menugrab */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = B38B6392259CE45500378052 /* Build configuration list for PBXNativeTarget "Menugrab" */;
@@ -493,10 +667,12 @@
 				B38B6369259CE45000378052 /* Sources */,
 				B38B636A259CE45000378052 /* Frameworks */,
 				B38B636B259CE45000378052 /* Resources */,
+				B3495BC6261E6A270057580E /* Embed App Clips */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				B3495BC4261E6A270057580E /* PBXTargetDependency */,
 			);
 			name = Menugrab;
 			packageProductDependencies = (
@@ -551,6 +727,17 @@
 				LastSwiftUpdateCheck = 1220;
 				LastUpgradeCheck = 1220;
 				TargetAttributes = {
+					B3495B9F261E6A210057580E = {
+						CreatedOnToolsVersion = 12.2;
+					};
+					B3495BB0261E6A270057580E = {
+						CreatedOnToolsVersion = 12.2;
+						TestTargetID = B3495B9F261E6A210057580E;
+					};
+					B3495BBB261E6A270057580E = {
+						CreatedOnToolsVersion = 12.2;
+						TestTargetID = B3495B9F261E6A210057580E;
+					};
 					B38B636C259CE45000378052 = {
 						CreatedOnToolsVersion = 12.2;
 					};
@@ -583,11 +770,37 @@
 				B38B636C259CE45000378052 /* Menugrab */,
 				B38B637D259CE45400378052 /* MenugrabTests */,
 				B38B6388259CE45400378052 /* MenugrabUITests */,
+				B3495B9F261E6A210057580E /* MenugrabAppClip */,
+				B3495BB0261E6A270057580E /* MenugrabAppClipTests */,
+				B3495BBB261E6A270057580E /* MenugrabAppClipUITests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		B3495B9E261E6A210057580E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B3495BAA261E6A270057580E /* Preview Assets.xcassets in Resources */,
+				B3495BA7261E6A270057580E /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B3495BAF261E6A270057580E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B3495BBA261E6A270057580E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B38B636B259CE45000378052 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -619,6 +832,31 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		B3495B9C261E6A210057580E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B3495BA5261E6A210057580E /* ContentView.swift in Sources */,
+				B3495BA3261E6A210057580E /* MenugrabAppClipApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B3495BAD261E6A270057580E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B3495BB6261E6A270057580E /* MenugrabAppClipTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B3495BB8261E6A270057580E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B3495BC1261E6A270057580E /* MenugrabAppClipUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B38B6369259CE45000378052 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -717,6 +955,21 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		B3495BB3261E6A270057580E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B3495B9F261E6A210057580E /* MenugrabAppClip */;
+			targetProxy = B3495BB2261E6A270057580E /* PBXContainerItemProxy */;
+		};
+		B3495BBE261E6A270057580E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B3495B9F261E6A210057580E /* MenugrabAppClip */;
+			targetProxy = B3495BBD261E6A270057580E /* PBXContainerItemProxy */;
+		};
+		B3495BC4261E6A270057580E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B3495B9F261E6A210057580E /* MenugrabAppClip */;
+			targetProxy = B3495BC3261E6A270057580E /* PBXContainerItemProxy */;
+		};
 		B38B6380259CE45400378052 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = B38B636C259CE45000378052 /* Menugrab */;
@@ -730,6 +983,136 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		B3495BC7261E6A270057580E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = MenugrabAppClip/MenugrabAppClip.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_ASSET_PATHS = "\"MenugrabAppClip/Preview Content\"";
+				DEVELOPMENT_TEAM = 3L953VRPM8;
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = MenugrabAppClip/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.guillevc.Menugrab.Clip;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		B3495BC8261E6A270057580E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = MenugrabAppClip/MenugrabAppClip.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_ASSET_PATHS = "\"MenugrabAppClip/Preview Content\"";
+				DEVELOPMENT_TEAM = 3L953VRPM8;
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = MenugrabAppClip/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.guillevc.Menugrab.Clip;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		B3495BC9261E6A270057580E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 3L953VRPM8;
+				INFOPLIST_FILE = MenugrabAppClipTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.guillevc.Menugrab.MenugrabAppClipTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MenugrabAppClip.app/MenugrabAppClip";
+			};
+			name = Debug;
+		};
+		B3495BCA261E6A270057580E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 3L953VRPM8;
+				INFOPLIST_FILE = MenugrabAppClipTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.guillevc.Menugrab.MenugrabAppClipTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MenugrabAppClip.app/MenugrabAppClip";
+			};
+			name = Release;
+		};
+		B3495BCB261E6A270057580E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 3L953VRPM8;
+				INFOPLIST_FILE = MenugrabAppClipUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.guillevc.Menugrab.MenugrabAppClipUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = MenugrabAppClip;
+			};
+			name = Debug;
+		};
+		B3495BCC261E6A270057580E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 3L953VRPM8;
+				INFOPLIST_FILE = MenugrabAppClipUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.guillevc.Menugrab.MenugrabAppClipUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = MenugrabAppClip;
+			};
+			name = Release;
+		};
 		B38B6390259CE45400378052 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -849,6 +1232,7 @@
 		B38B6393259CE45500378052 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
@@ -871,6 +1255,7 @@
 		B38B6394259CE45500378052 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
@@ -977,6 +1362,33 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		B3495BCD261E6A270057580E /* Build configuration list for PBXNativeTarget "MenugrabAppClip" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B3495BC7261E6A270057580E /* Debug */,
+				B3495BC8261E6A270057580E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B3495BCE261E6A270057580E /* Build configuration list for PBXNativeTarget "MenugrabAppClipTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B3495BC9261E6A270057580E /* Debug */,
+				B3495BCA261E6A270057580E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B3495BCF261E6A270057580E /* Build configuration list for PBXNativeTarget "MenugrabAppClipUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B3495BCB261E6A270057580E /* Debug */,
+				B3495BCC261E6A270057580E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		B38B6368259CE45000378052 /* Build configuration list for PBXProject "Menugrab" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
