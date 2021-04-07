@@ -14,12 +14,14 @@ struct OrderDetailsView: View {
     let order: Order
     let presentationType: CustomNavigationBarViewType
     let navigateToRestaurantAction: ((Restaurant) -> ())?
+    let navigateToCompletedOrderAction: ((Order) -> ())?
     
-    @State var isRestaurantNavigationLinkActive = false
+    @State private var navigationBarTitle = "Order details"
+    @State private var isRestaurantNavigationLinkActive = false
     
     var body: some View {
         VStack(spacing: 0) {
-            CustomNavigationBarView(title: "Order details", type: presentationType, onDismiss: { presentationMode.wrappedValue.dismiss() })
+            CustomNavigationBarView(title: navigationBarTitle, type: presentationType, onDismiss: { presentationMode.wrappedValue.dismiss() })
                 .background(Color.white)
             ScrollView(showsIndicators: false) {
                 VStack(spacing: 0) {
@@ -87,18 +89,26 @@ struct OrderDetailsView: View {
                 }
             )
             .edgesIgnoringSafeArea(.bottom)
-            NavigationLink(
-                destination: RestaurantMenuView(
-                    viewModel: .init(
-                        container: viewModel.container,
-                        restaurant: order.restaurant),
-                    navigateToCompletedOrderAction: { _ in
-                        // TODO:
-                    }
-                ),
-                isActive: $isRestaurantNavigationLinkActive
-            ) {
-                EmptyView()
+            if let navigateToCompletedOrderAction = navigateToCompletedOrderAction {
+                NavigationLink(
+                    destination: RestaurantMenuView(
+                        viewModel: .init(
+                            container: viewModel.container,
+                            restaurant: order.restaurant),
+                        navigateToCompletedOrderAction: { newOrder in
+                            DispatchQueue.main.async {
+                                isRestaurantNavigationLinkActive = false
+                                presentationMode.wrappedValue.dismiss()
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                    navigateToCompletedOrderAction(newOrder)
+                                }
+                            }
+                        }
+                    ),
+                    isActive: $isRestaurantNavigationLinkActive
+                ) {
+                    EmptyView()
+                }
             }
         }
         .navigationBarHidden(true)
@@ -107,6 +117,6 @@ struct OrderDetailsView: View {
 
 struct OrderDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        OrderDetailsView(viewModel: .init(container: .preview), order: Order.sampleOrders.first!, presentationType: .default, navigateToRestaurantAction: { _ in })
+        OrderDetailsView(viewModel: .init(container: .preview), order: Order.sampleOrders.first!, presentationType: .default, navigateToRestaurantAction: nil, navigateToCompletedOrderAction: nil)
     }
 }

@@ -155,7 +155,8 @@ struct HomeView: View {
                     navigateToRestaurantAction: { restaurant in
                         activeFullScreenCover = nil
                         selectedRestaurantId = restaurant.id
-                    }
+                    },
+                    navigateToCompletedOrderAction: nil
                 )
             }
         }

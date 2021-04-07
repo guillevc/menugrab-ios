@@ -7,9 +7,23 @@
 
 import SwiftUI
 
+fileprivate enum FullScreenCoverItem: Identifiable {
+    case orderDetails(order: Order)
+    
+    var id: String {
+        switch self {
+        case let .orderDetails(order):
+            return "orderDetails[\(order.id)]"
+        }
+    }
+}
+
 struct OrdersView: View {
     @Environment(\.presentationMode) private var presentationMode
     @StateObject var viewModel: OrdersViewModel
+    
+    @State private var selectedOrderId: String? = nil
+    @State private var activeFullScreenCover: FullScreenCoverItem? = nil
     
     var body: some View {
         VStack(spacing: 0) {
@@ -33,6 +47,22 @@ struct OrdersView: View {
             }
             Spacer()
         }
+        .fullScreenCover(item: $activeFullScreenCover, content: { item in
+            switch item {
+            case let .orderDetails(createdOrder):
+                OrderDetailsView(
+                    viewModel: .init(container: viewModel.container),
+                    order: createdOrder,
+                    presentationType: .sheet,
+                    navigateToRestaurantAction: nil,
+                    navigateToCompletedOrderAction: { newOrder in
+                        selectedOrderId = nil
+                        
+                        activeFullScreenCover = .orderDetails(order: newOrder)
+                    }
+                )
+            }
+        })
         .navigationBarHidden(true)
         .navigationViewStyle(StackNavigationViewStyle())
     }
@@ -42,7 +72,7 @@ struct OrdersView: View {
         let completedOrders = orders.filter({ !$0.isInProgress })
         
         return ScrollView {
-            VStack(spacing: 18) {
+            LazyVStack(spacing: 18) {
                 if !inProgressOrders.isEmpty {
                     OrderStateHeaderView(text: "In progress")
                         .padding(.horizontal)
@@ -62,12 +92,24 @@ struct OrdersView: View {
                     }
                 }
             }
-            Text(viewModel.orders.error?.localizedDescription ?? "")
         }
     }
     
     private func orderCellView(order: Order) -> some View {
-        NavigationLink(destination: OrderDetailsView(viewModel: .init(container: viewModel.container), order: order, presentationType: .default, navigateToRestaurantAction: nil)) {
+        NavigationLink(
+            destination: OrderDetailsView(
+                viewModel: .init(container: viewModel.container),
+                order: order,
+                presentationType: .default,
+                navigateToRestaurantAction: nil,
+                navigateToCompletedOrderAction: { newOrder in
+                    viewModel.loadUserOrders()
+                    activeFullScreenCover = .orderDetails(order: newOrder)
+                }
+            ),
+            tag: order.id,
+            selection: $selectedOrderId
+        ) {
             HStack(spacing: 16) {
                 LoadableImageView(viewModel: .init(container: viewModel.container, imageURLString: order.restaurant.imageURL))
                     .aspectRatio(contentMode: .fill)
