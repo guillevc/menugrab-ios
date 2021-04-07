@@ -10,17 +10,31 @@ import SwiftUI
 struct OrderDetailsView: View {
     @Environment(\.presentationMode) private var presentationMode
     
+    let viewModel: OrderDetailsViewModel
     let order: Order
+    let presentationType: CustomNavigationBarViewType
+    let navigateToRestaurantAction: ((Restaurant) -> ())?
+    
+    @State var isRestaurantNavigationLinkActive = false
     
     var body: some View {
         VStack(spacing: 0) {
-            CustomNavigationBarView(title: "Order details", type: .default, onDismiss: { presentationMode.wrappedValue.dismiss() })
+            CustomNavigationBarView(title: "Order details", type: presentationType, onDismiss: { presentationMode.wrappedValue.dismiss() })
                 .background(Color.white)
             ScrollView(showsIndicators: false) {
                 VStack(spacing: 0) {
-                    RestaurantNameTitleView(restaurantName: order.restaurant.name)
-                        .padding(.horizontal, 5)
-                        .padding(.vertical)
+                    Button(action: {
+                        if let navigateToRestaurantAction = navigateToRestaurantAction {
+                            navigateToRestaurantAction(order.restaurant)
+                        } else {
+                            isRestaurantNavigationLinkActive = true
+                        }
+                    }) {
+                        RestaurantNameTitleView(restaurantName: order.restaurant.name)
+                            .padding(.horizontal, 5)
+                            .padding(.vertical)
+                    }
+                    .buttonStyle(PlainButtonStyle())
                     HStack(spacing: 10) {
                         Image(systemName: "checkmark.circle.fill")
                             .font(.system(size: 23))
@@ -66,12 +80,26 @@ struct OrderDetailsView: View {
                 }
             }
             .background(
-                VStack {
+                VStack(spacing: 0) {
                     Color.white
+                    Color.backgroundGray
                     Color.backgroundGray
                 }
             )
             .edgesIgnoringSafeArea(.bottom)
+            NavigationLink(
+                destination: RestaurantMenuView(
+                    viewModel: .init(
+                        container: viewModel.container,
+                        restaurant: order.restaurant),
+                    navigateToCompletedOrderAction: { _ in
+                        // TODO:
+                    }
+                ),
+                isActive: $isRestaurantNavigationLinkActive
+            ) {
+                EmptyView()
+            }
         }
         .navigationBarHidden(true)
     }
@@ -79,6 +107,6 @@ struct OrderDetailsView: View {
 
 struct OrderDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        OrderDetailsView(order: Order.sampleOrders.first!)
+        OrderDetailsView(viewModel: .init(container: .preview), order: Order.sampleOrders.first!, presentationType: .default, navigateToRestaurantAction: { _ in })
     }
 }

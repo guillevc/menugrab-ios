@@ -114,7 +114,7 @@ struct HomeView: View {
                         container: viewModel.container,
                         navigateToCompletedOrderAction: { newOrder in
                             showingBasketSheet = false
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                                 activeFullScreenCover = .orderDetails(order: newOrder)
                             }
                         }
@@ -148,7 +148,15 @@ struct HomeView: View {
             case .search:
                 HomeSearchView(container: viewModel.container, restaurants: viewModel.nearbyRestaurants.value ?? [])
             case let .orderDetails(createdOrder):
-                OrderDetailsView(order: createdOrder)
+                OrderDetailsView(
+                    viewModel: .init(container: viewModel.container),
+                    order: createdOrder,
+                    presentationType: .sheet,
+                    navigateToRestaurantAction: { restaurant in
+                        activeFullScreenCover = nil
+                        selectedRestaurantId = restaurant.id
+                    }
+                )
             }
         }
         .onAppear {
@@ -190,12 +198,13 @@ struct HomeView: View {
                                 restaurant: restaurant
                             ),
                             navigateToCompletedOrderAction: { newOrder in
-                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                                     activeFullScreenCover = .orderDetails(order: newOrder)
                                 }
                             }
                         ),
-                        tag: restaurant.id, selection: $selectedRestaurantId
+                        tag: restaurant.id,
+                        selection: $selectedRestaurantId
                     ) {
                         RestaurantCellView(restaurant: restaurant, container: viewModel.container)
                             .padding(.horizontal)

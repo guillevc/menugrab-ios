@@ -43,22 +43,22 @@ struct OrdersView: View {
         
         return ScrollView {
             VStack(spacing: 18) {
-                OrderStateHeaderView(text: "In progress")
-                    .padding(.horizontal)
-                ForEach(inProgressOrders, id: \.id) { order in
-                    NavigationLink(destination: OrderDetailsView(order: order)) {
+                if !inProgressOrders.isEmpty {
+                    OrderStateHeaderView(text: "In progress")
+                        .padding(.horizontal)
+                    ForEach(inProgressOrders, id: \.id) { order in
                         orderCellView(order: order)
-                            .padding(.horizontal)
                     }
                 }
-                Divider()
-                    .padding(.horizontal)
-                OrderStateHeaderView(text: "Completed")
-                    .padding(.horizontal)
-                ForEach(completedOrders, id: \.id) { order in
-                    NavigationLink(destination: OrderDetailsView(order: order)) {
+                if !inProgressOrders.isEmpty && !completedOrders.isEmpty {
+                    Divider()
+                        .padding(.horizontal)
+                }
+                if !completedOrders.isEmpty {
+                    OrderStateHeaderView(text: "Completed")
+                        .padding(.horizontal)
+                    ForEach(completedOrders, id: \.id) { order in
                         orderCellView(order: order)
-                            .padding(.horizontal)
                     }
                 }
             }
@@ -67,22 +67,25 @@ struct OrdersView: View {
     }
     
     private func orderCellView(order: Order) -> some View {
-        HStack(spacing: 16) {
-            LoadableImageView(viewModel: .init(container: viewModel.container, imageURLString: order.restaurant.imageURL))
-                .aspectRatio(contentMode: .fill)
-                .frame(width: 90, height: 90)
-                .clipped()
-            VStack(alignment: .leading, spacing: 0) {
-                Text(order.restaurant.name)
-                    .myFont(size: 15, weight: .medium)
-                    .padding(.bottom, 6)
-                Text("\(order.totalQuantity) \(order.totalQuantity > 1 ? "items" : "item") ‒ \(order.totalPrice.formattedAmount ?? "-") €")
-                    .myFont(size: 13, color: .darkGray)
-                    .padding(.bottom, 4)
-                Text(order.date.formatted())
-                    .myFont(size: 13, color: .darkGray)
+        NavigationLink(destination: OrderDetailsView(viewModel: .init(container: viewModel.container), order: order, presentationType: .default, navigateToRestaurantAction: nil)) {
+            HStack(spacing: 16) {
+                LoadableImageView(viewModel: .init(container: viewModel.container, imageURLString: order.restaurant.imageURL))
+                    .aspectRatio(contentMode: .fill)
+                    .frame(width: 90, height: 90)
+                    .clipped()
+                VStack(alignment: .leading, spacing: 0) {
+                    Text(order.restaurant.name)
+                        .myFont(size: 15, weight: .medium)
+                        .padding(.bottom, 6)
+                    Text("\(order.totalQuantity) \(order.totalQuantity > 1 ? "items" : "item") ‒ \(order.totalPrice.formattedAmount ?? "-") €")
+                        .myFont(size: 13, color: .darkGray)
+                        .padding(.bottom, 4)
+                    Text(order.date.formatted())
+                        .myFont(size: 13, color: .darkGray)
+                }
+                Spacer()
             }
-            Spacer()
+            .padding(.horizontal)
         }
     }
 }
