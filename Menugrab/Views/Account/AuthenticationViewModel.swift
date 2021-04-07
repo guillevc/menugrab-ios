@@ -36,4 +36,9 @@ final class AuthenticationViewModel: NSObject, ObservableObject {
     func signOut() {
         container.services.usersService.signOut()
     }
+    
+    func signInAnonymously() {
+        container.services.usersService
+            .signInAnonymously(user: loadableBinding(\.user))
+    }
 }

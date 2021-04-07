@@ -57,7 +57,7 @@ struct AuthenticationView: View {
                         primaryButtonView(text: "Sign up")
                     }
                     .buttonStyle(IdentityButtonStyle())
-                    Button(action: { }) {
+                    Button(action: { viewModel.signInAnonymously() }) {
                         HStack {
                             Text("Continue as guest")
                                 .myFont(size: 13, weight: .medium, color: .gray)
@@ -82,10 +82,12 @@ struct AuthenticationView: View {
                             Button(action: { viewModel.create() }) {
                                 primaryButtonView(text: "Sign up")
                             }
+                            .buttonStyle(PlainButtonStyle())
                         } else {
                             Button(action: { viewModel.signIn() }) {
                                 primaryButtonView(text: "Log in")
                             }
+                            .buttonStyle(PlainButtonStyle())
                         }
                         VStack(spacing: 4) {
                             if currentStep == .create {
@@ -97,11 +99,13 @@ struct AuthenticationView: View {
                                             .myFont(size: 13, weight: .bold, color: .lightGray)
                                     }
                                 }
+                                .buttonStyle(PlainButtonStyle())
                             } else {
                                 Button(action: { withAnimation { currentStep = .create } }) {
                                     Text("Create a new account")
                                         .myFont(size: 13, weight: .bold, color: .lightGray)
                                 }
+                                .buttonStyle(PlainButtonStyle())
                             }
                             Text("- or -")
                                 .myFont(size: 13, weight: .medium, color: .lightGray)
@@ -110,6 +114,7 @@ struct AuthenticationView: View {
                                     Text("Continue as guest")
                                         .myFont(size: 13, weight: .bold, color: .lightGray)
                                 }
+                                .buttonStyle(PlainButtonStyle())
                             }
                         }
                     }
@@ -125,6 +130,7 @@ struct AuthenticationView: View {
                     VStack {
                         Text(error.localizedDescription)
                         Button("Retry", action: { viewModel.user = Loadable.notRequested })
+                            .buttonStyle(PlainButtonStyle())
                     }
                     .padding()
                 }

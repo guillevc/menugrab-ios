@@ -15,6 +15,7 @@ protocol UsersService {
     func create(user: Binding<Loadable<User>>, email: String, password: String)
     func signIn(user: Binding<Loadable<User>>, email: String, password: String)
     func signOut()
+    func signInAnonymously(user: Binding<Loadable<User>>)
     func updateUser(displayName: String, email: String, password: String)
     func registerFirebaseAuthListeners()
 }
@@ -72,24 +73,24 @@ struct UsersServiceImpl: UsersService {
         try? Auth.auth().signOut()
     }
     
-    func signInAnonymously(authResult: Binding<Loadable<AuthDataResult>>) {
+    func signInAnonymously(user: Binding<Loadable<User>>) {
         let anyCancellableBag = AnyCancellableBag()
         
-        authResult.wrappedValue.setIsLoading(bag: anyCancellableBag)
+        user.wrappedValue.setIsLoading(bag: anyCancellableBag)
         
         Deferred {
-            Future<AuthDataResult, Error> { promise in
+            Future<User, Error> { promise in
                 Auth.auth().signInAnonymously { authResult, error in
                     if let error = error {
                         promise(.failure(error))
-                    } else if let authResult = authResult {
-                        promise(.success(authResult))
+                    } else if let user = authResult?.user {
+                        promise(.success(user))
                     }
                 }
             }
         }
         .receive(on: DispatchQueue.main)
-        .sinkToLoadable({ authResult.wrappedValue = $0 })
+        .sinkToLoadable({ user.wrappedValue = $0 })
         .store(in: anyCancellableBag)
     }
     
@@ -113,6 +114,7 @@ struct UsersServiceStub: UsersService {
     func create(user: Binding<Loadable<User>>, email: String, password: String) { }
     func signIn(user: Binding<Loadable<User>>, email: String, password: String) { }
     func signOut() { }
+    func signInAnonymously(user: Binding<Loadable<User>>) { }
     func updateUser(displayName: String, email: String, password: String) { }
     func registerFirebaseAuthListeners() { }
 }
