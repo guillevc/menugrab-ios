@@ -17,5 +17,8 @@ jobs:
     - name: Xcode version
       run: /usr/bin/xcodebuild -version
       
-    - name: Xcode build
+    - name: Build App
       run: xcodebuild clean build -scheme Menugrab -destination 'platform=iOS Simulator,name=iPhone 11,OS=14.0'
+
+    - name: Build App Clip
+      run: xcodebuild clean build -scheme MenugrabAppClip -destination 'platform=iOS Simulator,name=iPhone 11,OS=14.0'
