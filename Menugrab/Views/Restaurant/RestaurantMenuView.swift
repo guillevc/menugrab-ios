@@ -28,6 +28,13 @@ struct RestaurantMenuView: View {
     @State private var isHeaderVisible = false
     @State private var headerTopPadding: CGSize? = nil
     @State private var activeSheet: ActiveSheet? = nil
+    private var navigationBarDismissButtonHidden: Bool {
+        #if APPCLIP
+        return true
+        #else
+        return false
+        #endif
+    }
     
     private func scrollOffset(_ geometry: GeometryProxy) -> CGFloat {
         geometry.frame(in: .global).minY
@@ -75,7 +82,7 @@ struct RestaurantMenuView: View {
                         }
                         .frame(height: Self.initialImageHeight)
                         VStack(spacing: 0) {
-                            RestaurantHeaderView(restaurant: viewModel.restaurant, onMoreInfoButtonTapped: { activeSheet = .moreInfo })
+                            RestaurantHeaderView(basket: viewModel.basket, restaurant: viewModel.restaurant, onMoreInfoButtonTapped: { activeSheet = .moreInfo })
                                 .padding(.horizontal)
                                 .padding(.bottom)
                             if let menu = viewModel.menu.value {
@@ -94,7 +101,7 @@ struct RestaurantMenuView: View {
                                             .padding(.bottom, 20)
                                         VStack(alignment: .leading, spacing: 36) {
                                             ForEach(itemCategory.menuItems, id: \.name) { menuItem in
-                                                MenuItemView(basket: viewModel.basket, menuItem: menuItem, onIncrementQuantityTapped: { viewModel.incrementBasketQuantityOfMenuItem($0) }, onDecrementQuantityTapped: { viewModel.decrementBasketQuantityOfMenuItem($0) })
+                                                MenuItemView(basket: viewModel.basket, restaurant: viewModel.restaurant, menuItem: menuItem, onIncrementQuantityTapped: { viewModel.incrementBasketQuantityOfMenuItem($0) }, onDecrementQuantityTapped: { viewModel.decrementBasketQuantityOfMenuItem($0) })
                                             }
                                         }
                                         .padding(.bottom, 36)
@@ -121,11 +128,15 @@ struct RestaurantMenuView: View {
                 }
                 ZStack {
                     HStack {
+                        #if APPCLIP
+                        Text("")
+                        #else
                         Button(action: { presentationMode.wrappedValue.dismiss() }) {
                             Image(systemName: "arrow.left")
                                 .font(.system(size: 20))
                                 .foregroundColor(.black)
                         }
+                        #endif
                         Spacer()
                     }
                     Spacer()
@@ -179,17 +190,43 @@ struct RestaurantMenuView: View {
 }
 
 fileprivate struct RestaurantHeaderView: View {
+    let basket: Basket
     let restaurant: Restaurant
     let onMoreInfoButtonTapped: () -> ()
     
+    var infoMessage: String {
+        switch basket.orderType {
+        case .pickup:
+            if restaurant.acceptingOrderTypes.contains(.table) {
+                return "To start an order from the table, locate the label and scan it with your phone"
+            } else {
+                return "Make your order and collect it at the restaurant when it's ready"
+            }
+        case .table:
+            return "Make your order and it will be delivered to your table"
+        }
+    }
+    
     var body: some View {
         VStack(spacing: 10) {
-            Text(restaurant.name)
+            HStack {
+                Spacer()
+                Text(restaurant.name)
                 .myFont(size: 23, weight: .bold)
-            OrderTypeSegmentedPickerView()
+                Spacer()
+            }
+            OrderTypeSegmentedPickerView(acceptingOrderTypes: restaurant.acceptingOrderTypes, currentOrderType: basket.orderType)
             HStack(spacing: 16) {
-                Text("\(restaurant.formattedDistance ?? "-") away")
-                    .myFont(size: 13)
+                switch basket.orderType {
+                case .pickup:
+                    if let formattedDistance = restaurant.formattedDistance {
+                        Text("\(formattedDistance) away")
+                            .myFont(size: 13)
+                    }
+                case .table:
+                    Text("#13")
+                        .myFont(size: 13)
+                }
                 Button(action: { onMoreInfoButtonTapped() }) {
                     HStack(spacing: 4) {
                         Text("More info")
@@ -205,7 +242,7 @@ fileprivate struct RestaurantHeaderView: View {
                 Image(systemName: "info.circle")
                     .font(Font.system(size: 15).weight(.regular))
                     .foregroundColor(.myBlack)
-                Text("To start an order from the table, locate the label and scan it with your phone")
+                Text(infoMessage)
                     .myFont(size: 13)
                 Spacer()
             }
@@ -222,19 +259,22 @@ fileprivate struct RestaurantHeaderView: View {
 
 fileprivate struct OrderTypeSegmentedPickerView: View {
     private static let cornerRadius: CGFloat = 20
-    @State private var currentOrderType = OrderType.table
+    let acceptingOrderTypes: [OrderType]
+    @State var currentOrderType: OrderType
     
     var body: some View {
         HStack(spacing: 0) {
-            ForEach(OrderType.allCases, id: \.self) { type in
+            ForEach(acceptingOrderTypes, id: \.self) { type in
                 let isSelected = currentOrderType == type
                 HStack(spacing: 4) {
                     type.icon
                         .resizable()
+                        .renderingMode(.template)
+                        .foregroundColor(isSelected ? .myBlack : .gray)
                         .aspectRatio(contentMode: .fit)
                         .frame(width: 18, height: 18)
                     Text(type.label)
-                        .myFont(size: 15, weight: isSelected ? .bold : .regular)
+                        .myFont(size: 15, weight: isSelected ? .bold : .regular, color: isSelected ? .myBlack : .gray)
                     
                 }
                 .padding(.horizontal, 15)
@@ -251,6 +291,7 @@ fileprivate struct OrderTypeSegmentedPickerView: View {
         }
         .background(Color.lightestGray).clipped()
         .cornerRadius(Self.cornerRadius)
+        .disabled(true)
     }
 }
 
@@ -259,6 +300,7 @@ fileprivate struct MenuItemView: View {
     private static let inBasketMarkWidth: CGFloat = 3
     
     let basket: Basket
+    let restaurant: Restaurant
     let menuItem: MenuItem
     let onIncrementQuantityTapped: (MenuItem) -> ()
     let onDecrementQuantityTapped: (MenuItem) -> ()
@@ -286,29 +328,32 @@ fileprivate struct MenuItemView: View {
             VStack(alignment: .trailing, spacing: 24) {
                 Text("\(menuItem.price.formattedAmount ?? "-") €")
                     .myFont(size: 15, weight: .bold)
-                if quantityInBasket > 0 {
-                    HStack(spacing: 4) {
-                        ModifyQuantityButton(
-                            action: { onDecrementQuantityTapped(menuItem) },
-                            type: .remove
-                        )
-                        Text(String(quantityInBasket))
-                            .myFont(size: 15, weight: .medium)
-                            .frame(width: 22)
-                        ModifyQuantityButton(
-                            action: { onIncrementQuantityTapped(menuItem) },
-                            type: .add
-                        )
+                
+                if restaurant.acceptingOrderTypes.contains(basket.orderType) {
+                    if quantityInBasket > 0 {
+                        HStack(spacing: 4) {
+                            ModifyQuantityButton(
+                                action: { onDecrementQuantityTapped(menuItem) },
+                                type: .remove
+                            )
+                            Text(String(quantityInBasket))
+                                .myFont(size: 15, weight: .medium)
+                                .frame(width: 22)
+                            ModifyQuantityButton(
+                                action: { onIncrementQuantityTapped(menuItem) },
+                                type: .add
+                            )
+                        }
+                    } else {
+                        Button(action: { onIncrementQuantityTapped(menuItem) }) {
+                            Text("ADD")
+                                .myFont(size: 15, weight: .bold, color: .myPrimary)
+                                .padding(.vertical, 5)
+                                .padding(.horizontal, 15)
+                                .background(Color.myPrimaryLighter.cornerRadius(20))
+                        }
+                        .buttonStyle(PlainButtonStyle())
                     }
-                } else {
-                    Button(action: { onIncrementQuantityTapped(menuItem) }) {
-                        Text("ADD")
-                            .myFont(size: 15, weight: .bold, color: .myPrimary)
-                            .padding(.vertical, 5)
-                            .padding(.horizontal, 15)
-                            .background(Color.myPrimaryLighter.cornerRadius(20))
-                    }
-                    .buttonStyle(PlainButtonStyle())
                 }
             }
             .frame(width: Self.controlFrameWidth, alignment: .topTrailing)

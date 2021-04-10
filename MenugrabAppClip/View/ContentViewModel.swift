@@ -10,6 +10,7 @@ import Combine
 
 final class ContentViewModel: NSObject, ObservableObject {
     @Published var user: Loadable<User>
+    @Published var restaurant: Loadable<Restaurant>
     
     let container: DIContainer
     private var anyCancellableBag = AnyCancellableBag()
@@ -20,14 +21,21 @@ final class ContentViewModel: NSObject, ObservableObject {
     
     init(
         container: DIContainer,
-        user: Loadable<User> = .notRequested
+        user: Loadable<User> = .notRequested,
+        restaurant: Loadable<Restaurant> = .notRequested
     ) {
         self.container = container
         _user = .init(wrappedValue: user)
+        _restaurant = .init(wrappedValue: restaurant)
     }
     
     func signInAnonymously() {
         container.services.usersService
             .signInAnonymously(user: loadableBinding(\.user))
+    }
+    
+    func loadRestaurant(id: String) {
+        container.services.restaurantsService
+            .load(restaurant: loadableBinding(\.restaurant), id: id)
     }
 }

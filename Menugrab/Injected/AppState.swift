@@ -14,8 +14,8 @@ struct AppState: Equatable {
     var basket: Basket
     var permissions = Permissions()
     
-    static var defaultValue: Self {
-        Self(currentUser: nil, basket: Basket(orderType: .pickup))
+    static func defaultValue(orderType: OrderType) -> Self {
+        Self(currentUser: nil, basket: Basket(orderType: orderType))
     }
 }
 

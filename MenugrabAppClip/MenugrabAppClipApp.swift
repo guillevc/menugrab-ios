@@ -9,7 +9,10 @@ import SwiftUI
 import Firebase
 
 fileprivate class AppDelegate: NSObject, UIApplicationDelegate {
-    let container = AppEnvironment.initialize().container
+    let container: DIContainer = {
+        AppEnvironment.initialize(orderType: .table).container
+    }()
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         FirebaseApp.configure()
         container.services.usersService.registerFirebaseAuthListeners()
