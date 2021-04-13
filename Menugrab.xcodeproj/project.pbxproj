@@ -85,6 +85,8 @@
 		B3B432BD261E7A2100A8886F /* DMSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B38B63D3259CE59E00378052 /* DMSans-Regular.ttf */; };
 		B3B8F90225B0CBBA00DE92AA /* AppEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3B8F90125B0CBBA00DE92AA /* AppEnvironment.swift */; };
 		B3B9BD4426262CD500DBB16F /* EnvironmentVariables.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3B9BD4326262CD500DBB16F /* EnvironmentVariables.swift */; };
+		B3B9BD4C26264C4A00DBB16F /* MenugrabLogoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3B9BD4B26264C4A00DBB16F /* MenugrabLogoView.swift */; };
+		B3B9BD5326264C5C00DBB16F /* MenugrabLogoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3B9BD4B26264C4A00DBB16F /* MenugrabLogoView.swift */; };
 		B3C20B9425A3D64200B3B595 /* Decimal+Currency.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C20B9325A3D64200B3B595 /* Decimal+Currency.swift */; };
 		B3D0BF5725AE6CFA00FF2B28 /* RestaurantsWebRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D0BF5625AE6CFA00FF2B28 /* RestaurantsWebRepository.swift */; };
 		B3D0BF6025AE715200FF2B28 /* WebRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D0BF5F25AE715200FF2B28 /* WebRepository.swift */; };
@@ -301,6 +303,7 @@
 		B3B432A6261E79E200A8886F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B3B8F90125B0CBBA00DE92AA /* AppEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppEnvironment.swift; sourceTree = "<group>"; };
 		B3B9BD4326262CD500DBB16F /* EnvironmentVariables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnvironmentVariables.swift; sourceTree = "<group>"; };
+		B3B9BD4B26264C4A00DBB16F /* MenugrabLogoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenugrabLogoView.swift; sourceTree = "<group>"; };
 		B3C20B9325A3D64200B3B595 /* Decimal+Currency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Decimal+Currency.swift"; sourceTree = "<group>"; };
 		B3D0BF5625AE6CFA00FF2B28 /* RestaurantsWebRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantsWebRepository.swift; sourceTree = "<group>"; };
 		B3D0BF5F25AE715200FF2B28 /* WebRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebRepository.swift; sourceTree = "<group>"; };
@@ -376,7 +379,7 @@
 				B3B432A6261E79E200A8886F /* GoogleService-Info.plist */,
 				B3495BAC261E6A270057580E /* MenugrabAppClip.entitlements */,
 				B3B9BD4326262CD500DBB16F /* EnvironmentVariables.swift */,
-				B3E880C8261E6FF500885BBC /* View */,
+				B3E880C8261E6FF500885BBC /* Views */,
 				B3B432C4261E7DF100A8886F /* Resources */,
 				B3495BA8261E6A270057580E /* Preview Content */,
 			);
@@ -558,6 +561,7 @@
 			isa = PBXGroup;
 			children = (
 				B3B0BCAC25A7F9580068C1EC /* CustomNavigationBarView.swift */,
+				B3B9BD4B26264C4A00DBB16F /* MenugrabLogoView.swift */,
 				B3AF0A5B261BA477003065EB /* OrderItemsTotalPriceView.swift */,
 				B37405892615F1B900ABA766 /* OrderItemView.swift */,
 				B38B63C3259CE55C00378052 /* RestaurantCellView.swift */,
@@ -686,13 +690,13 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		B3E880C8261E6FF500885BBC /* View */ = {
+		B3E880C8261E6FF500885BBC /* Views */ = {
 			isa = PBXGroup;
 			children = (
 				B3495BA4261E6A210057580E /* ContentView.swift */,
 				B3E880C9261E70E100885BBC /* ContentViewModel.swift */,
 			);
-			path = View;
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -972,6 +976,7 @@
 				B3E88104261E747300885BBC /* RestaurantLocationSectionView.swift in Sources */,
 				B3E8807D261E6D6700885BBC /* DIContainer.swift in Sources */,
 				B3E88119261E747800885BBC /* Divider+.swift in Sources */,
+				B3B9BD5326264C5C00DBB16F /* MenugrabLogoView.swift in Sources */,
 				B3E8810B261E747300885BBC /* OrderItemsTotalPriceView.swift in Sources */,
 				B3E88118261E747800885BBC /* Color+.swift in Sources */,
 				B3E880B2261E6D9A00885BBC /* AnyCancellable+StoreInAnyCancellableBag.swift in Sources */,
@@ -1081,6 +1086,7 @@
 				B35129962612579200BC6AAB /* UserPermissionsService.swift in Sources */,
 				B3FB495C25BA15FF007B4C97 /* UsersService.swift in Sources */,
 				B3880BDF25F98D1F006317BC /* ContentViewModel.swift in Sources */,
+				B3B9BD4C26264C4A00DBB16F /* MenugrabLogoView.swift in Sources */,
 				B38B63C4259CE55C00378052 /* AllRestaurantsView.swift in Sources */,
 				B3AE503325B0BDD7008F9FF4 /* Publisher+SinkToLoadable.swift in Sources */,
 				B3311751259D57E80016619A /* IdentityButtonStyle.swift in Sources */,

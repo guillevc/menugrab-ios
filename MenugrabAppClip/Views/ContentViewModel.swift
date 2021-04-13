@@ -14,6 +14,7 @@ final class ContentViewModel: NSObject, ObservableObject {
     @Published var user: Loadable<User>
     @Published var restaurant: Loadable<Restaurant>
     @Published var inRegion = false
+    @Published var initialLoadingFinished = false
     
     let container: DIContainer
     private var anyCancellableBag = AnyCancellableBag()
@@ -48,21 +49,23 @@ final class ContentViewModel: NSObject, ObservableObject {
         }
         
         let restaurantId = components.path.suffix(from: firstIndexOfRestaurantId)
-        guard let payload = userActivity.appClipActivationPayload else { return }
-        
-//        let restaurantId = "0hvk480X17rautiZxhbd"
+        guard let payload = userActivity.appClipActivationPayload else {
+            initialLoadingFinished = true
+            return
+        }
         loadRestaurantAndCheckIfUserInRegion(restaurantId: String(restaurantId), payload: payload)
     }
     
     private func loadRestaurantAndCheckIfUserInRegion(restaurantId: String, payload: APActivationPayload) {
         if EnvironmentVariables.CHECK_USER_LOCATION_DISABLED {
             inRegion = true
+            initialLoadingFinished = true
         } else {
             _restaurant.projectedValue.sink(
-                receiveCompletion: { subscriptionCompletion in
+                receiveCompletion: { [weak self] subscriptionCompletion in
                     if case let .failure(error) = subscriptionCompletion {
-                        // TODO: handle error
-                        print(error.localizedDescription)
+                        guard let self = self else { return }
+                        self.initialLoadingFinished = true
                     }
                 }, receiveValue: { [weak self] restaurant in
                     guard let self = self,
@@ -86,13 +89,9 @@ final class ContentViewModel: NSObject, ObservableObject {
             identifier: "restaurant_location"
         )
         payload.confirmAcquired(in: restaurantRegion) { inRegion, error in
-            if let error = error {
-                print(error.localizedDescription)
-            }
-            
-            print("inRegion=\(inRegion)")
             DispatchQueue.main.async {
                 self.inRegion = inRegion
+                self.initialLoadingFinished = true
             }
         }
     }

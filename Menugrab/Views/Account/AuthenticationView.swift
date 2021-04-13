@@ -39,12 +39,7 @@ struct AuthenticationView: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            HStack(spacing: 0) {
-                Text("menu")
-                Text("grab")
-                    .foregroundColor(.myPrimary)
-            }
-            .myFont(size: 32, weight: .bold)
+            MenugrabLogoView()
             .padding(.top, topPadding)
             Spacer()
             if currentStep == .selection {
@@ -74,6 +69,7 @@ struct AuthenticationView: View {
                     VStack(spacing: 16) {
                         TextField("Email", text: $viewModel.email)
                             .textContentType(.emailAddress)
+                            .autocapitalization(.none)
                             .myFont(size: 17)
                         SecureField("Password", text: $viewModel.password)
                             .textContentType(.password)

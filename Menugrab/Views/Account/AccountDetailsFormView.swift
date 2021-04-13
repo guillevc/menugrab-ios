@@ -77,8 +77,17 @@ enum FormFieldViewType: String {
         switch self {
         case .newPassword, .newPasswordRepeat:
             return true
-        default:
+        case .name, .email:
             return false
+        }
+    }
+    
+    var autocapitalization: UITextAutocapitalizationType {
+        switch self {
+        case .email, .newPassword, .newPasswordRepeat:
+            return .none
+        case .name:
+            return .sentences
         }
     }
 }
@@ -100,6 +109,7 @@ fileprivate struct FormFieldView: View {
                 TextField("", text: $value)
                     .myFont(size: 17)
                     .textContentType(type.contentType)
+                    .autocapitalization(type.autocapitalization)
             }
             
         }
