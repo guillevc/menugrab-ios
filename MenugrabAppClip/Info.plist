@@ -27,7 +27,7 @@
 		<key>NSAppClipRequestEphemeralUserNotification</key>
 		<false/>
 		<key>NSAppClipRequestLocationConfirmation</key>
-		<false/>
+		<true/>
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>We use your location to find nearby restaurants</string>

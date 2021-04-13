@@ -25,15 +25,19 @@ struct ContentView: View {
                 case .isLoading:
                     Text("isLoading")
                 case .loaded:
-                    RestaurantMenuView(
-                        viewModel: .init(
-                            container: viewModel.container,
-                            restaurant: restaurant
-                        ),
-                        navigateToCompletedOrderAction: { newOrder in
-                            print("new")
-                        }
-                    )
+                    if viewModel.inRegion {
+                        RestaurantMenuView(
+                            viewModel: .init(
+                                container: viewModel.container,
+                                restaurant: restaurant
+                            ),
+                            navigateToCompletedOrderAction: { newOrder in
+                                print("new")
+                            }
+                        )
+                    } else {
+                        Text("error: User not in region")
+                    }
                 case let .failed(error):
                     Text("failed:\(error.localizedDescription)")
                 }
@@ -41,10 +45,9 @@ struct ContentView: View {
                 Text("failed:\(error.localizedDescription)")
             }
         }
+        .onContinueUserActivity(NSUserActivityTypeBrowsingWeb, perform: viewModel.handleUserActivity)
         .onAppear {
-            viewModel.container.services.userPermissionsService.request(permission: .location)
             viewModel.signInAnonymously()
-            viewModel.loadRestaurant(id: "0hvk480X17rautiZxhbd")
         }
         .onReceive(viewModel.currentUserUpdate) { self.isUserAuthenticated = $0 != nil }
     }

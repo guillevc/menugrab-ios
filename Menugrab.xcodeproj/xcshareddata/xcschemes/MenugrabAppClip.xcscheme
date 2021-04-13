@@ -73,7 +73,12 @@
       <EnvironmentVariables>
          <EnvironmentVariable
             key = "_XCAppClipURL"
-            value = "https://example.com"
+            value = "https://www.menugrab.me/app-clips/restaurants/0hvk480X17rautiZxhbd"
+            isEnabled = "YES">
+         </EnvironmentVariable>
+         <EnvironmentVariable
+            key = "CHECK_USER_LOCATION_DISABLED"
+            value = ""
             isEnabled = "NO">
          </EnvironmentVariable>
       </EnvironmentVariables>
