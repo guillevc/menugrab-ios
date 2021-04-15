@@ -10,6 +10,7 @@ import SwiftUI
 enum CustomNavigationBarViewType: CaseIterable {
     case `default`
     case sheet
+    case notNavigable
 }
 
 enum CustomNavigationBarRightButtonType: CaseIterable {
@@ -38,10 +39,12 @@ struct CustomNavigationBarView: View {
     var body: some View {
         ZStack {
             HStack(alignment: .center) {
-                Button(action: { onDismiss?() }) {
-                    Image(systemName: type == .default ? "arrow.left" : "xmark")
-                        .font(.system(size: 20))
-                        .foregroundColor(.myBlack)
+                if type != .notNavigable {
+                    Button(action: { onDismiss?() }) {
+                        Image(systemName: type == .default ? "arrow.left" : "xmark")
+                            .font(.system(size: 20))
+                            .foregroundColor(.myBlack)
+                    }
                 }
                 Spacer()
                 if let rightButtonType = rightButtonType {

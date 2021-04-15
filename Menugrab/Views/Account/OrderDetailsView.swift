@@ -26,13 +26,15 @@ struct OrderDetailsView: View {
             ScrollView(showsIndicators: false) {
                 VStack(spacing: 0) {
                     Button(action: {
-                        if let navigateToRestaurantAction = navigateToRestaurantAction {
-                            navigateToRestaurantAction(order.restaurant)
-                        } else {
-                            isRestaurantNavigationLinkActive = true
+                        if presentationType != .notNavigable {
+                            if let navigateToRestaurantAction = navigateToRestaurantAction {
+                                navigateToRestaurantAction(order.restaurant)
+                            } else {
+                                isRestaurantNavigationLinkActive = true
+                            }
                         }
                     }) {
-                        RestaurantNameTitleView(restaurantName: order.restaurant.name)
+                        RestaurantNameTitleView(restaurantName: order.restaurant.name, showChevronRight: false)
                             .padding(.horizontal, 5)
                             .padding(.vertical)
                     }

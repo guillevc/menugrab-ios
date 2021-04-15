@@ -9,11 +9,17 @@ import SwiftUI
 
 struct RestaurantNameTitleView: View {
     let restaurantName: String
+    let showChevronRight: Bool
+    
+    init(restaurantName: String, showChevronRight: Bool = true) {
+        self.restaurantName = restaurantName
+        self.showChevronRight = showChevronRight
+    }
 
     var body: some View {
         HStack {
             Text(restaurantName)
-                .myFont(size: 23, weight: .bold)
+                .myFont(size: 23, weight: .bold, color: .black)
                 .background(
                     VStack {
                         Spacer()
@@ -22,10 +28,11 @@ struct RestaurantNameTitleView: View {
                             .offset(x: 0, y: -7)
                     }
                 )
-            Image(systemName: "chevron.right")
-                .font(.system(size: 17))
-                .foregroundColor(.myPrimary)
-            
+            if showChevronRight {
+                Image(systemName: "chevron.right")
+                    .font(.system(size: 17))
+                    .foregroundColor(.myPrimary)
+            }
         }
     }
 }

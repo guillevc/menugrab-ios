@@ -67,7 +67,7 @@ struct BasketView: View {
                                         .frame(width: 325, height: 50, alignment: .center)
                                         .overlay(
                                             Text("Check out")
-                                                .myFont(size: 17, weight: .bold)
+                                                .myFont(size: 17, weight: .bold, color: .black)
                                         )
                                         .padding(.top, 40)
                                 }

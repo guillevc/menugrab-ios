@@ -7,45 +7,76 @@
 
 import SwiftUI
 
+fileprivate enum FullScreenCoverItem: Identifiable {
+    case orderDetails(order: Order)
+    
+    var id: String {
+        switch self {
+        case let .orderDetails(order):
+            return "orderDetails[\(order.id)]"
+        }
+    }
+}
+
 struct ContentView: View {
     @ObservedObject var viewModel: ContentViewModel
-    @State var isUserAuthenticated = false
+    @State private var isUserAuthenticated = false
+    @State private var activeFullScreenCover: FullScreenCoverItem? = nil
     
     var body: some View {
         Group {
-            switch viewModel.user {
-            case .notRequested, .isLoading:
-                SplashScreenView(text: "Creating anonymous user session...", isTextHidden: !viewModel.initialLoadingFinished)
-            case let .failed(error):
-                SplashScreenView(text: "error: Couldn't create anonymous user session. (\(error.localizedDescription))", isTextHidden: !viewModel.initialLoadingFinished)
-            case .loaded:
-                switch viewModel.restaurant {
+            NavigationView {
+                switch viewModel.user {
                 case .notRequested, .isLoading:
-                    SplashScreenView(text: "Loading restaurant data...", isTextHidden: !viewModel.initialLoadingFinished)
+                    SplashScreenView(text: "Creating anonymous user session...", isTextHidden: !viewModel.initialLoadingFinished)
                 case let .failed(error):
-                    SplashScreenView(text: "error: Couldn't load restaurant data. (\(error.localizedDescription))", isTextHidden: !viewModel.initialLoadingFinished)
-                case let .loaded(restaurant):
-                    if viewModel.inRegion {
-                        RestaurantMenuView(
-                            viewModel: .init(
-                                container: viewModel.container,
-                                restaurant: restaurant
-                            ),
-                            navigateToCompletedOrderAction: { newOrder in
-                                print("new")
-                            }
-                        )
-                    } else {
-                        SplashScreenView(text: "error: Couldn't confirm user is within the restaurant area. Allow location services (Privacy > Location Services > App Clips and try again.", isTextHidden: !viewModel.initialLoadingFinished)
+                    SplashScreenView(text: "error: Couldn't create anonymous user session. (\(error.localizedDescription))", isTextHidden: !viewModel.initialLoadingFinished)
+                case .loaded:
+                    switch viewModel.restaurant {
+                    case .notRequested, .isLoading:
+                        SplashScreenView(text: "Loading restaurant data...", isTextHidden: !viewModel.initialLoadingFinished)
+                    case let .failed(error):
+                        SplashScreenView(text: "error: Couldn't load restaurant data. (\(error.localizedDescription))", isTextHidden: !viewModel.initialLoadingFinished)
+                    case let .loaded(restaurant):
+                        if viewModel.inRegion {
+                            RestaurantMenuView(
+                                viewModel: .init(
+                                    container: viewModel.container,
+                                    restaurant: restaurant
+                                ),
+                                navigateToCompletedOrderAction: { newOrder in
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                        activeFullScreenCover = .orderDetails(order: newOrder)
+                                    }
+                                }
+                            )
+                        } else {
+                            SplashScreenView(text: "error: Couldn't confirm user is within the restaurant area. \nAllow location services (Settings > Privacy > Location Services > App Clips) and try again.", isTextHidden: !viewModel.initialLoadingFinished)
+                        }
                     }
                 }
             }
+            .onContinueUserActivity(NSUserActivityTypeBrowsingWeb, perform: viewModel.handleUserActivity)
+            .onAppear {
+                viewModel.signInAnonymously()
+            }
+            .onReceive(viewModel.currentUserUpdate) { self.isUserAuthenticated = $0 != nil }
         }
-        .onContinueUserActivity(NSUserActivityTypeBrowsingWeb, perform: viewModel.handleUserActivity)
-        .onAppear {
-            viewModel.signInAnonymously()
+        .fullScreenCover(item: $activeFullScreenCover) { item in
+            switch item {
+            case let .orderDetails(createdOrder):
+                OrderDetailsView(
+                    viewModel: .init(container: viewModel.container),
+                    order: createdOrder,
+                    presentationType: .notNavigable,
+                    navigateToRestaurantAction: { restaurant in
+//                        activeFullScreenCover = nil
+                        //                        selectedRestaurantId = restaurant.id
+                    },
+                    navigateToCompletedOrderAction: nil
+                )
+            }
         }
-        .onReceive(viewModel.currentUserUpdate) { self.isUserAuthenticated = $0 != nil }
     }
 }
 
@@ -59,6 +90,7 @@ fileprivate struct SplashScreenView: View {
             VStack {
                 Spacer()
                 Text(text)
+                    .myFont()
                     .opacity(isTextHidden ? 0 : 1)
             }
             .padding(.horizontal)

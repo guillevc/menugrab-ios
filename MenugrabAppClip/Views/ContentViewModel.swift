@@ -57,26 +57,26 @@ final class ContentViewModel: NSObject, ObservableObject {
     }
     
     private func loadRestaurantAndCheckIfUserInRegion(restaurantId: String, payload: APActivationPayload) {
-        if EnvironmentVariables.CHECK_USER_LOCATION_DISABLED {
-            inRegion = true
-            initialLoadingFinished = true
-        } else {
-            _restaurant.projectedValue.sink(
-                receiveCompletion: { [weak self] subscriptionCompletion in
-                    if case let .failure(error) = subscriptionCompletion {
-                        guard let self = self else { return }
-                        self.initialLoadingFinished = true
-                    }
-                }, receiveValue: { [weak self] restaurant in
-                    guard let self = self,
-                          let restaurant = restaurant.value else {
-                        return
-                    }
+        _restaurant.projectedValue.sink(
+            receiveCompletion: { [weak self] subscriptionCompletion in
+                if case .failure = subscriptionCompletion {
+                    guard let self = self else { return }
+                    self.initialLoadingFinished = true
+                }
+            }, receiveValue: { [weak self] restaurant in
+                guard let self = self,
+                      let restaurant = restaurant.value else {
+                    return
+                }
+                if EnvironmentVariables.CHECK_USER_LOCATION_DISABLED {
+                    self.inRegion = true
+                    self.initialLoadingFinished = true
+                } else {
                     self.checkIfUserInRestaurantRegion(restaurant: restaurant, payload: payload)
                 }
-            )
-            .store(in: anyCancellableBag)
-        }
+            }
+        )
+        .store(in: anyCancellableBag)
         
         container.services.restaurantsService
             .load(restaurant: loadableBinding(\.restaurant), id: restaurantId)

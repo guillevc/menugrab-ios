@@ -212,7 +212,7 @@ fileprivate struct RestaurantHeaderView: View {
             HStack {
                 Spacer()
                 Text(restaurant.name)
-                .myFont(size: 23, weight: .bold)
+                    .myFont(size: 23, weight: .bold, color: .black)
                 Spacer()
             }
             OrderTypeSegmentedPickerView(acceptingOrderTypes: restaurant.acceptingOrderTypes, currentOrderType: basket.orderType)
