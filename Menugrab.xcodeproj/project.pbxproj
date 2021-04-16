@@ -10,6 +10,8 @@
 		B30AAB1D25B47EDC00EC9EBA /* RoundedRectangleSpecificCorners.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30AAB1C25B47EDC00EC9EBA /* RoundedRectangleSpecificCorners.swift */; };
 		B3147BEC25B519E2007EF4D7 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = B3147BEB25B519E2007EF4D7 /* FirebaseAuth */; };
 		B3147BF125B51D87007EF4D7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B3147BF025B51D87007EF4D7 /* GoogleService-Info.plist */; };
+		B314E584262A3CC00007043E /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = B314E583262A3CC00007043E /* FirebaseMessaging */; };
+		B314E5BC262A4BA60007043E /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = B314E5BB262A4BA60007043E /* FirebaseMessaging */; };
 		B3247FE7261D2BB4001EC1CC /* OrderDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3247FE6261D2BB4001EC1CC /* OrderDetailsViewModel.swift */; };
 		B329FE68259F6EE100B404A7 /* SecondaryButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B329FE67259F6EE100B404A7 /* SecondaryButtonView.swift */; };
 		B329FE6D259F7E4600B404A7 /* Basket.swift in Sources */ = {isa = PBXBuildFile; fileRef = B329FE6C259F7E4600B404A7 /* Basket.swift */; };
@@ -217,6 +219,7 @@
 /* Begin PBXFileReference section */
 		B30AAB1C25B47EDC00EC9EBA /* RoundedRectangleSpecificCorners.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedRectangleSpecificCorners.swift; sourceTree = "<group>"; };
 		B3147BF025B51D87007EF4D7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		B314E582262A3C7A0007043E /* Menugrab.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Menugrab.entitlements; sourceTree = "<group>"; };
 		B3247FE6261D2BB4001EC1CC /* OrderDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderDetailsViewModel.swift; sourceTree = "<group>"; };
 		B329FE67259F6EE100B404A7 /* SecondaryButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondaryButtonView.swift; sourceTree = "<group>"; };
 		B329FE6C259F7E4600B404A7 /* Basket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Basket.swift; sourceTree = "<group>"; };
@@ -328,6 +331,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B314E5BC262A4BA60007043E /* FirebaseMessaging in Frameworks */,
 				B3E88076261E6CB900885BBC /* FirebaseAuth in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -350,6 +354,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B314E584262A3CC00007043E /* FirebaseMessaging in Frameworks */,
 				B3147BEC25B519E2007EF4D7 /* FirebaseAuth in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -479,6 +484,7 @@
 		B38B636F259CE45000378052 /* Menugrab */ = {
 			isa = PBXGroup;
 			children = (
+				B314E582262A3C7A0007043E /* Menugrab.entitlements */,
 				B38B6370259CE45100378052 /* MenugrabApp.swift */,
 				B38B6379259CE45400378052 /* Info.plist */,
 				B3147BF025B51D87007EF4D7 /* GoogleService-Info.plist */,
@@ -717,6 +723,7 @@
 			name = MenugrabAppClip;
 			packageProductDependencies = (
 				B3E88075261E6CB900885BBC /* FirebaseAuth */,
+				B314E5BB262A4BA60007043E /* FirebaseMessaging */,
 			);
 			productName = MenugrabAppClip;
 			productReference = B3495BA0261E6A210057580E /* MenugrabAppClip.app */;
@@ -775,6 +782,7 @@
 			name = Menugrab;
 			packageProductDependencies = (
 				B3147BEB25B519E2007EF4D7 /* FirebaseAuth */,
+				B314E583262A3CC00007043E /* FirebaseMessaging */,
 			);
 			productName = Menugrab;
 			productReference = B38B636D259CE45000378052 /* Menugrab.app */;
@@ -1150,6 +1158,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = MenugrabAppClip/MenugrabAppClip.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"MenugrabAppClip/Preview Content\"";
 				DEVELOPMENT_TEAM = 3L953VRPM8;
@@ -1162,6 +1171,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = guillevc.Menugrab.Clip;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG APPCLIP";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1174,6 +1184,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = MenugrabAppClip/MenugrabAppClip.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"MenugrabAppClip/Preview Content\"";
 				DEVELOPMENT_TEAM = 3L953VRPM8;
@@ -1186,6 +1197,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = guillevc.Menugrab.Clip;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = APPCLIP;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1398,6 +1410,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Menugrab/Menugrab.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"Menugrab/Preview Content\"";
@@ -1423,6 +1436,8 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Menugrab/Menugrab.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"Menugrab/Preview Content\"";
 				DEVELOPMENT_TEAM = 3L953VRPM8;
@@ -1435,6 +1450,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = guillevc.Menugrab;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1608,6 +1624,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B3147BEA25B519E2007EF4D7 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseAuth;
+		};
+		B314E583262A3CC00007043E /* FirebaseMessaging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B3147BEA25B519E2007EF4D7 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseMessaging;
+		};
+		B314E5BB262A4BA60007043E /* FirebaseMessaging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B3147BEA25B519E2007EF4D7 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseMessaging;
 		};
 		B3E88075261E6CB900885BBC /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;
