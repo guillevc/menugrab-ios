@@ -24,8 +24,8 @@ struct ContentView: View {
     @State private var activeFullScreenCover: FullScreenCoverItem? = nil
     
     var body: some View {
-        Group {
-            NavigationView {
+        NavigationView {
+            ZStack {
                 switch viewModel.user {
                 case .notRequested, .isLoading:
                     SplashScreenView(text: "Creating anonymous user session...", isTextHidden: !viewModel.initialLoadingFinished)
@@ -56,11 +56,12 @@ struct ContentView: View {
                     }
                 }
             }
+            .navigationBarHidden(true)
             .onContinueUserActivity(NSUserActivityTypeBrowsingWeb, perform: viewModel.handleUserActivity)
             .onAppear {
                 viewModel.signInAnonymously()
             }
-            .onReceive(viewModel.currentUserUpdate) { self.isUserAuthenticated = $0 != nil }
+            .onReceive(viewModel.currentUserUpdate) { self.isUserAuthenticated = $0 != nil } 
         }
         .fullScreenCover(item: $activeFullScreenCover) { item in
             switch item {
@@ -69,10 +70,7 @@ struct ContentView: View {
                     viewModel: .init(container: viewModel.container),
                     order: createdOrder,
                     presentationType: .notNavigable,
-                    navigateToRestaurantAction: { restaurant in
-//                        activeFullScreenCover = nil
-                        //                        selectedRestaurantId = restaurant.id
-                    },
+                    navigateToRestaurantAction: { _ in },
                     navigateToCompletedOrderAction: nil
                 )
             }
