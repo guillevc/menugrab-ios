@@ -44,15 +44,19 @@ final class ContentViewModel: NSObject, ObservableObject {
                 url: incomingURL,
                 resolvingAgainstBaseURL: true
               ),
-              let firstIndexOfRestaurantId = components.path.range(of: "/app-clips/restaurants/")?.upperBound else {
-            return
-        }
-        
-        let restaurantId = components.path.suffix(from: firstIndexOfRestaurantId)
-        guard let payload = userActivity.appClipActivationPayload else {
+              let firstIndexOfRestaurantId = components.path.range(of: "/app-clips/restaurants/")?.upperBound,
+              let rangeOfTableParamWithSlashes = components.path.range(of: "/table/") else {
             initialLoadingFinished = true
             return
         }
+        let restaurantId = components.path[firstIndexOfRestaurantId..<rangeOfTableParamWithSlashes.lowerBound]
+        let table = components.path.suffix(from: rangeOfTableParamWithSlashes.upperBound)
+        guard let payload = userActivity.appClipActivationPayload,
+              let tableAsInt = Int(String(table)) else {
+            initialLoadingFinished = true
+            return
+        }
+        container.appState[\.basket].table = tableAsInt
         loadRestaurantAndCheckIfUserInRegion(restaurantId: String(restaurantId), payload: payload)
     }
     

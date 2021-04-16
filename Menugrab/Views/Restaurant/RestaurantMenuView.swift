@@ -194,6 +194,14 @@ fileprivate struct RestaurantHeaderView: View {
     let restaurant: Restaurant
     let onMoreInfoButtonTapped: () -> ()
     
+    var tableAsString: String {
+        var tableAsString = "-"
+        if let table = basket.table  {
+            tableAsString = String(table)
+        }
+        return tableAsString
+    }
+    
     var infoMessage: String {
         switch basket.orderType {
         case .pickup:
@@ -224,7 +232,7 @@ fileprivate struct RestaurantHeaderView: View {
                             .myFont(size: 13)
                     }
                 case .table:
-                    Text("#13")
+                    Text("#\(tableAsString)")
                         .myFont(size: 13)
                 }
                 Button(action: { onMoreInfoButtonTapped() }) {
