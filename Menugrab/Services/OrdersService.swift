@@ -44,3 +44,32 @@ struct OrdersServiceStub: OrdersService {
     func loadByUserId(orders: Binding<Loadable<[Order]>>, userId: String) { }
     func createOrder(from basket: Basket) -> AnyPublisher<Order, Error>? { return nil }
 }
+
+// MARK: - DTOs
+
+struct CreateOrderDTO: Encodable {
+    let restaurantId: String
+    let orderType: OrderType
+    let table: Int?
+    let items: [CreateOrderItemDTO]
+    
+    init?(from basket: Basket) {
+        guard let restaurant = basket.restaurant else { return nil }
+        restaurantId = restaurant.id
+        orderType = basket.orderType
+        if orderType == .table {
+            guard let table = basket.table else { return nil }
+            self.table = table
+        } else {
+            table = nil
+        }
+        items = basket.items.map {
+            return CreateOrderItemDTO(menuItemId: $0.menuItem.id, quantity: $0.quantity)
+        }
+    }
+}
+
+struct CreateOrderItemDTO: Encodable {
+    let menuItemId: String
+    let quantity: Int
+}

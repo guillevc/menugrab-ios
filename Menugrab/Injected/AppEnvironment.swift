@@ -54,6 +54,7 @@ extension AppEnvironment {
     
     private static func configuredWebRepositoriesContainer(session: URLSession, jsonDecoder: JSONDecoder) -> WebRepositoriesContainer {
         .init(
+            usersWebRepository: UsersWebRepositoryImpl(session: session, baseURL: Self.apiBaseURL, jsonDecoder: jsonDecoder),
             restaurantsWebRepository: RestaurantsWebRepositoryImpl(session: session, baseURL: Self.apiBaseURL, jsonDecoder: jsonDecoder),
             ordersWebRepository: OrdersWebRepositoryImpl(session: session, baseURL: Self.apiBaseURL, jsonDecoder: jsonDecoder),
             imagesWebRepository: ImagesWebRepositoryImpl(session: session, baseURL: "")
@@ -62,7 +63,7 @@ extension AppEnvironment {
     
     private static func configuredServicesContainer(appState: Store<AppState>, webRepositories: WebRepositoriesContainer) -> ServicesContainer {
         .init(
-            usersService: UsersServiceImpl(appState: appState),
+            usersService: UsersServiceImpl(appState: appState, webRepository: webRepositories.usersWebRepository),
             restaurantsService: RestaurantsServiceImpl(appState: appState, webRepository: webRepositories.restaurantsWebRepository),
             ordersService: OrdersServiceImpl(appState: appState, webRepository: webRepositories.ordersWebRepository),
             imagesService: ImagesServiceImpl(appState: appState, webRepository: webRepositories.imagesWebRepository),

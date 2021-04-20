@@ -7,8 +7,9 @@
 
 import Foundation
 import SwiftUI
-import FirebaseAuth
 import Combine
+import FirebaseAuth
+import FirebaseMessaging
 
 
 protocol UsersService {
@@ -18,18 +19,22 @@ protocol UsersService {
     func signInAnonymously(user: Binding<Loadable<User>>)
     func updateUser(displayName: String, email: String, password: String)
     func registerFirebaseAuthListeners()
+    func updateFCMToken(fcmToken: String) -> AnyPublisher<FCMTokenDTO, Error>
 }
 
 struct UsersServiceImpl: UsersService {
     let appState: Store<AppState>
+    let webRepository: UsersWebRepository
+    private let anyCancellableBag = AnyCancellableBag()
     
-    init(appState: Store<AppState>) {
+    init(appState: Store<AppState>, webRepository: UsersWebRepository) {
         self.appState = appState
+        self.webRepository = webRepository
     }
     
+    // MARK: - UsersService
+    
     func create(user: Binding<Loadable<User>>, email: String, password: String) {
-        let anyCancellableBag = AnyCancellableBag()
-        
         user.wrappedValue.setIsLoading(bag: anyCancellableBag)
 
         Deferred {
@@ -49,8 +54,6 @@ struct UsersServiceImpl: UsersService {
     }
     
     func signIn(user: Binding<Loadable<User>>, email: String, password: String) {
-        let anyCancellableBag = AnyCancellableBag()
-        
         user.wrappedValue.setIsLoading(bag: anyCancellableBag)
         
         Deferred {
@@ -74,8 +77,6 @@ struct UsersServiceImpl: UsersService {
     }
     
     func signInAnonymously(user: Binding<Loadable<User>>) {
-        let anyCancellableBag = AnyCancellableBag()
-        
         user.wrappedValue.setIsLoading(bag: anyCancellableBag)
         
         Deferred {
@@ -106,7 +107,47 @@ struct UsersServiceImpl: UsersService {
     func registerFirebaseAuthListeners() {
         Auth.auth().addStateDidChangeListener { (_, user) in
             appState[\.currentUser] = user
+            if user != nil {
+                fetchAndUpdateFCMToken()
+            }
         }
+    }
+    
+    func updateFCMToken(fcmToken: String) -> AnyPublisher<FCMTokenDTO, Error> {
+        guard let currentUser = appState[\.currentUser] else {
+            return Fail(outputType: FCMTokenDTO.self, failure: MenugrabAppError.unauthenticatedUser)
+                .eraseToAnyPublisher()
+        }
+        let fcmTokenDTO = FCMTokenDTO(fcmToken: fcmToken)
+        return webRepository.updateFCMToken(userId: currentUser.uid, fcmTokenDTO: fcmTokenDTO)
+            .eraseToAnyPublisher()
+    }
+    
+    // MARK: - Private functions
+    
+    private func fetchAndUpdateFCMToken() {
+        Deferred {
+            Future<String, Error> { promise in
+                Messaging.messaging().token { fcmToken, error in
+                    if let error = error {
+                        promise(.failure(error))
+                    } else if let token = fcmToken {
+                        promise(.success(token))
+                    }
+                }
+            }
+        }
+        .flatMap(updateFCMToken(fcmToken:))
+        .receive(on: DispatchQueue.main)
+        .sink(receiveCompletion: { completion in
+            if case let .failure(error) = completion {
+                // TODO: handle error
+                print(error.localizedDescription)
+            }
+        }, receiveValue: { fcmTokenDTO in
+            print("updated fcmToken on server to \(fcmTokenDTO.fcmToken)")
+        })
+        .store(in: anyCancellableBag)
     }
 }
 
@@ -117,4 +158,14 @@ struct UsersServiceStub: UsersService {
     func signInAnonymously(user: Binding<Loadable<User>>) { }
     func updateUser(displayName: String, email: String, password: String) { }
     func registerFirebaseAuthListeners() { }
+    func updateFCMToken(fcmToken: String) -> AnyPublisher<FCMTokenDTO, Error> {
+        Fail(outputType: FCMTokenDTO.self, failure: MenugrabAppError.unauthenticatedUser)
+            .eraseToAnyPublisher()
+    }
+}
+
+// MARK: - DTOs
+
+struct FCMTokenDTO: Decodable, Encodable {
+    let fcmToken: String
 }

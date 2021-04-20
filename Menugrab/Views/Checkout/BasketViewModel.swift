@@ -23,8 +23,8 @@ final class BasketViewModel: NSObject, ObservableObject {
     func createOrderFromCurrentBasket() {
         let basket = container.appState[\.basket]
         container.services.ordersService.createOrder(from: basket)?
-            .sink(receiveCompletion: { subscriptionCompletion in
-                if case let .failure(error) = subscriptionCompletion {
+            .sink(receiveCompletion: { completion in
+                if case let .failure(error) = completion {
                     // TODO: handle order error
                     print(error.localizedDescription)
                 }

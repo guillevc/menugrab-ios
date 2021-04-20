@@ -30,7 +30,6 @@ extension WebRepository {
                 
                 return data
             }
-            
             .decode(type: T.self, decoder: jsonDecoder)
             .receive(on: DispatchQueue.main)
             .eraseToAnyPublisher()

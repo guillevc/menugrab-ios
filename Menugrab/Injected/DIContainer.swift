@@ -39,6 +39,7 @@ struct ServicesContainer {
 }
 
 struct WebRepositoriesContainer {
+    let usersWebRepository: UsersWebRepository
     let restaurantsWebRepository: RestaurantsWebRepository
     let ordersWebRepository: OrdersWebRepository
     let imagesWebRepository: ImagesWebRepository

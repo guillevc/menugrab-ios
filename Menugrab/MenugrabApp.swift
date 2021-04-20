@@ -6,48 +6,43 @@
 //
 
 import SwiftUI
+import Combine
 import Firebase
 import FirebaseMessaging
 import UserNotifications
 import UserNotificationsUI
 
+// MARK: - UIApplicationDelegate
 
 fileprivate class AppDelegate: NSObject, UIApplicationDelegate {
     let container = AppEnvironment.initialize(orderType: .pickup).container
+    private var anyCancellableBag = AnyCancellableBag()
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         FirebaseApp.configure()
         container.services.usersService.registerFirebaseAuthListeners()
         
         // notifications
         
-        if #available(iOS 10.0, *) {
-            // For iOS 10 display notification (sent via APNS)
-            UNUserNotificationCenter.current().delegate = self
-            
-            let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
-            UNUserNotificationCenter.current().requestAuthorization(
-                options: authOptions,
-                completionHandler: {_, _ in })
-        } else {
-            let settings: UIUserNotificationSettings =
-                UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
-            application.registerUserNotificationSettings(settings)
-        }
+        UNUserNotificationCenter.current().delegate = self
+        
+        let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
+        UNUserNotificationCenter.current().requestAuthorization(
+            options: authOptions,
+            completionHandler: {_, _ in })
         application.registerForRemoteNotifications()
         
         Messaging.messaging().delegate = self
         
-//        Messaging.messaging().token { token, error in
-//            if let error = error {
-//                print("Error fetching FCM registration token: \(error)")
-//            } else if let token = token {
-//                print("FCM registration token: \(token)")
-//            }
-//        }
-//        
         return true
     }
-    
+}
+
+// MARK: - Notifications
+
+// UIApplicationDelgate notifications related hooks
+
+extension AppDelegate {
     func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
         print(error.localizedDescription)
     }
@@ -60,33 +55,47 @@ fileprivate class AppDelegate: NSObject, UIApplicationDelegate {
         }
         print("Received an APNs device token: \(readableToken)")
     }
+    
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        print("didReceiveRemoteNotification")
+        completionHandler(UIBackgroundFetchResult.newData)
+    }
 }
 
-// MARK: - UNUserNotificationCenterDelegate
+// UNUserNotificationCenterDelegate
 
 extension AppDelegate: UNUserNotificationCenterDelegate {
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
         print("didReceiveResponse")
+        
+    }
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        completionHandler([.banner, .badge, .sound])
     }
 }
 
-// MARK: - MessagingDelegate
+// MessagingDelegate
 
 extension AppDelegate: MessagingDelegate {
     
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
-        print("didReceiveRegistrationToken token=\(fcmToken ?? "-")")
+        guard let token = fcmToken else { return }
+        container.services.usersService.updateFCMToken(fcmToken: token)
+            .sink(receiveCompletion: { completion in
+                if case let .failure(error) = completion {
+                    // TODO: handle error
+                    print(error.localizedDescription)
+                }
+            }, receiveValue: { fcmTokenDTO in
+                print("updated fcmToken on server to \(fcmTokenDTO.fcmToken)")
+            })
+            .store(in: anyCancellableBag)
         
-//        let dataDict:[String: String] = ["token": fcmToken ?? ""]
-//        NotificationCenter.default.post(name: Notification.Name("FCMToken"), object: nil, userInfo: dataDict)
-        // TODO: If necessary send token to application server.
-        // Note: This callback is fired at each app startup and whenever a new token is generated.
     }
-    
-    
-    
 }
 
+// MARK: - Main App
 
 @main
 struct MenugrabApp: App {

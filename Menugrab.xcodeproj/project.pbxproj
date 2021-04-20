@@ -158,6 +158,10 @@
 		B3E8811A261E747800885BBC /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B39CB2ED25A4201000823800 /* Constants.swift */; };
 		B3E8811B261E747800885BBC /* UINavigationController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38B63CD259CE56A00378052 /* UINavigationController+.swift */; };
 		B3E8811C261E747800885BBC /* View+.swift in Sources */ = {isa = PBXBuildFile; fileRef = B373A9E9259D167F0089FA60 /* View+.swift */; };
+		B3EF52B7262E39D8000AEC4C /* UsersWebRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3EF52B6262E39D8000AEC4C /* UsersWebRepository.swift */; };
+		B3EF52BE262E3D2F000AEC4C /* UsersWebRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3EF52B6262E39D8000AEC4C /* UsersWebRepository.swift */; };
+		B3EF52C6262E3FF4000AEC4C /* MenugrabAppError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3EF52C5262E3FF4000AEC4C /* MenugrabAppError.swift */; };
+		B3EF52D4262E407C000AEC4C /* MenugrabAppError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3EF52C5262E3FF4000AEC4C /* MenugrabAppError.swift */; };
 		B3F9AA2B25BB96C0002D7C80 /* AuthenticationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3F9AA2A25BB96C0002D7C80 /* AuthenticationViewModel.swift */; };
 		B3FB495C25BA15FF007B4C97 /* UsersService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3FB495B25BA15FF007B4C97 /* UsersService.swift */; };
 		B3FB496125BA1C55007B4C97 /* AuthenticationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3FB496025BA1C55007B4C97 /* AuthenticationView.swift */; };
@@ -320,6 +324,8 @@
 		B3E0B59425FAEBC9000935A8 /* OrdersViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdersViewModel.swift; sourceTree = "<group>"; };
 		B3E4797E25B6346200F61D27 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		B3E880C9261E70E100885BBC /* ContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewModel.swift; sourceTree = "<group>"; };
+		B3EF52B6262E39D8000AEC4C /* UsersWebRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersWebRepository.swift; sourceTree = "<group>"; };
+		B3EF52C5262E3FF4000AEC4C /* MenugrabAppError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenugrabAppError.swift; sourceTree = "<group>"; };
 		B3F9AA2A25BB96C0002D7C80 /* AuthenticationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationViewModel.swift; sourceTree = "<group>"; };
 		B3FB495B25BA15FF007B4C97 /* UsersService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersService.swift; sourceTree = "<group>"; };
 		B3FB496025BA1C55007B4C97 /* AuthenticationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationView.swift; sourceTree = "<group>"; };
@@ -673,6 +679,7 @@
 				B344A5D425FBFD4B005E6F6F /* OrdersService.swift */,
 				B35129952612579200BC6AAB /* UserPermissionsService.swift */,
 				B331DF8B25B1069200912AFC /* ImagesService.swift */,
+				B3EF52CD262E404E000AEC4C /* Errors */,
 				B3B8F90925B0CBCA00DE92AA /* Helpers */,
 			);
 			path = Services;
@@ -684,6 +691,7 @@
 				B3D0BF5625AE6CFA00FF2B28 /* RestaurantsWebRepository.swift */,
 				B344A5D925FBFE95005E6F6F /* OrdersWebRepository.swift */,
 				B331DF9025B106C200912AFC /* ImagesWebRepository.swift */,
+				B3EF52B6262E39D8000AEC4C /* UsersWebRepository.swift */,
 				B3B8F90A25B0CBD700DE92AA /* Helpers */,
 			);
 			path = Repositories;
@@ -703,6 +711,14 @@
 				B3E880C9261E70E100885BBC /* ContentViewModel.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		B3EF52CD262E404E000AEC4C /* Errors */ = {
+			isa = PBXGroup;
+			children = (
+				B3EF52C5262E3FF4000AEC4C /* MenugrabAppError.swift */,
+			);
+			path = Errors;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -953,9 +969,11 @@
 				B3E88088261E6D7A00885BBC /* ImagesWebRepository.swift in Sources */,
 				B3E880FA261E746D00885BBC /* OrderDetailsViewModel.swift in Sources */,
 				B3E88116261E747800885BBC /* Date+.swift in Sources */,
+				B3EF52D4262E407C000AEC4C /* MenugrabAppError.swift in Sources */,
 				B3E880BA261E6DB800885BBC /* Models+SampleData.swift in Sources */,
 				B3E880A5261E6D9600885BBC /* UserPermissionsService.swift in Sources */,
 				B3B9BD4426262CD500DBB16F /* EnvironmentVariables.swift in Sources */,
+				B3EF52BE262E3D2F000AEC4C /* UsersWebRepository.swift in Sources */,
 				B3E88087261E6D7A00885BBC /* OrdersWebRepository.swift in Sources */,
 				B3E8807F261E6D6700885BBC /* AppEnvironment.swift in Sources */,
 				B3E880EB261E745B00885BBC /* RestaurantMoreInfoView.swift in Sources */,
@@ -1045,6 +1063,7 @@
 				B3A21E2625A93C630036E399 /* AccountView.swift in Sources */,
 				B33D527625AE5B7C003ADD1A /* Models+SampleData.swift in Sources */,
 				B374058A2615F1B900ABA766 /* OrderItemView.swift in Sources */,
+				B3EF52C6262E3FF4000AEC4C /* MenugrabAppError.swift in Sources */,
 				B36A6E9025AFBF3800EAC483 /* AppState.swift in Sources */,
 				B3D0BF6025AE715200FF2B28 /* WebRepository.swift in Sources */,
 				B3A21E3025A93C8A0036E399 /* OrdersView.swift in Sources */,
@@ -1058,6 +1077,7 @@
 				B329FE68259F6EE100B404A7 /* SecondaryButtonView.swift in Sources */,
 				B3F9AA2B25BB96C0002D7C80 /* AuthenticationViewModel.swift in Sources */,
 				B3D0BF6525AE733300FF2B28 /* APICall.swift in Sources */,
+				B3EF52B7262E39D8000AEC4C /* UsersWebRepository.swift in Sources */,
 				B38687E225A655E10026B592 /* RestaurantLocationSectionView.swift in Sources */,
 				B3B0BCAD25A7F9580068C1EC /* CustomNavigationBarView.swift in Sources */,
 				B38B63B9259CE4F500378052 /* Restaurant.swift in Sources */,
