@@ -99,7 +99,6 @@ extension UserPermissionsServiceImpl {
         let permission = manager.authorizationStatus.map
         appState[\.permissions.location] = permission
         appState[\.location] = permission == .granted ? locations.last : nil
-        
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {

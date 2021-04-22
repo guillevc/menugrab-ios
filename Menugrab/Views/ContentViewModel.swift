@@ -16,6 +16,10 @@ final class ContentViewModel: NSObject, ObservableObject {
         container.appState.updates(for: \.currentUser)
     }
     
+    var currentOrderUpdate: AnyPublisher<Order?, Never> {
+        container.appState.updates(for: \.currentOrder)
+    }
+    
     init(
         container: DIContainer
     ) {

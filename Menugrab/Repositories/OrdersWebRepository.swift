@@ -11,6 +11,7 @@ import Combine
 protocol OrdersWebRepository: WebRepository {
     func loadOrdersByUserId(userId: String) -> AnyPublisher<[Order], Error>
     func createOrder(createOrderDTO: CreateOrderDTO) -> AnyPublisher<Order, Error>
+    func loadCurrentOrder(userId: String) -> AnyPublisher<Order, Error>
 }
 
 struct OrdersWebRepositoryImpl: OrdersWebRepository {
@@ -25,6 +26,10 @@ struct OrdersWebRepositoryImpl: OrdersWebRepository {
     func createOrder(createOrderDTO: CreateOrderDTO) -> AnyPublisher<Order, Error> {
         call(endpoint: OrdersWebRepositoryAPI.createOrder(createOrderDTO: createOrderDTO))
     }
+    
+    func loadCurrentOrder(userId: String) -> AnyPublisher<Order, Error> {
+        call(endpoint: OrdersWebRepositoryAPI.loadCurrentOrder(userId: userId))
+    }
 }
 
 // MARK: - Endpoints
@@ -32,6 +37,7 @@ struct OrdersWebRepositoryImpl: OrdersWebRepository {
 fileprivate enum OrdersWebRepositoryAPI {
     case ordersByUserId(userId: String)
     case createOrder(createOrderDTO: CreateOrderDTO)
+    case loadCurrentOrder(userId: String)
 }
 
 extension OrdersWebRepositoryAPI: APICall {
@@ -41,12 +47,14 @@ extension OrdersWebRepositoryAPI: APICall {
             return "/users/\(userId)/orders"
         case .createOrder:
             return "/orders"
+        case .loadCurrentOrder(let userId):
+            return "/users/\(userId)/current-order"
         }
     }
     
     var method: String {
         switch self {
-        case .ordersByUserId:
+        case .ordersByUserId, .loadCurrentOrder:
             return "GET"
         case .createOrder:
             return "POST"
@@ -62,7 +70,7 @@ extension OrdersWebRepositoryAPI: APICall {
     
     func body() throws -> Data? {
         switch self {
-        case .ordersByUserId:
+        case .ordersByUserId, .loadCurrentOrder:
             return nil
         case .createOrder(let createOrderDTO):
             return try JSONEncoder().encode(createOrderDTO)

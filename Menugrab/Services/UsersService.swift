@@ -18,8 +18,9 @@ protocol UsersService {
     func signOut()
     func signInAnonymously(user: Binding<Loadable<User>>)
     func updateUser(displayName: String, email: String, password: String)
-    func registerFirebaseAuthListeners()
+    func addAuthStateDidChangeListener(listener: @escaping (User?) -> ())
     func updateFCMToken(fcmToken: String) -> AnyPublisher<FCMTokenDTO, Error>
+    func fetchAndUpdateFCMToken()
 }
 
 struct UsersServiceImpl: UsersService {
@@ -36,7 +37,7 @@ struct UsersServiceImpl: UsersService {
     
     func create(user: Binding<Loadable<User>>, email: String, password: String) {
         user.wrappedValue.setIsLoading(bag: anyCancellableBag)
-
+        
         Deferred {
             Future<User, Error> { promise in
                 Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
@@ -104,12 +105,9 @@ struct UsersServiceImpl: UsersService {
         currentUser.updatePassword(to: password, completion: nil)
     }
     
-    func registerFirebaseAuthListeners() {
+    func addAuthStateDidChangeListener(listener: @escaping (User?) -> ()) {
         Auth.auth().addStateDidChangeListener { (_, user) in
-            appState[\.currentUser] = user
-            if user != nil {
-                fetchAndUpdateFCMToken()
-            }
+            listener(user)
         }
     }
     
@@ -123,9 +121,7 @@ struct UsersServiceImpl: UsersService {
             .eraseToAnyPublisher()
     }
     
-    // MARK: - Private functions
-    
-    private func fetchAndUpdateFCMToken() {
+    func fetchAndUpdateFCMToken() {
         Deferred {
             Future<String, Error> { promise in
                 Messaging.messaging().token { fcmToken, error in
@@ -157,11 +153,12 @@ struct UsersServiceStub: UsersService {
     func signOut() { }
     func signInAnonymously(user: Binding<Loadable<User>>) { }
     func updateUser(displayName: String, email: String, password: String) { }
-    func registerFirebaseAuthListeners() { }
+    func addAuthStateDidChangeListener(listener: @escaping (User?) -> ()) { }
     func updateFCMToken(fcmToken: String) -> AnyPublisher<FCMTokenDTO, Error> {
         Fail(outputType: FCMTokenDTO.self, failure: MenugrabAppError.unauthenticatedUser)
             .eraseToAnyPublisher()
     }
+    func fetchAndUpdateFCMToken() { }
 }
 
 // MARK: - DTOs

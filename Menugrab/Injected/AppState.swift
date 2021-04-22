@@ -10,12 +10,13 @@ import CoreLocation
 
 struct AppState: Equatable {
     var currentUser: User?
+    var currentOrder: Order?
     var location: CLLocation?
     var basket: Basket
     var permissions = Permissions()
     
     static func defaultValue(orderType: OrderType) -> Self {
-        Self(currentUser: nil, basket: Basket(orderType: orderType))
+        Self(currentUser: nil, currentOrder: nil, basket: Basket(orderType: orderType))
     }
 }
 

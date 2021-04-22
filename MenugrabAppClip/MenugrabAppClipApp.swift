@@ -15,7 +15,14 @@ fileprivate class AppDelegate: NSObject, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         FirebaseApp.configure()
-        container.services.usersService.registerFirebaseAuthListeners()
+        container.services.usersService.addAuthStateDidChangeListener { [weak self] user in
+            guard let self = self else { return }
+            self.container.appState[\.currentUser] = user
+            if user != nil {
+                self.container.services.usersService.fetchAndUpdateFCMToken()
+                self.container.services.ordersService.loadCurrentOrder()
+            }
+        }
         return true
     }
 }

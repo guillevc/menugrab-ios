@@ -12,11 +12,13 @@ import Combine
 protocol OrdersService {
     func loadByUserId(orders: Binding<Loadable<[Order]>>, userId: String)
     func createOrder(from basket: Basket) -> AnyPublisher<Order, Error>?
+    func loadCurrentOrder()
 }
 
 struct OrdersServiceImpl: OrdersService {
     let appState: Store<AppState>
     let webRepository: OrdersWebRepository
+    let anyCancellableBag = AnyCancellableBag()
     
     init(appState: Store<AppState>, webRepository: OrdersWebRepository) {
         self.appState = appState
@@ -24,8 +26,6 @@ struct OrdersServiceImpl: OrdersService {
     }
     
     func loadByUserId(orders: Binding<Loadable<[Order]>>, userId: String) {
-        let anyCancellableBag = AnyCancellableBag()
-        
         orders.wrappedValue.setIsLoading(bag: anyCancellableBag)
 
         webRepository.loadOrdersByUserId(userId: userId)
@@ -38,11 +38,29 @@ struct OrdersServiceImpl: OrdersService {
         return webRepository.createOrder(createOrderDTO: createOrderDTO)
             .eraseToAnyPublisher()
     }
+    
+    func loadCurrentOrder() {
+        guard let userId = appState[\.currentUser]?.uid else { return }
+        webRepository.loadCurrentOrder(userId: userId)
+            .sink(receiveCompletion: { completion in
+                if case let .failure(error) = completion {
+                    // TODO: handle error
+                    print(error.localizedDescription)
+                }
+            }, receiveValue: { currentOrder in
+                appState[\.currentOrder] = currentOrder
+                // TODO: correct orderType
+                print("current order received: \(currentOrder.id) from restaurant \(currentOrder.restaurant.name)")
+                appState[\.basket] = Basket(orderType: .pickup)
+            })
+            .store(in: anyCancellableBag)
+    }
 }
 
 struct OrdersServiceStub: OrdersService {
     func loadByUserId(orders: Binding<Loadable<[Order]>>, userId: String) { }
     func createOrder(from basket: Basket) -> AnyPublisher<Order, Error>? { return nil }
+    func loadCurrentOrder() { }
 }
 
 // MARK: - DTOs
