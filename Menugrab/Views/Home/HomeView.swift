@@ -22,6 +22,8 @@ fileprivate enum FullScreenCoverItem: Identifiable {
 }
 
 struct HomeView: View {
+    fileprivate static let currentRestaurantViewHeight: CGFloat = 65
+    
     @StateObject var viewModel: HomeViewModel
     
     @State private var showingLocationSelector = false
@@ -34,106 +36,116 @@ struct HomeView: View {
         viewModel.container.appState[\.location] == nil ? "Select location" : "Current location"
     }
     
+    private var lastRestaurantCellBottomPadding: CGFloat {
+        viewModel.currentOrder == nil ? 20 : 20 + Self.currentRestaurantViewHeight
+    }
+    
     var body: some View {
         NavigationView {
-            GeometryReader { geometry in
-                ZStack {
-                    VStack(spacing: 0) {
-                        ZStack {
-                            HStack {
-                                NavigationLink(destination: AccountView(viewModel: .init(container: viewModel.container))) {
-                                    Image(systemName: "person")
-                                        .font(.system(size: 23))
-                                        .foregroundColor(.myBlack)
-                                }
-                                Spacer()
-                                Button(action: { showingBasketSheet = true }) {
-                                    Image(systemName: "cart")
-                                        .font(.system(size: 23))
-                                        .foregroundColor(viewModel.basketIsValid ? .myBlack : .lightGray)
-                                }
-                                .disabled(!viewModel.basketIsValid)
+            ZStack {
+                VStack(spacing: 0) {
+                    ZStack {
+                        HStack {
+                            NavigationLink(destination: AccountView(viewModel: .init(container: viewModel.container))) {
+                                Image(systemName: "person")
+                                    .font(.system(size: 23))
+                                    .foregroundColor(.myBlack)
                             }
-                            Button(action: {
-                                withAnimation(.linear(duration: 0.15)) {
-                                    showingLocationSelector = true
-                                }
-                            }, label: {
-                                HStack(spacing: 5) {
-                                    Text(locationSelectorButtonText)
-                                        .myFont(size: 17, weight: .bold)
-                                    Image(systemName: "chevron.down")
-                                        .font(.system(size: 17))
-                                        .foregroundColor(.myPrimary)
-                                }
-                            })
-                            .buttonStyle(PlainButtonStyle())
-                        }
-                        .padding()
-                        .frame(height: Constants.customNavigationBarHeight)
-                        Divider()
-                            .light()
-                        if let restaurants = viewModel.filteredNearbyRestaurants.value {
-                            nearbyRestaurantsLoadedView(restaurants: restaurants)
-                        } else if let error = viewModel.filteredNearbyRestaurants.error {
-                            Text("Failed: \(error.localizedDescription)")
                             Spacer()
-                        } else {
-                            nearbyRestaurantsLoadedView(restaurants: Restaurant.sampleRestaurants)
-                                .redacted(reason: .placeholder)
-                                .disabled(true)
+                            Button(action: { showingBasketSheet = true }) {
+                                Image(systemName: "cart")
+                                    .font(.system(size: 23))
+                                    .foregroundColor(viewModel.basketIsValid ? .myBlack : .lightGray)
+                            }
+                            .disabled(!viewModel.basketIsValid)
                         }
-                        if let currentOrder = viewModel.currentOrder {
+                        Button(action: {
+                            withAnimation(.linear(duration: 0.15)) {
+                                showingLocationSelector = true
+                            }
+                        }, label: {
+                            HStack(spacing: 5) {
+                                Text(locationSelectorButtonText)
+                                    .myFont(size: 17, weight: .bold)
+                                Image(systemName: "chevron.down")
+                                    .font(.system(size: 17))
+                                    .foregroundColor(.myPrimary)
+                            }
+                        })
+                        .buttonStyle(PlainButtonStyle())
+                    }
+                    .padding()
+                    .frame(height: Constants.customNavigationBarHeight)
+                    Divider()
+                        .light()
+                    if let restaurants = viewModel.filteredNearbyRestaurants.value {
+                        nearbyRestaurantsLoadedView(restaurants: restaurants)
+                    } else if let error = viewModel.filteredNearbyRestaurants.error {
+                        Text("Failed: \(error.localizedDescription)")
+                        Spacer()
+                    } else {
+                        nearbyRestaurantsLoadedView(restaurants: Restaurant.sampleRestaurants)
+                            .redacted(reason: .placeholder)
+                            .disabled(true)
+                    }
+                }
+                
+                if let currentOrder = viewModel.currentOrder {
+                    GeometryReader { geometry in
+                        VStack {
+                            Spacer()
                             Button(action: {
                                 activeFullScreenCover = .orderDetails(order: currentOrder)
                             }) {
-                                OrderInProgressView(container: viewModel.container, order: currentOrder, bottomPadding: geometry.safeAreaInsets.bottom)
+                                OrderInProgressView(container: viewModel.container, order: currentOrder, height: Self.currentRestaurantViewHeight, bottomPadding: geometry.safeAreaInsets.bottom)
                             }
                             .buttonStyle(IdentityButtonStyle())
                         }
                     }
-                    if (showingLocationSelector) {
-                        let onDismissSelector = {
-                            withAnimation(.linear(duration: 0.2)) {
-                                viewModel.requestLocationPermission()
-                                showingLocationSelector = false
-                            }
+                }
+                if (showingLocationSelector) {
+                    let onDismissSelector = {
+                        withAnimation(.linear(duration: 0.2)) {
+                            viewModel.requestLocationPermission()
+                            showingLocationSelector = false
                         }
-                        Color.black
-                            .edgesIgnoringSafeArea(.all)
-                            .opacity(0.2)
-                            .transition(.opacity)
-                            .onTapGesture(perform: onDismissSelector)
-                            .zIndex(1)
+                    }
+                    Color.black
+                        .edgesIgnoringSafeArea(.all)
+                        .opacity(0.2)
+                        .transition(.opacity)
+                        .onTapGesture(perform: onDismissSelector)
+                        .zIndex(1)
+                    GeometryReader { geometry in
                         VStack {
                             Spacer()
                             LocationSelectorView(onDismissSelector: onDismissSelector, bottomPadding: geometry.safeAreaInsets.bottom)
                         }
-                        
-                        .zIndex(2)
-                        .transition(.move(edge: .bottom))
+                        .edgesIgnoringSafeArea(.bottom)
                     }
+                    .zIndex(2)
+                    .transition(.move(edge: .bottom))
                 }
-                .navigationBarHidden(true)
-                .sheet(isPresented: $showingBasketSheet) {
-                    BasketView(
-                        viewModel: .init(
-                            container: viewModel.container,
-                            navigateToCompletedOrderAction: { newOrder in
-                                showingBasketSheet = false
-                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                                    activeFullScreenCover = .orderDetails(order: newOrder)
-                                }
-                            }
-                        ),
-                        navigateToRestaurantAction: { restaurant in
-                            showingBasketSheet = false
-                            selectedRestaurantId = restaurant.id
-                        }
-                    )
-                }
-                .edgesIgnoringSafeArea(.bottom)
             }
+            .navigationBarHidden(true)
+            .sheet(isPresented: $showingBasketSheet) {
+                BasketView(
+                    viewModel: .init(
+                        container: viewModel.container,
+                        navigateToCompletedOrderAction: { newOrder in
+                            showingBasketSheet = false
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                activeFullScreenCover = .orderDetails(order: newOrder)
+                            }
+                        }
+                    ),
+                    navigateToRestaurantAction: { restaurant in
+                        showingBasketSheet = false
+                        selectedRestaurantId    = restaurant.id
+                    }
+                )
+            }
+            .edgesIgnoringSafeArea(.bottom)
         }
         .actionSheet(isPresented: $showingActionSheet) {
             ActionSheet(title: Text("Filter restaurants"), message: nil, buttons: [
@@ -226,7 +238,7 @@ struct HomeView: View {
                         RestaurantCellView(restaurant: restaurant, container: viewModel.container)
                             .padding(.horizontal)
                             .padding(.top, 20)
-                            .padding(.bottom, index == restaurants.count - 1 ? 20 : 0)
+                            .padding(.bottom, index == restaurants.count - 1 ? lastRestaurantCellBottomPadding : 0)
                     }
                     .buttonStyle(IdentityButtonStyle())
                 }
@@ -385,6 +397,7 @@ fileprivate struct LocationSelectorItemView: View {
 fileprivate struct OrderInProgressView: View {
     let container: DIContainer
     let order: Order
+    let height: CGFloat
     let bottomPadding: CGFloat
     
     var stateInformationString: String {
@@ -421,7 +434,7 @@ fileprivate struct OrderInProgressView: View {
             .padding(.vertical, 10)
             .padding(.bottom, bottomPadding)
         }
-        .frame(height: 65)
+        .frame(height: height)
     }
 }
 
