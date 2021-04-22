@@ -13,6 +13,7 @@ struct AppState: Equatable {
     var currentOrder: Order?
     var location: CLLocation?
     var basket: Basket
+    var lastSentFCMToken: String?
     var permissions = Permissions()
     
     static func defaultValue(orderType: OrderType) -> Self {

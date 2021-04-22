@@ -190,7 +190,6 @@ struct HomeView: View {
         }
         .onAppear {
             viewModel.resolveLocationPermissionStatus()
-            viewModel.loadNearbyRestaurants()
         }
         .navigationViewStyle(DoubleColumnNavigationViewStyle())
     }

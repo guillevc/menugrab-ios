@@ -116,9 +116,24 @@ struct UsersServiceImpl: UsersService {
             return Fail(outputType: FCMTokenDTO.self, failure: MenugrabAppError.unauthenticatedUser)
                 .eraseToAnyPublisher()
         }
-        let fcmTokenDTO = FCMTokenDTO(fcmToken: fcmToken)
-        return webRepository.updateFCMToken(userId: currentUser.uid, fcmTokenDTO: fcmTokenDTO)
-            .eraseToAnyPublisher()
+        guard appState[\.lastSentFCMToken] != fcmToken else {
+            return Just(FCMTokenDTO(fcmToken: fcmToken))
+                .setFailureType(to: Error.self)
+                .eraseToAnyPublisher()
+        }
+        let publisher = webRepository.updateFCMToken(userId: currentUser.uid, fcmTokenDTO: FCMTokenDTO(fcmToken: fcmToken))
+        publisher
+            .map(\.fcmToken)
+            .sink(receiveCompletion: { completion in
+                if case let .failure(error) = completion {
+                    // TODO: handle error
+                    print(error.localizedDescription)
+                }
+            }, receiveValue: { token in
+                appState[\.lastSentFCMToken] = token
+            })
+            .store(in: anyCancellableBag)
+        return publisher.eraseToAnyPublisher()
     }
     
     func fetchAndUpdateFCMToken() {
