@@ -8,16 +8,9 @@
 import Foundation
 import Combine
 
-//private var restaurants: [Restaurant] {
-//    if let appliedFilter = viewModel.appliedFilter {
-//        return Self.allRestaurants.filter({ $0.acceptingOrderTypes.contains(appliedFilter) })
-//    } else {
-//        return Self.allRestaurants
-//    }
-//}
-
 final class HomeViewModel: ObservableObject {
     @Published private var nearbyRestaurants: Loadable<[Restaurant]>
+    @Published var currentOrder: Order?
     @Published var appliedFilter: OrderType?
     @Published var basketIsValid = false
     
@@ -42,6 +35,12 @@ final class HomeViewModel: ObservableObject {
     ) {
         self.container = container
         _nearbyRestaurants = .init(wrappedValue: nearbyRestaurants)
+        container.appState.updates(for: \.currentOrder)
+            .sink { [weak self] currentOrder in
+                guard let self = self else { return }
+                self.currentOrder = currentOrder
+            }
+            .store(in: anyCancellableBag)
         container.appState.updates(for: \.basket.isValid)
             .sink { [weak self] basketIsValid in
                 guard let self = self else { return }

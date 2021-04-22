@@ -36,94 +36,103 @@ struct HomeView: View {
     
     var body: some View {
         NavigationView {
-            ZStack {
-                VStack(spacing: 0) {
-                    ZStack {
-                        HStack {
-                            NavigationLink(destination: AccountView(viewModel: .init(container: viewModel.container))) {
-                                Image(systemName: "person")
-                                    .font(.system(size: 23))
-                                    .foregroundColor(.myBlack)
+            GeometryReader { geometry in
+                ZStack {
+                    VStack(spacing: 0) {
+                        ZStack {
+                            HStack {
+                                NavigationLink(destination: AccountView(viewModel: .init(container: viewModel.container))) {
+                                    Image(systemName: "person")
+                                        .font(.system(size: 23))
+                                        .foregroundColor(.myBlack)
+                                }
+                                Spacer()
+                                Button(action: { showingBasketSheet = true }) {
+                                    Image(systemName: "cart")
+                                        .font(.system(size: 23))
+                                        .foregroundColor(viewModel.basketIsValid ? .myBlack : .lightGray)
+                                }
+                                .disabled(!viewModel.basketIsValid)
                             }
+                            Button(action: {
+                                withAnimation(.linear(duration: 0.15)) {
+                                    showingLocationSelector = true
+                                }
+                            }, label: {
+                                HStack(spacing: 5) {
+                                    Text(locationSelectorButtonText)
+                                        .myFont(size: 17, weight: .bold)
+                                    Image(systemName: "chevron.down")
+                                        .font(.system(size: 17))
+                                        .foregroundColor(.myPrimary)
+                                }
+                            })
+                            .buttonStyle(PlainButtonStyle())
+                        }
+                        .padding()
+                        .frame(height: Constants.customNavigationBarHeight)
+                        Divider()
+                            .light()
+                        if let restaurants = viewModel.filteredNearbyRestaurants.value {
+                            nearbyRestaurantsLoadedView(restaurants: restaurants)
+                        } else if let error = viewModel.filteredNearbyRestaurants.error {
+                            Text("Failed: \(error.localizedDescription)")
                             Spacer()
-                            Button(action: { showingBasketSheet = true }) {
-                                Image(systemName: "cart")
-                                    .font(.system(size: 23))
-                                    .foregroundColor(viewModel.basketIsValid ? .myBlack : .lightGray)
-                            }
-                            .disabled(!viewModel.basketIsValid)
+                        } else {
+                            nearbyRestaurantsLoadedView(restaurants: Restaurant.sampleRestaurants)
+                                .redacted(reason: .placeholder)
+                                .disabled(true)
                         }
-                        Button(action: {
-                            withAnimation(.linear(duration: 0.15)) {
-                                showingLocationSelector = true
+                        if let currentOrder = viewModel.currentOrder {
+                            Button(action: {
+                                activeFullScreenCover = .orderDetails(order: currentOrder)
+                            }) {
+                                OrderInProgressView(container: viewModel.container, order: currentOrder, bottomPadding: geometry.safeAreaInsets.bottom)
                             }
-                        }, label: {
-                            HStack(spacing: 5) {
-                                Text(locationSelectorButtonText)
-                                    .myFont(size: 17, weight: .bold)
-                                Image(systemName: "chevron.down")
-                                    .font(.system(size: 17))
-                                    .foregroundColor(.myPrimary)
-                            }
-                        })
-                        .buttonStyle(PlainButtonStyle())
-                    }
-                    .padding()
-                    .frame(height: Constants.customNavigationBarHeight)
-                    Divider()
-                        .light()
-                    if let restaurants = viewModel.filteredNearbyRestaurants.value {
-                        nearbyRestaurantsLoadedView(restaurants: restaurants)
-                    } else if let error = viewModel.filteredNearbyRestaurants.error {
-                        Text("Failed: \(error.localizedDescription)")
-                        Spacer()
-                    } else {
-                        nearbyRestaurantsLoadedView(restaurants: Restaurant.sampleRestaurants)
-                            .redacted(reason: .placeholder)
-                            .disabled(true)
-                    }
-                }
-                if (showingLocationSelector) {
-                    let onDismissSelector = {
-                        withAnimation(.linear(duration: 0.2)) {
-                            viewModel.requestLocationPermission()
-                            showingLocationSelector = false
+                            .buttonStyle(IdentityButtonStyle())
                         }
                     }
-                    Color.black
-                        .edgesIgnoringSafeArea(.all)
-                        .opacity(0.2)
-                        .transition(.opacity)
-                        .onTapGesture(perform: onDismissSelector)
-                        .zIndex(1)
-                    GeometryReader { geometry in
+                    if (showingLocationSelector) {
+                        let onDismissSelector = {
+                            withAnimation(.linear(duration: 0.2)) {
+                                viewModel.requestLocationPermission()
+                                showingLocationSelector = false
+                            }
+                        }
+                        Color.black
+                            .edgesIgnoringSafeArea(.all)
+                            .opacity(0.2)
+                            .transition(.opacity)
+                            .onTapGesture(perform: onDismissSelector)
+                            .zIndex(1)
                         VStack {
                             Spacer()
                             LocationSelectorView(onDismissSelector: onDismissSelector, bottomPadding: geometry.safeAreaInsets.bottom)
                         }
-                        .edgesIgnoringSafeArea(.bottom)
+                        
+                        .zIndex(2)
+                        .transition(.move(edge: .bottom))
                     }
-                    .zIndex(2)
-                    .transition(.move(edge: .bottom))
                 }
-            }
-            .navigationBarHidden(true)
-            .sheet(isPresented: $showingBasketSheet) {
-                BasketView(
-                    viewModel: .init(
-                        container: viewModel.container,
-                        navigateToCompletedOrderAction: { newOrder in
-                            showingBasketSheet = false
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                                activeFullScreenCover = .orderDetails(order: newOrder)
+                .navigationBarHidden(true)
+                .sheet(isPresented: $showingBasketSheet) {
+                    BasketView(
+                        viewModel: .init(
+                            container: viewModel.container,
+                            navigateToCompletedOrderAction: { newOrder in
+                                showingBasketSheet = false
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                    activeFullScreenCover = .orderDetails(order: newOrder)
+                                }
                             }
+                        ),
+                        navigateToRestaurantAction: { restaurant in
+                            showingBasketSheet = false
+                            selectedRestaurantId = restaurant.id
                         }
-                    ),
-                    navigateToRestaurantAction: { restaurant in
-                        showingBasketSheet = false
-                        selectedRestaurantId = restaurant.id
-                    }
-                )
+                    )
+                }
+                .edgesIgnoringSafeArea(.bottom)
             }
         }
         .actionSheet(isPresented: $showingActionSheet) {
@@ -370,6 +379,49 @@ fileprivate struct LocationSelectorItemView: View {
                 .frame(width: 26, height: 26)
                 .foregroundColor(isSelected ? .myPrimary : .myBlack)
         }
+    }
+}
+
+fileprivate struct OrderInProgressView: View {
+    let container: DIContainer
+    let order: Order
+    let bottomPadding: CGFloat
+    
+    var stateInformationString: String {
+        switch order.orderState {
+        case .pending:
+            return "Order is waiting for approval from the restaurant"
+        case .accepted:
+            return "Order is being prepared"
+        case .completed, .canceled:
+            return "-"
+        }
+    }
+    
+    var body: some View {
+        ZStack {
+            Color.myPrimary
+            HStack(spacing: 16) {
+                ZStack {
+                    LoadableImageView(viewModel: .init(container: container, imageURLString: order.restaurant.imageURL))
+                        .aspectRatio(contentMode: .fill)
+                        .frame(width: 50, height: 50)
+                        .clipped()
+                }
+                VStack(alignment: .leading) {
+                    Text(stateInformationString)
+                        .myFont(size: 15, weight: .bold)
+                    Text(order.restaurant.name)
+                        .myFont()
+                }
+                Spacer()
+                ProgressView()
+            }
+            .padding(.horizontal)
+            .padding(.vertical, 10)
+            .padding(.bottom, bottomPadding)
+        }
+        .frame(height: 65)
     }
 }
 

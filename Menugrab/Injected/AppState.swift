@@ -39,7 +39,7 @@ extension AppState {
 #if DEBUG
 extension AppState {
     static var preview: Self {
-        Self(currentUser: nil, basket: .sampleBasket)
+        Self(currentUser: nil, currentOrder: Order.sampleOrders.first!, basket: .sampleBasket)
     }
 }
 #endif
