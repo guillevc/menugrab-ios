@@ -18,7 +18,7 @@ struct AllRestaurantsView: View {
         VStack(spacing: 0) {
             CustomNavigationBarView(title: title, type: .default, onDismiss: { presentationMode.wrappedValue.dismiss() })
             ScrollView(showsIndicators: false) {
-                VStack(spacing: 0) {
+                LazyVStack(spacing: 0) {
                     ForEach(Array(restaurants.enumerated()), id: \.offset) { index, restaurant in
                         RestaurantCellView(restaurant: restaurant, container: container)
                             .padding(.horizontal)

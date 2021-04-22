@@ -37,7 +37,7 @@ struct HomeSearchView: View {
             .padding(.vertical, 10)
             .frame(height: Constants.customNavigationBarHeight)
             ScrollView(showsIndicators: false) {
-                VStack(spacing: 0) {
+                LazyVStack(spacing: 0) {
                     ForEach(filteredRestaurants) { restaurant in
                         Button(action: { navigateToRestaurantAction(restaurant) }) {
                             RestaurantCellView(restaurant: restaurant, container: container)
