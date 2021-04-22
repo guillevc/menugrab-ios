@@ -34,7 +34,7 @@ struct OrderDetailsView: View {
                             }
                         }
                     }) {
-                        RestaurantNameTitleView(restaurantName: order.restaurant.name, showChevronRight: false)
+                        RestaurantNameTitleView(restaurantName: order.restaurant.name, showChevronRight: presentationType != .notNavigable)
                             .padding(.horizontal, 5)
                             .padding(.vertical)
                     }

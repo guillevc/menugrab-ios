@@ -33,7 +33,7 @@ struct HomeView: View {
     private var locationSelectorButtonText: String {
         viewModel.container.appState[\.location] == nil ? "Select location" : "Current location"
     }
-
+    
     var body: some View {
         NavigationView {
             ZStack {
@@ -72,9 +72,9 @@ struct HomeView: View {
                     .frame(height: Constants.customNavigationBarHeight)
                     Divider()
                         .light()
-                    if let restaurants = viewModel.nearbyRestaurants.value {
+                    if let restaurants = viewModel.filteredNearbyRestaurants.value {
                         nearbyRestaurantsLoadedView(restaurants: restaurants)
-                    } else if let error = viewModel.nearbyRestaurants.error {
+                    } else if let error = viewModel.filteredNearbyRestaurants.error {
                         Text("Failed: \(error.localizedDescription)")
                         Spacer()
                     } else {
@@ -146,7 +146,14 @@ struct HomeView: View {
         .fullScreenCover(item: $activeFullScreenCover) { item in
             switch item {
             case .search:
-                HomeSearchView(container: viewModel.container, restaurants: viewModel.nearbyRestaurants.value ?? [])
+                HomeSearchView(
+                    container: viewModel.container,
+                    restaurants: viewModel.filteredNearbyRestaurants.value ?? [],
+                    navigateToRestaurantAction: { restaurant in
+                        activeFullScreenCover = nil
+                        selectedRestaurantId = restaurant.id
+                    }
+                )
             case let .orderDetails(createdOrder):
                 OrderDetailsView(
                     viewModel: .init(container: viewModel.container),
@@ -170,7 +177,7 @@ struct HomeView: View {
     private func nearbyRestaurantsLoadedView(restaurants: [Restaurant]) -> some View {
         ScrollView(showsIndicators: false) {
             VStack(spacing: 0) {
-                RestaurantSearchInputView(type: .display(onSliderTapped: { showingActionSheet = true }))
+                RestaurantSearchInputView(type: .display(onSliderTapped: { showingActionSheet = true }), keywords: .constant(""))
                     .onTapGesture {
                         activeFullScreenCover = .search
                     }
@@ -187,7 +194,7 @@ struct HomeView: View {
                 HeaderView(text: "Favourites ⭐", destination: AllRestaurantsView(title: "All our favourites", restaurants: restaurants, container: viewModel.container))
                     .padding(.horizontal)
                     .padding(.bottom, -5)
-                HCarouselView(restaurants: restaurants, container: viewModel.container)
+                HCarouselView(restaurants: restaurants.filter({ $0.isFeatured }), container: viewModel.container, activeFullScreenCover: $activeFullScreenCover)
                 HeaderView(text: "Nearby 📍", destination: AllRestaurantsView(title: "All restaurants", restaurants: restaurants, container: viewModel.container))
                     .padding(.horizontal)
                     .padding(.top, 10)
@@ -217,19 +224,37 @@ struct HomeView: View {
             }
         }
     }
+    
 }
 
 fileprivate struct HCarouselView: View {
     let restaurants: [Restaurant]
     let container: DIContainer
+    @Binding var activeFullScreenCover: FullScreenCoverItem?
     
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             LazyHStack(spacing: 20) {
                 ForEach(Array(restaurants.enumerated()), id: \.offset) { index, restaurant in
-                    RestaurantCellView(restaurant: restaurant, container: container)
-                        .frame(width: 275, height: 125, alignment: .center)
-                        .padding(.trailing, index == restaurants.count - 1 ? 20 : 0)
+                    NavigationLink(
+                        destination: RestaurantMenuView(
+                            viewModel: .init(
+                                container: container,
+                                restaurant: restaurant
+                            ),
+                            navigateToCompletedOrderAction: { newOrder in
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                    activeFullScreenCover = .orderDetails(order: newOrder)
+                                }
+                            }
+                        )
+                    ) {
+                        
+                        RestaurantCellView(restaurant: restaurant, container: container)
+                            .frame(width: 275, height: 125, alignment: .center)
+                            .padding(.trailing, index == restaurants.count - 1 ? 20 : 0)
+                    }
+                    .buttonStyle(IdentityButtonStyle())
                 }
             }
             .padding(.vertical, 25)
@@ -344,7 +369,6 @@ fileprivate struct LocationSelectorItemView: View {
                 .resizable()
                 .frame(width: 26, height: 26)
                 .foregroundColor(isSelected ? .myPrimary : .myBlack)
-            
         }
     }
 }

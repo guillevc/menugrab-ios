@@ -22,6 +22,7 @@ struct Restaurant: Identifiable, Decodable, Equatable {
     let address: String
     let acceptingOrderTypes: [OrderType]
     let distance: Double?
+    let isFeatured: Bool
     
     var formattedDistance: String? {
         guard let distance = distance else { return nil }

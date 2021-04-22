@@ -12,6 +12,16 @@ struct HomeSearchView: View {
     
     let container: DIContainer
     let restaurants: [Restaurant]
+    let navigateToRestaurantAction: (Restaurant) -> ()
+    
+    private var filteredRestaurants: [Restaurant] {
+        guard keywords != "" else { return restaurants }
+        return restaurants.filter {
+            $0.name.localizedCaseInsensitiveContains(keywords)
+        }
+    }
+    
+    @State private var keywords = ""
     
     var body: some View {
         VStack(spacing: 0) {
@@ -21,17 +31,20 @@ struct HomeSearchView: View {
                         .font(.system(size: 20))
                         .foregroundColor(.myBlack)
                 }
-                RestaurantSearchInputView(type: .input)
+                RestaurantSearchInputView(type: .input, keywords: $keywords)
             }
             .padding(.horizontal)
             .padding(.vertical, 10)
             .frame(height: Constants.customNavigationBarHeight)
             ScrollView(showsIndicators: false) {
                 VStack(spacing: 0) {
-                    ForEach(restaurants) { restaurant in
-                        RestaurantCellView(restaurant: restaurant, container: container)
-                            .padding(.horizontal)
-                            .padding(.vertical, 10)
+                    ForEach(filteredRestaurants) { restaurant in
+                        Button(action: { navigateToRestaurantAction(restaurant) }) {
+                            RestaurantCellView(restaurant: restaurant, container: container)
+                                .padding(.horizontal)
+                                .padding(.vertical, 10)
+                        }
+                        .buttonStyle(IdentityButtonStyle())
                     }
                 }
             }
@@ -45,7 +58,7 @@ struct HomeSearchView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             ForEach(["iPhone 11 Pro", "iPhone SE (2nd generation)"], id: \.self) { deviceName in
-                HomeSearchView(container: .preview, restaurants: Restaurant.sampleRestaurants)
+                HomeSearchView(container: .preview, restaurants: Restaurant.sampleRestaurants, navigateToRestaurantAction: { _ in })
                     .previewDevice(PreviewDevice(rawValue: deviceName))
                     .previewDisplayName(deviceName)
             }

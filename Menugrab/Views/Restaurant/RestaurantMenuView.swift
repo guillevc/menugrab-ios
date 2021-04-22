@@ -328,7 +328,6 @@ fileprivate struct MenuItemView: View {
                 if let description = menuItem.description {
                     Text(description)
                         .myFont(size: 13, color: .darkGray)
-                        //                        .lineLimit(nil)
                         .fixedSize(horizontal: false, vertical: true)
                 }
             }
@@ -424,7 +423,7 @@ fileprivate struct BasketFloatingButtonView: View {
         .frame(width: 325, height: 50, alignment: .center)
         .background(
             Color.myPrimary
-                .cornerRadius(16)
+                .cornerRadius(22)
         )
     }
 }

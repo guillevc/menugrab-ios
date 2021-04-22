@@ -17,14 +17,22 @@ import Combine
 //}
 
 final class HomeViewModel: ObservableObject {
-    @Published var nearbyRestaurants: Loadable<[Restaurant]>
-    @Published var appliedFilter: OrderType? {
-        didSet {
-            print("TODO")
-        }
-    }
+    @Published private var nearbyRestaurants: Loadable<[Restaurant]>
+    @Published var appliedFilter: OrderType?
     @Published var basketIsValid = false
     
+    var filteredNearbyRestaurants: Loadable<[Restaurant]> {
+        if case let .loaded(restaurants) = nearbyRestaurants,
+           let appliedFilter = appliedFilter {
+            let filtered = restaurants.filter {
+                $0.acceptingOrderTypes.contains(appliedFilter)
+            }
+            return .loaded(filtered)
+        } else {
+            return nearbyRestaurants
+        }
+    }
+
     let container: DIContainer
     private var anyCancellableBag = AnyCancellableBag()
     
@@ -66,5 +74,4 @@ final class HomeViewModel: ObservableObject {
         container.services.restaurantsService
             .loadNearby(restaurants: loadableBinding(\.nearbyRestaurants), coordinates: coordinates)
     }
-    
 }

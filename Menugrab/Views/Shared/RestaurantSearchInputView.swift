@@ -27,10 +27,8 @@ enum RestaurantSearchInputViewType: Equatable {
 }
 
 struct RestaurantSearchInputView: View {
-    
     let type: RestaurantSearchInputViewType
-    
-    @State var keywords = ""
+    @Binding var keywords: String
     
     var body: some View {
         HStack {
@@ -63,9 +61,9 @@ struct RestaurantSearchInputView: View {
 struct RestaurantSearchInputView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            RestaurantSearchInputView(type: .display(onSliderTapped: nil))
+            RestaurantSearchInputView(type: .display(onSliderTapped: nil), keywords: .constant("keywords"))
                 .previewDisplayName("Display mode")
-            RestaurantSearchInputView(type: .input)
+            RestaurantSearchInputView(type: .input, keywords: .constant("keywords"))
                 .previewDisplayName("Input mode")
         }
         .padding()

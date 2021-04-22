@@ -386,10 +386,10 @@
 			isa = PBXGroup;
 			children = (
 				B3495BA2261E6A210057580E /* MenugrabAppClipApp.swift */,
+				B3B9BD4326262CD500DBB16F /* EnvironmentVariables.swift */,
 				B3495BAB261E6A270057580E /* Info.plist */,
 				B3B432A6261E79E200A8886F /* GoogleService-Info.plist */,
 				B3495BAC261E6A270057580E /* MenugrabAppClip.entitlements */,
-				B3B9BD4326262CD500DBB16F /* EnvironmentVariables.swift */,
 				B3E880C8261E6FF500885BBC /* Views */,
 				B3B432C4261E7DF100A8886F /* Resources */,
 				B3495BA8261E6A270057580E /* Preview Content */,
@@ -490,10 +490,10 @@
 		B38B636F259CE45000378052 /* Menugrab */ = {
 			isa = PBXGroup;
 			children = (
-				B314E582262A3C7A0007043E /* Menugrab.entitlements */,
 				B38B6370259CE45100378052 /* MenugrabApp.swift */,
 				B38B6379259CE45400378052 /* Info.plist */,
 				B3147BF025B51D87007EF4D7 /* GoogleService-Info.plist */,
+				B314E582262A3C7A0007043E /* Menugrab.entitlements */,
 				B38B63B4259CE4EB00378052 /* Models */,
 				B38B63BD259CE55C00378052 /* Views */,
 				B3D0BF4925AE6C0E00FF2B28 /* Services */,

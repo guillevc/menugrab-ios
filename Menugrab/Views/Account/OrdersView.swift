@@ -40,6 +40,8 @@ struct OrdersView: View {
                 ordersLoadedView(orders: Order.sampleOrders)
                     .redacted(reason: .placeholder)
                     .disabled(true)
+            case let .loaded(orders) where orders.isEmpty:
+                OrdersEmptyView()
             case let .loaded(orders):
                 ordersLoadedView(orders: orders)
             case let .failed(error):
@@ -140,6 +142,21 @@ fileprivate struct OrderStateHeaderView: View {
                 .myFont(size: 17, weight: .medium)
             Spacer()
         }
+    }
+}
+
+fileprivate struct OrdersEmptyView: View {
+    var body: some View {
+        VStack(spacing: 10) {
+            Spacer()
+            Text("No orders... yet")
+                .myFont(size: 17, weight: .regular)
+            Text("Start making orders and they will appear right here.")
+                .myFont(size: 17, weight: .regular, color: .darkGray)
+            Spacer()
+        }
+        .multilineTextAlignment(.center)
+        .padding(.horizontal, 40)
     }
 }
 

@@ -63,7 +63,7 @@ struct BasketView: View {
                                 ZigZagBackgroundView(color: .backgroundGray, numberOfTriangles: 20, triangleHeight: 10)
                                 Button(action: { viewModel.createOrderFromCurrentBasket() }) {
                                     Color.myPrimary
-                                        .cornerRadius(16)
+                                        .cornerRadius(22)
                                         .frame(width: 325, height: 50, alignment: .center)
                                         .overlay(
                                             Text("Check out")
