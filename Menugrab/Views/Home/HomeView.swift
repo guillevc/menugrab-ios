@@ -197,7 +197,7 @@ struct HomeView: View {
     
     private func nearbyRestaurantsLoadedView(restaurants: [Restaurant]) -> some View {
         ScrollView(showsIndicators: false) {
-            LazyVStack(spacing: 0) {
+            VStack(spacing: 0) {
                 RestaurantSearchInputView(type: .display(onSliderTapped: { showingActionSheet = true }), keywords: .constant(""))
                     .onTapGesture {
                         activeFullScreenCover = .search
