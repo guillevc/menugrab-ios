@@ -23,7 +23,7 @@ enum APIError: Swift.Error, LocalizedError {
     var errorDescription: String? {
         switch self {
         case .invalidURL: return "Invalid URL"
-        case let .httpCode(statusCode, message): return "Unexpected HTTP code: \(statusCode) (\(message ?? "no error message from server"))"
+        case let .httpCode(statusCode, message): return "[HTTP \(statusCode)] \(message ?? "error-message-empty")"
         case .unexpectedResponse: return "Unexpected response from the server"
         case .imageProcessing: return "Unable to load image"
         }

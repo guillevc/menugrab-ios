@@ -413,6 +413,7 @@ fileprivate struct OrderInProgressView: View {
     var body: some View {
         ZStack {
             Color.myPrimary
+                .opacity(0.98)
             HStack(spacing: 16) {
                 ZStack {
                     LoadableImageView(viewModel: .init(container: container, imageURLString: order.restaurant.imageURL))
