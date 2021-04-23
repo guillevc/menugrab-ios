@@ -8,6 +8,8 @@
 import Foundation
 
 final class BasketViewModel: NSObject, ObservableObject {
+    @Published var orderRequestInProgress = false
+    
     let container: DIContainer
     let navigateToCompletedOrderAction: (Order) -> ()
     private var anyCancellableBag = AnyCancellableBag()
@@ -21,16 +23,18 @@ final class BasketViewModel: NSObject, ObservableObject {
     }
     
     func createOrderFromCurrentBasket() {
+        orderRequestInProgress = true
         let basket = container.appState[\.basket]
         container.services.ordersService.createOrder(from: basket)?
             .sink(receiveCompletion: { completion in
                 if case let .failure(error) = completion {
-                    // TODO: handle order error
-                    print(error.localizedDescription)
+                    self.container.appState[\.displayedErrorMessage] = error.localizedDescription
                 }
+                self.orderRequestInProgress = false
             }, receiveValue: { order in
                 self.container.appState[\.basket].removeAllItems()
                 self.navigateToCompletedOrderAction(order)
+                self.orderRequestInProgress = false
             })
             .store(in: anyCancellableBag)
     }

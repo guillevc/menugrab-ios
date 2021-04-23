@@ -62,15 +62,20 @@ struct BasketView: View {
                             ZStack {
                                 ZigZagBackgroundView(color: .backgroundGray, numberOfTriangles: 20, triangleHeight: 10)
                                 Button(action: { viewModel.createOrderFromCurrentBasket() }) {
-                                    Color.myPrimary
-                                        .cornerRadius(22)
-                                        .frame(width: 325, height: 50, alignment: .center)
-                                        .overlay(
+                                    ZStack {
+                                        Color.myPrimary
+                                            .cornerRadius(22)
+                                            .frame(width: 325, height: 50, alignment: .center)
+                                        if viewModel.orderRequestInProgress {
+                                            ProgressView()
+                                        } else {
                                             Text("Check out")
                                                 .myFont(size: 17, weight: .bold, color: .black)
-                                        )
-                                        .padding(.top, 40)
+                                        }
+                                    }
+                                    .padding(.top, 40)
                                 }
+                                .disabled(viewModel.orderRequestInProgress)
                             }
                             .padding(.bottom, geometry.safeAreaInsets.bottom)
                             .background(Color.backgroundGray)
