@@ -15,6 +15,7 @@ struct AppState: Equatable {
     var basket: Basket
     var lastSentFCMToken: String?
     var permissions = Permissions()
+    var displayedErrorMessage: String?
     
     static func defaultValue(orderType: OrderType) -> Self {
         Self(currentUser: nil, currentOrder: nil, basket: Basket(orderType: orderType))

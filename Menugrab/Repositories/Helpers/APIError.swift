@@ -14,21 +14,24 @@ extension HTTPStatusCodes {
     static let success = 200 ..< 300
 }
 
-enum APIError: Swift.Error {
+enum APIError: Swift.Error, LocalizedError {
     case invalidURL
-    case httpCode(HTTPStatusCode)
+    case httpCode(statusCode: HTTPStatusCode, message: String?)
     case unexpectedResponse
     case imageProcessing
-}
-
-extension APIError: LocalizedError {
+    
     var errorDescription: String? {
         switch self {
         case .invalidURL: return "Invalid URL"
-        case let .httpCode(code) where code == 401: return "Unauthorized"
-        case let .httpCode(code): return "Unexpected HTTP code: \(code)"
+        case let .httpCode(statusCode, message): return "Unexpected HTTP code: \(statusCode) (\(message ?? "no error message from server"))"
         case .unexpectedResponse: return "Unexpected response from the server"
         case .imageProcessing: return "Unable to load image"
         }
     }
+}
+
+struct APIErrorDTO: Decodable {
+    let statusCode: Int
+    let error: String
+    let message: String
 }

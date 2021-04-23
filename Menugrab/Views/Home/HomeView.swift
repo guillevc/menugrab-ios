@@ -97,10 +97,11 @@ struct HomeView: View {
                             Button(action: {
                                 activeFullScreenCover = .orderDetails(order: currentOrder)
                             }) {
-                                OrderInProgressView(container: viewModel.container, order: currentOrder, height: Self.currentRestaurantViewHeight, bottomPadding: geometry.safeAreaInsets.bottom)
+                                OrderInProgressView(container: viewModel.container, order: currentOrder, height: Self.currentRestaurantViewHeight, safeAreaBottomInset: geometry.safeAreaInsets.bottom)
                             }
                             .buttonStyle(IdentityButtonStyle())
                         }
+                        .edgesIgnoringSafeArea(.bottom)
                     }
                 }
                 if (showingLocationSelector) {
@@ -119,7 +120,7 @@ struct HomeView: View {
                     GeometryReader { geometry in
                         VStack {
                             Spacer()
-                            LocationSelectorView(onDismissSelector: onDismissSelector, bottomPadding: geometry.safeAreaInsets.bottom)
+                            LocationSelectorView(onDismissSelector: onDismissSelector, safeAreaBottomInset: geometry.safeAreaInsets.bottom)
                         }
                         .edgesIgnoringSafeArea(.bottom)
                     }
@@ -145,7 +146,6 @@ struct HomeView: View {
                     }
                 )
             }
-            .edgesIgnoringSafeArea(.bottom)
         }
         .actionSheet(isPresented: $showingActionSheet) {
             ActionSheet(title: Text("Filter restaurants"), message: nil, buttons: [
@@ -302,7 +302,7 @@ fileprivate struct HeaderView<Destination: View>: View {
 
 fileprivate struct LocationSelectorView: View {
     let onDismissSelector: (() -> ())?
-    let bottomPadding: CGFloat
+    let safeAreaBottomInset: CGFloat
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -339,7 +339,7 @@ fileprivate struct LocationSelectorView: View {
             .opacity(0.3)
             .disabled(true)
         }
-        .padding(.bottom, bottomPadding)
+        .padding(.bottom, safeAreaBottomInset)
         .background(
             Color.white
                 .shadow(radius: 20)
@@ -397,7 +397,7 @@ fileprivate struct OrderInProgressView: View {
     let container: DIContainer
     let order: Order
     let height: CGFloat
-    let bottomPadding: CGFloat
+    let safeAreaBottomInset: CGFloat
     
     var stateInformationString: String {
         switch order.orderState {
@@ -431,9 +431,9 @@ fileprivate struct OrderInProgressView: View {
             }
             .padding(.horizontal)
             .padding(.vertical, 10)
-            .padding(.bottom, bottomPadding)
+            .padding(.bottom, safeAreaBottomInset)
         }
-        .frame(height: height)
+        .frame(height: height + safeAreaBottomInset)
     }
 }
 
@@ -441,7 +441,7 @@ struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             HomeView(viewModel: .init(container: .preview, nearbyRestaurants: Loadable.loaded(Restaurant.sampleRestaurants)))
-            LocationSelectorView(onDismissSelector: nil, bottomPadding: 0)
+            LocationSelectorView(onDismissSelector: nil, safeAreaBottomInset: 0)
                 .previewLayout(.sizeThatFits)
         }
     }

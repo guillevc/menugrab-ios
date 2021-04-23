@@ -44,8 +44,7 @@ struct OrdersServiceImpl: OrdersService {
         webRepository.loadCurrentOrder(userId: userId)
             .sink(receiveCompletion: { completion in
                 if case let .failure(error) = completion {
-                    // TODO: handle error
-                    print(error.localizedDescription)
+                    appState[\.displayedErrorMessage] = error.localizedDescription
                 }
             }, receiveValue: { currentOrder in
                 appState[\.currentOrder] = currentOrder

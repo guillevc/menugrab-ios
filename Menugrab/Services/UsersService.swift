@@ -126,8 +126,7 @@ struct UsersServiceImpl: UsersService {
             .map(\.fcmToken)
             .sink(receiveCompletion: { completion in
                 if case let .failure(error) = completion {
-                    // TODO: handle error
-                    print(error.localizedDescription)
+                    appState[\.displayedErrorMessage] = error.localizedDescription
                 }
             }, receiveValue: { token in
                 appState[\.lastSentFCMToken] = token
@@ -152,8 +151,7 @@ struct UsersServiceImpl: UsersService {
         .receive(on: DispatchQueue.main)
         .sink(receiveCompletion: { completion in
             if case let .failure(error) = completion {
-                // TODO: handle error
-                print(error.localizedDescription)
+                appState[\.displayedErrorMessage] = error.localizedDescription
             }
         }, receiveValue: { fcmTokenDTO in
             print("updated fcmToken on server to \(fcmTokenDTO.fcmToken)")

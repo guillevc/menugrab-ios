@@ -48,9 +48,13 @@ final class HomeViewModel: ObservableObject {
             }
             .store(in: anyCancellableBag)
         container.appState.updates(for: \.location)
-            .sink { [weak self] _ in
+            .sink { [weak self] location in
                 guard let self = self else { return }
-                self.loadNearbyRestaurants()
+                var coordinates: Coordinates?
+                if let clLocationCoordinate2D = location?.coordinate {
+                    coordinates = Coordinates(clLocationCoordinate2D: clLocationCoordinate2D)
+                }
+                self.loadNearbyRestaurants(coordinates: coordinates)
             }
             .store(in: anyCancellableBag)
     }
@@ -63,13 +67,7 @@ final class HomeViewModel: ObservableObject {
         container.services.userPermissionsService.request(permission: .location)
     }
     
-    func loadNearbyRestaurants() {
-        var coordinates: Coordinates?
-        
-        if let clLocationCoordinate2D = container.appState[\.location]?.coordinate {
-            coordinates = Coordinates(clLocationCoordinate2D: clLocationCoordinate2D)
-        }
-        
+    private func loadNearbyRestaurants(coordinates: Coordinates?) {
         container.services.restaurantsService
             .loadNearby(restaurants: loadableBinding(\.nearbyRestaurants), coordinates: coordinates)
     }

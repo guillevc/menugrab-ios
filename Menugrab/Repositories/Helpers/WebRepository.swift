@@ -25,7 +25,8 @@ extension WebRepository {
                     throw APIError.unexpectedResponse
                 }
                 guard validHTTPStatusCodes.contains(statusCode) else {
-                    throw APIError.httpCode(statusCode)
+                    let httpCodeApiError = try? jsonDecoder.decode(APIErrorDTO.self, from: data)
+                    throw APIError.httpCode(statusCode: statusCode, message: httpCodeApiError?.message)
                 }
                 
                 return data
