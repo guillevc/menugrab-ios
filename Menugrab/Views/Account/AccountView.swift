@@ -24,7 +24,7 @@ struct AccountView: View {
                 AccountItemView(mainImageSystemName: "person.crop.square.fill.and.at.rectangle", actionImageSystemName: "chevron.right", text: "Profile")
             }
             .padding(.bottom, Constants.formBigSpacing)
-            NavigationLink(destination: AboutView().environmentObject(AboutViewModel(isBlue: false))) {
+            NavigationLink(destination: AboutView()) {
                 AccountItemView(mainImageSystemName: nil, actionImageSystemName: "chevron.right", text: "About")
                     .padding(.bottom, Constants.formBigSpacing)
             }
