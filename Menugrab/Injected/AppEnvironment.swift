@@ -19,7 +19,7 @@ struct AppEnvironment {
 // MARK: - Initializers
 
 extension AppEnvironment {
-    private static let apiBaseURL = "http://192.168.0.91:3000/api"
+    private static let apiBaseURL = "http://192.168.2.10:3000/api"
 //    private static let apiBaseURL = "https://www.menugrab.me/api"
     
     static func initialize(orderType: OrderType) -> Self {

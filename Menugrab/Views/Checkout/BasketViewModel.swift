@@ -24,15 +24,13 @@ final class BasketViewModel: NSObject, ObservableObject {
     
     func createOrderFromCurrentBasket() {
         orderRequestInProgress = true
-        let basket = container.appState[\.basket]
-        container.services.ordersService.createOrder(from: basket)?
+        container.services.ordersService.createOrderFromBasket()?
             .sink(receiveCompletion: { completion in
                 if case let .failure(error) = completion {
                     self.container.appState[\.displayedErrorMessage] = error.localizedDescription
                 }
                 self.orderRequestInProgress = false
             }, receiveValue: { order in
-                self.container.appState[\.basket].removeAllItems()
                 self.navigateToCompletedOrderAction(order)
                 self.orderRequestInProgress = false
             })

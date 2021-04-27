@@ -62,10 +62,14 @@ extension AppDelegate {
             readableToken += String(format: "%02.2hhx", deviceToken[i] as CVarArg)
         }
         print("Received an APNs device token: \(readableToken)")
+        Messaging.messaging().apnsToken = deviceToken
     }
     
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         print("didReceiveRemoteNotification")
+        if let notificationData = CurrentOrderStateUpdateNotificationData(from: userInfo) {
+            container.services.ordersService.updateCurrentOrderStateUsingNotificationData(notificationData: notificationData)
+        }
         completionHandler(UIBackgroundFetchResult.newData)
     }
 }
@@ -75,11 +79,11 @@ extension AppDelegate {
 extension AppDelegate: UNUserNotificationCenterDelegate {
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
         print("didReceiveResponse")
-        
     }
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
         completionHandler([.banner, .badge, .sound])
+        print("will Present")
     }
 }
 

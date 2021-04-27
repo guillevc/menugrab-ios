@@ -46,6 +46,8 @@
 		B38687DD25A653540026B592 /* RestaurantMoreInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38687DC25A653540026B592 /* RestaurantMoreInfoView.swift */; };
 		B38687E225A655E10026B592 /* RestaurantLocationSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38687E125A655E10026B592 /* RestaurantLocationSectionView.swift */; };
 		B38687E725A65AF70026B592 /* RestaurantMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38687E625A65AF70026B592 /* RestaurantMapView.swift */; };
+		B386EBB6263796C100224228 /* CurrentOrderStateUpdateNotificationData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B386EBB5263796C100224228 /* CurrentOrderStateUpdateNotificationData.swift */; };
+		B386EBC32637970200224228 /* CurrentOrderStateUpdateNotificationData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B386EBB5263796C100224228 /* CurrentOrderStateUpdateNotificationData.swift */; };
 		B3880BDA25F98C2A006317BC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3880BD925F98C2A006317BC /* ContentView.swift */; };
 		B3880BDF25F98D1F006317BC /* ContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3880BDE25F98D1F006317BC /* ContentViewModel.swift */; };
 		B38B6371259CE45100378052 /* MenugrabApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38B6370259CE45100378052 /* MenugrabApp.swift */; };
@@ -265,6 +267,7 @@
 		B38687DC25A653540026B592 /* RestaurantMoreInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantMoreInfoView.swift; sourceTree = "<group>"; };
 		B38687E125A655E10026B592 /* RestaurantLocationSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantLocationSectionView.swift; sourceTree = "<group>"; };
 		B38687E625A65AF70026B592 /* RestaurantMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantMapView.swift; sourceTree = "<group>"; };
+		B386EBB5263796C100224228 /* CurrentOrderStateUpdateNotificationData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentOrderStateUpdateNotificationData.swift; sourceTree = "<group>"; };
 		B3880BD925F98C2A006317BC /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		B3880BDE25F98D1F006317BC /* ContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewModel.swift; sourceTree = "<group>"; };
 		B38B636D259CE45000378052 /* Menugrab.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Menugrab.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -460,6 +463,14 @@
 			path = Helpers;
 			sourceTree = "<group>";
 		};
+		B386EBB42637969F00224228 /* Notifications */ = {
+			isa = PBXGroup;
+			children = (
+				B386EBB5263796C100224228 /* CurrentOrderStateUpdateNotificationData.swift */,
+			);
+			path = Notifications;
+			sourceTree = "<group>";
+		};
 		B38B6364259CE45000378052 = {
 			isa = PBXGroup;
 			children = (
@@ -550,6 +561,7 @@
 				B329FE6C259F7E4600B404A7 /* Basket.swift */,
 				B3A21E3B25A93D310036E399 /* User.swift */,
 				B3C20B9325A3D64200B3B595 /* Decimal+Currency.swift */,
+				B386EBB42637969F00224228 /* Notifications */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -978,6 +990,7 @@
 				B3E8807F261E6D6700885BBC /* AppEnvironment.swift in Sources */,
 				B3E880EB261E745B00885BBC /* RestaurantMoreInfoView.swift in Sources */,
 				B3E88091261E6D8600885BBC /* APICall.swift in Sources */,
+				B386EBC32637970200224228 /* CurrentOrderStateUpdateNotificationData.swift in Sources */,
 				B3E88115261E747800885BBC /* LinkIfDestinationNotNull.swift in Sources */,
 				B3E88102261E747300885BBC /* SecondaryButtonView.swift in Sources */,
 				B3E8811B261E747800885BBC /* UINavigationController+.swift in Sources */,
@@ -1089,6 +1102,7 @@
 				B3AE501625B0B298008F9FF4 /* DIContainer.swift in Sources */,
 				B329FE6D259F7E4600B404A7 /* Basket.swift in Sources */,
 				B38687DD25A653540026B592 /* RestaurantMoreInfoView.swift in Sources */,
+				B386EBB6263796C100224228 /* CurrentOrderStateUpdateNotificationData.swift in Sources */,
 				B35B9D1E259D765100488D75 /* Menu.swift in Sources */,
 				B39CB2EE25A4201000823800 /* Constants.swift in Sources */,
 				B3A21E3525A93C950036E399 /* OrderDetailsView.swift in Sources */,

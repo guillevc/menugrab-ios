@@ -11,8 +11,9 @@ import Combine
 
 protocol OrdersService {
     func loadByUserId(orders: Binding<Loadable<[Order]>>, userId: String)
-    func createOrder(from basket: Basket) -> AnyPublisher<Order, Error>?
+    func createOrderFromBasket() -> AnyPublisher<Order, Error>?
     func loadCurrentOrder()
+    func updateCurrentOrderStateUsingNotificationData(notificationData: CurrentOrderStateUpdateNotificationData)
 }
 
 struct OrdersServiceImpl: OrdersService {
@@ -33,10 +34,22 @@ struct OrdersServiceImpl: OrdersService {
             .store(in: anyCancellableBag)
     }
     
-    func createOrder(from basket: Basket) -> AnyPublisher<Order, Error>? {
-        guard let createOrderDTO = CreateOrderDTO.init(from: basket) else { return nil }
-        return webRepository.createOrder(createOrderDTO: createOrderDTO)
-            .eraseToAnyPublisher()
+    func createOrderFromBasket() -> AnyPublisher<Order, Error>? {
+        guard let createOrderDTO = CreateOrderDTO.init(from: appState[\.basket]) else { return nil }
+        
+        let createOrderPublisher = webRepository.createOrder(createOrderDTO: createOrderDTO)
+        
+        createOrderPublisher.sink(receiveCompletion: { completion in
+            if case let .failure(error) = completion {
+                //
+            }
+        }, receiveValue: { order in
+            appState[\.basket].removeAllItems()
+            appState[\.currentOrder] = order
+        })
+        .store(in: anyCancellableBag)
+        
+        return createOrderPublisher.eraseToAnyPublisher()
     }
     
     func loadCurrentOrder() {
@@ -54,12 +67,29 @@ struct OrdersServiceImpl: OrdersService {
             })
             .store(in: anyCancellableBag)
     }
+    
+    func updateCurrentOrderStateUsingNotificationData(notificationData: CurrentOrderStateUpdateNotificationData) {
+        guard let currentOrder = appState[\.currentOrder],
+              currentOrder.id == notificationData.orderId else {
+            print("Failed updateCurrentOrderStateUsingNotificationData")
+            return
+        }
+        let newOrderState = notificationData.orderState
+        print("Updating currentOrder from \(currentOrder.orderState.rawValue) to \(newOrderState.rawValue)")
+        switch newOrderState {
+        case .pending, .accepted:
+            appState[\.currentOrder] = currentOrder.copy(with: notificationData.orderState)
+        case .completed, .canceled:
+            appState[\.currentOrder] = nil
+        }
+    }
 }
 
 struct OrdersServiceStub: OrdersService {
     func loadByUserId(orders: Binding<Loadable<[Order]>>, userId: String) { }
-    func createOrder(from basket: Basket) -> AnyPublisher<Order, Error>? { return nil }
+    func createOrderFromBasket() -> AnyPublisher<Order, Error>? { return nil }
     func loadCurrentOrder() { }
+    func updateCurrentOrderStateUsingNotificationData(notificationData: CurrentOrderStateUpdateNotificationData) { }
 }
 
 // MARK: - DTOs
