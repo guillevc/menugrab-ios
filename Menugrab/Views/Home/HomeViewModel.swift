@@ -13,6 +13,7 @@ final class HomeViewModel: ObservableObject {
     @Published var currentOrder: Order?
     @Published var appliedFilter: OrderType?
     @Published var basketIsValid = false
+    @Published var basketIsEmpty = false
     
     var filteredNearbyRestaurants: Loadable<[Restaurant]> {
         if case let .loaded(restaurants) = nearbyRestaurants,
@@ -41,10 +42,11 @@ final class HomeViewModel: ObservableObject {
                 self.currentOrder = currentOrder
             }
             .store(in: anyCancellableBag)
-        container.appState.updates(for: \.basket.isValid)
-            .sink { [weak self] basketIsValid in
+        container.appState.updates(for: \.basket)
+            .sink { [weak self] basket in
                 guard let self = self else { return }
-                self.basketIsValid = basketIsValid
+                self.basketIsValid = basket.isValid
+                self.basketIsEmpty = basket.items.isEmpty
             }
             .store(in: anyCancellableBag)
         container.appState.updates(for: \.location)

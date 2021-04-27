@@ -56,6 +56,14 @@ struct HomeView: View {
                                 Image(systemName: "cart")
                                     .font(.system(size: 23))
                                     .foregroundColor(viewModel.basketIsValid ? .myBlack : .lightGray)
+                                    .overlay(
+                                        Color.myPrimary
+                                            .clipShape(Circle())
+                                            .frame(width: 9, height: 9)
+                                            .padding(.leading, 22)
+                                            .padding(.bottom, 18)
+                                            .opacity(viewModel.basketIsValid && !viewModel.basketIsEmpty ? 1 : 0)
+                                    )
                             }
                             .disabled(!viewModel.basketIsValid)
                         }
