@@ -183,10 +183,9 @@ struct HomeView: View {
                         selectedRestaurantId = restaurant.id
                     }
                 )
-            case let .orderDetails(createdOrder):
+            case .orderDetails:
                 OrderDetailsView(
-                    viewModel: .init(container: viewModel.container),
-                    order: createdOrder,
+                    viewModel: .init(container: viewModel.container, type: .currentOrder),
                     presentationType: .sheet,
                     navigateToRestaurantAction: { restaurant in
                         activeFullScreenCover = nil

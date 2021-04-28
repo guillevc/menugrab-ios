@@ -221,6 +221,7 @@ fileprivate struct RestaurantHeaderView: View {
                 Spacer()
                 Text(restaurant.name)
                     .myFont(size: 23, weight: .bold, color: .black)
+                    .multilineTextAlignment(.center)
                 Spacer()
             }
             OrderTypeSegmentedPickerView(acceptingOrderTypes: restaurant.acceptingOrderTypes, currentOrderType: basket.orderType)

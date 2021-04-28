@@ -41,7 +41,7 @@ struct OrdersServiceImpl: OrdersService {
         
         createOrderPublisher.sink(receiveCompletion: { completion in
             if case let .failure(error) = completion {
-                //
+                print(error.localizedDescription)
             }
         }, receiveValue: { order in
             appState[\.basket].removeAllItems()
@@ -57,6 +57,7 @@ struct OrdersServiceImpl: OrdersService {
         webRepository.loadCurrentOrder(userId: userId)
             .sink(receiveCompletion: { completion in
                 if case let .failure(error) = completion {
+                    appState[\.currentOrder] = nil
                     appState[\.displayedErrorMessage] = error.localizedDescription
                 }
             }, receiveValue: { currentOrder in

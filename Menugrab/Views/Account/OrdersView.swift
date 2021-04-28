@@ -51,10 +51,9 @@ struct OrdersView: View {
         }
         .fullScreenCover(item: $activeFullScreenCover, content: { item in
             switch item {
-            case let .orderDetails(createdOrder):
+            case .orderDetails:
                 OrderDetailsView(
-                    viewModel: .init(container: viewModel.container),
-                    order: createdOrder,
+                    viewModel: .init(container: viewModel.container, type: .currentOrder),
                     presentationType: .sheet,
                     navigateToRestaurantAction: nil,
                     navigateToCompletedOrderAction: { newOrder in
@@ -100,8 +99,7 @@ struct OrdersView: View {
     private func orderCellView(order: Order) -> some View {
         NavigationLink(
             destination: OrderDetailsView(
-                viewModel: .init(container: viewModel.container),
-                order: order,
+                viewModel: .init(container: viewModel.container, type: .completedOrder(order)),
                 presentationType: .default,
                 navigateToRestaurantAction: nil,
                 navigateToCompletedOrderAction: { newOrder in
@@ -118,13 +116,13 @@ struct OrdersView: View {
                     .frame(width: 90, height: 90)
                     .clipped()
                 VStack(alignment: .leading, spacing: 0) {
-                    Text(order.restaurant.name)
+                    Text("\(order.restaurant.name)\(order.orderState == .canceled ? " (canceled)" : "")")
                         .myFont(size: 15, weight: .medium)
                         .padding(.bottom, 6)
                     Text("\(order.totalQuantity) \(order.totalQuantity > 1 ? "items" : "item") ‒ \(order.totalPrice.formattedAmount ?? "-") €")
                         .myFont(size: 13, color: .darkGray)
                         .padding(.bottom, 4)
-                    Text(order.date.formatted())
+                    Text(order.date.formatted)
                         .myFont(size: 13, color: .darkGray)
                 }
                 Spacer()

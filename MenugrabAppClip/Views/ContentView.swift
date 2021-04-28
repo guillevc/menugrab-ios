@@ -67,8 +67,7 @@ struct ContentView: View {
             switch item {
             case let .orderDetails(createdOrder):
                 OrderDetailsView(
-                    viewModel: .init(container: viewModel.container),
-                    order: createdOrder,
+                    viewModel: .init(container: viewModel.container, type: .completedOrder(createdOrder)),
                     presentationType: .notNavigable,
                     navigateToRestaurantAction: { _ in },
                     navigateToCompletedOrderAction: nil
