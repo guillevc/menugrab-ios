@@ -28,11 +28,11 @@ extension Order {
     
     static let sampleOrders: [Order] = {
         return [
-            Order(id: "test1Kpj3N7ao6c0ALf9", orderType: .pickup, date: Date.init(), orderState: .completed, restaurant: Restaurant.sampleRestaurants[0], orderItems: sampleOrderItems),
-            Order(id: "test2aj3b6c0ALbasdad", orderType: .table, date: Date.init(), orderState: .canceled, restaurant: Restaurant.sampleRestaurants[1], orderItems: sampleOrderItems),
-            Order(id: "test3aasdadsc0ALf9sa", orderType: .table, date: Date.init(), orderState: .pending, restaurant: Restaurant.sampleRestaurants[2], orderItems: sampleOrderItems),
-            Order(id: "test4Kpj3N7ao6c0ALfs", orderType: .table, date: Date.init(), orderState: .accepted, restaurant: Restaurant.sampleRestaurants[2], orderItems: sampleOrderItems),
-            Order(id: "test5Kpj3N0ALf9saB0s", orderType: .table, date: Date.init(), orderState: .completed, restaurant: Restaurant.sampleRestaurants[2], orderItems: sampleOrderItems)
+            Order(id: "test1Kpj3N7ao6c0ALf9", orderType: .pickup, date: Date.init(), completionDate: Date.init(), orderState: .completed, restaurant: Restaurant.sampleRestaurants[0], orderItems: sampleOrderItems),
+            Order(id: "test2aj3b6c0ALbasdad", orderType: .table, date: Date.init(), completionDate: Date.init(), orderState: .canceled, restaurant: Restaurant.sampleRestaurants[1], orderItems: sampleOrderItems),
+            Order(id: "test3aasdadsc0ALf9sa", orderType: .table, date: Date.init(), completionDate: Date.init(), orderState: .pending, restaurant: Restaurant.sampleRestaurants[2], orderItems: sampleOrderItems),
+            Order(id: "test4Kpj3N7ao6c0ALfs", orderType: .table, date: Date.init(), completionDate: Date.init(), orderState: .accepted, restaurant: Restaurant.sampleRestaurants[2], orderItems: sampleOrderItems),
+            Order(id: "test5Kpj3N0ALf9saB0s", orderType: .table, date: Date.init(), completionDate: Date.init(), orderState: .completed, restaurant: Restaurant.sampleRestaurants[2], orderItems: sampleOrderItems)
         ]
     }()
     

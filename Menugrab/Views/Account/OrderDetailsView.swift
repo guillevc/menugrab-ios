@@ -70,9 +70,9 @@ struct OrderDetailsView: View {
     }
     
     private var orderCompletionDateMessage: String? {
-        // TODO: add completion date from model
-        if viewModel.order.orderState == .accepted {
-            return "It will be ready at \(viewModel.order.date.timeFormatted)"
+        if viewModel.order.orderState == .accepted,
+           let completionDate = viewModel.order.completionDate {
+            return "It will be ready at \(completionDate.timeFormatted)"
         } else {
             return nil
         }

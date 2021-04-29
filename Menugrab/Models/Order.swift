@@ -50,6 +50,7 @@ struct Order: Identifiable, Decodable, Equatable {
     let id: String
     let orderType: OrderType
     let date: Date
+    let completionDate: Date?
     let orderState: OrderState
     let restaurant: Restaurant
     let orderItems: [OrderItem]
@@ -71,6 +72,7 @@ struct Order: Identifiable, Decodable, Equatable {
             id: id,
             orderType: orderType,
             date: date,
+            completionDate: completionDate,
             orderState: orderState,
             restaurant: restaurant,
             orderItems: orderItems
