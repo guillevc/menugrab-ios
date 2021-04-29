@@ -24,8 +24,8 @@ protocol UsersService {
 }
 
 struct UsersServiceImpl: UsersService {
-    let appState: Store<AppState>
-    let webRepository: UsersWebRepository
+    private let appState: Store<AppState>
+    private let webRepository: UsersWebRepository
     private let anyCancellableBag = AnyCancellableBag()
     
     init(appState: Store<AppState>, webRepository: UsersWebRepository) {
@@ -116,23 +116,8 @@ struct UsersServiceImpl: UsersService {
             return Fail(outputType: FCMTokenDTO.self, failure: MenugrabAppError.unauthenticatedUser)
                 .eraseToAnyPublisher()
         }
-        guard appState[\.lastSentFCMToken] != fcmToken else {
-            return Just(FCMTokenDTO(fcmToken: fcmToken))
-                .setFailureType(to: Error.self)
-                .eraseToAnyPublisher()
-        }
-        let publisher = webRepository.updateFCMToken(userId: currentUser.uid, fcmTokenDTO: FCMTokenDTO(fcmToken: fcmToken))
-        publisher
-            .map(\.fcmToken)
-            .sink(receiveCompletion: { completion in
-                if case let .failure(error) = completion {
-                    appState[\.displayedErrorMessage] = error.localizedDescription
-                }
-            }, receiveValue: { token in
-                appState[\.lastSentFCMToken] = token
-            })
-            .store(in: anyCancellableBag)
-        return publisher.eraseToAnyPublisher()
+        return webRepository.updateFCMToken(userId: currentUser.uid, fcmTokenDTO: FCMTokenDTO(fcmToken: fcmToken))
+            .eraseToAnyPublisher()
     }
     
     func fetchAndUpdateFCMToken() {
