@@ -20,6 +20,7 @@ extension WebRepository {
         return Auth.auth().currentUserIdTokenPublisher()
             .tryMap { try endpoint.urlRequest(baseURL: baseURL, bearerToken: $0) }
             .flatMap { session.dataTaskPublisher(for: $0).mapError { $0 as Error } }
+            .share()
             .tryMap { data, response in
                 guard let statusCode = (response as? HTTPURLResponse)?.statusCode else {
                     throw APIError.unexpectedResponse
