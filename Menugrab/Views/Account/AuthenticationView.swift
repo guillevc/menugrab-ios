@@ -106,7 +106,7 @@ struct AuthenticationView: View {
                             Text("- or -")
                                 .myFont(size: 13, weight: .medium, color: .lightGray)
                             HStack {
-                                Button(action: { }) {
+                                Button(action: { viewModel.signInAnonymously() }) {
                                     Text("Continue as guest")
                                         .myFont(size: 13, weight: .bold, color: .lightGray)
                                 }

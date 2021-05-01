@@ -15,17 +15,12 @@ struct ContentView: View {
     var body: some View {
         VStack(spacing: 0) {
             if let displayedErrorMessage = displayedErrorMessage {
-                HStack {
-                    Image(systemName: "xmark.octagon.fill")
-                        .font(.system(size: 15))
-                        .foregroundColor(.myBlack)
-                    Text(displayedErrorMessage)
-                        .myFont(size: 13, color: .myBlack)
-                    Spacer()
-                }
-                .padding(.horizontal)
-                .padding(.vertical, 5)
-                .background(Color.errorRed)
+                Text(displayedErrorMessage)
+                    .myFont(size: 15, color: .myBlack)
+                    .frame(maxWidth: .infinity)
+                    .padding(.horizontal)
+                    .padding(.vertical)
+                    .background(Color.errorRed)
             }
             ZStack { () -> AnyView in
                 if isUserAuthenticated {

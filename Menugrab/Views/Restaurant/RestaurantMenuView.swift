@@ -122,7 +122,7 @@ struct RestaurantMenuView: View {
                         Button(action: { activeSheet = .basket }) {
                             BasketFloatingButtonView(totalQuantity: viewModel.basket.totalQuantity, totalPrice: viewModel.basket.totalPrice)
                         }
-                        .buttonStyle(PlainButtonStyle())
+                        .buttonStyle(IdentityButtonStyle())
                     }
                     .padding(.bottom, 24)
                 }

@@ -76,6 +76,7 @@ struct BasketView: View {
                                     .padding(.top, 40)
                                 }
                                 .disabled(viewModel.orderRequestInProgress || viewModel.container.appState[\.currentOrder] != nil)
+                                .buttonStyle(PlainButtonStyle())
                             }
                             .padding(.bottom, 24)
                             .padding(.bottom, geometry.safeAreaInsets.bottom)
