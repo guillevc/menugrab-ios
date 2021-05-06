@@ -34,7 +34,7 @@
 		B34B4119259F559400C64D34 /* ZigZagBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B34B4118259F559400C64D34 /* ZigZagBackgroundView.swift */; };
 		B35129962612579200BC6AAB /* UserPermissionsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B35129952612579200BC6AAB /* UserPermissionsService.swift */; };
 		B35B9D1E259D765100488D75 /* Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = B35B9D1D259D765100488D75 /* Menu.swift */; };
-		B367204825AD18D400926040 /* Date+.swift in Sources */ = {isa = PBXBuildFile; fileRef = B367204725AD18D400926040 /* Date+.swift */; };
+		B367204825AD18D400926040 /* Date&DateFormatter+.swift in Sources */ = {isa = PBXBuildFile; fileRef = B367204725AD18D400926040 /* Date&DateFormatter+.swift */; };
 		B369DB2E25B90A6E000013A1 /* RestaurantMenuViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B369DB2D25B90A6E000013A1 /* RestaurantMenuViewModel.swift */; };
 		B36A6E8425AFB6CE00EAC483 /* AnyCancellableBag.swift in Sources */ = {isa = PBXBuildFile; fileRef = B36A6E8325AFB6CE00EAC483 /* AnyCancellableBag.swift */; };
 		B36A6E9025AFBF3800EAC483 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = B36A6E8F25AFBF3800EAC483 /* AppState.swift */; };
@@ -152,7 +152,7 @@
 		B3E8810D261E747300885BBC /* RestaurantCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38B63C3259CE55C00378052 /* RestaurantCellView.swift */; };
 		B3E88114261E747800885BBC /* IdentityButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3311750259D57E80016619A /* IdentityButtonStyle.swift */; };
 		B3E88115261E747800885BBC /* LinkIfDestinationNotNull.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3AE2DBC25A78D9400E5ED60 /* LinkIfDestinationNotNull.swift */; };
-		B3E88116261E747800885BBC /* Date+.swift in Sources */ = {isa = PBXBuildFile; fileRef = B367204725AD18D400926040 /* Date+.swift */; };
+		B3E88116261E747800885BBC /* Date&DateFormatter+.swift in Sources */ = {isa = PBXBuildFile; fileRef = B367204725AD18D400926040 /* Date&DateFormatter+.swift */; };
 		B3E88117261E747800885BBC /* LoadableImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B331DF9525B1145800912AFC /* LoadableImageView.swift */; };
 		B3E88118261E747800885BBC /* Color+.swift in Sources */ = {isa = PBXBuildFile; fileRef = B373A9CC259CF87A0089FA60 /* Color+.swift */; };
 		B3E88119261E747800885BBC /* Divider+.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3B0BC9F25A7F3080068C1EC /* Divider+.swift */; };
@@ -253,7 +253,7 @@
 		B34B4118259F559400C64D34 /* ZigZagBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZigZagBackgroundView.swift; sourceTree = "<group>"; };
 		B35129952612579200BC6AAB /* UserPermissionsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPermissionsService.swift; sourceTree = "<group>"; };
 		B35B9D1D259D765100488D75 /* Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Menu.swift; sourceTree = "<group>"; };
-		B367204725AD18D400926040 /* Date+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+.swift"; sourceTree = "<group>"; };
+		B367204725AD18D400926040 /* Date&DateFormatter+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date&DateFormatter+.swift"; sourceTree = "<group>"; };
 		B369DB2D25B90A6E000013A1 /* RestaurantMenuViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantMenuViewModel.swift; sourceTree = "<group>"; };
 		B36A6E8325AFB6CE00EAC483 /* AnyCancellableBag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyCancellableBag.swift; sourceTree = "<group>"; };
 		B36A6E8F25AFBF3800EAC483 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
@@ -450,7 +450,7 @@
 			children = (
 				B373A9CC259CF87A0089FA60 /* Color+.swift */,
 				B39CB2ED25A4201000823800 /* Constants.swift */,
-				B367204725AD18D400926040 /* Date+.swift */,
+				B367204725AD18D400926040 /* Date&DateFormatter+.swift */,
 				B3B0BC9F25A7F3080068C1EC /* Divider+.swift */,
 				B3311750259D57E80016619A /* IdentityButtonStyle.swift */,
 				B3AE2DBC25A78D9400E5ED60 /* LinkIfDestinationNotNull.swift */,
@@ -977,7 +977,7 @@
 				B3E880F3261E745F00885BBC /* BasketViewModel.swift in Sources */,
 				B3E88088261E6D7A00885BBC /* ImagesWebRepository.swift in Sources */,
 				B3E880FA261E746D00885BBC /* OrderDetailsViewModel.swift in Sources */,
-				B3E88116261E747800885BBC /* Date+.swift in Sources */,
+				B3E88116261E747800885BBC /* Date&DateFormatter+.swift in Sources */,
 				B3EF52D4262E407C000AEC4C /* MenugrabAppError.swift in Sources */,
 				B3E880BA261E6DB800885BBC /* Models+SampleData.swift in Sources */,
 				B3E880A5261E6D9600885BBC /* UserPermissionsService.swift in Sources */,
@@ -1057,7 +1057,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B367204825AD18D400926040 /* Date+.swift in Sources */,
+				B367204825AD18D400926040 /* Date&DateFormatter+.swift in Sources */,
 				B344A5DA25FBFE95005E6F6F /* OrdersWebRepository.swift in Sources */,
 				B3311741259D2EFC0016619A /* BasketView.swift in Sources */,
 				B3B0BCA025A7F3080068C1EC /* Divider+.swift in Sources */,

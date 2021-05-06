@@ -79,7 +79,7 @@ struct OrdersServiceImpl: OrdersService {
         print("Updating currentOrder from \(currentOrder.orderState.rawValue) to \(newOrderState.rawValue)")
         switch newOrderState {
         case .pending, .accepted:
-            appState[\.currentOrder] = currentOrder.copy(with: notificationData.orderState)
+            appState[\.currentOrder] = currentOrder.copy(orderState: notificationData.orderState, completionDate: notificationData.completionDate)
         case .completed, .canceled:
             appState[\.currentOrder] = nil
         }

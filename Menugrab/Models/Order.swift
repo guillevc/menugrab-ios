@@ -67,15 +67,15 @@ struct Order: Identifiable, Decodable, Equatable {
         orderState.isInProgress
     }
     
-    func copy(with orderState: OrderState) -> Self {
+    func copy(orderState: OrderState, completionDate: Date?) -> Self {
         Self(
-            id: id,
-            orderType: orderType,
-            date: date,
+            id: self.id,
+            orderType: self.orderType,
+            date: self.date,
             completionDate: completionDate,
             orderState: orderState,
-            restaurant: restaurant,
-            orderItems: orderItems
+            restaurant: self.restaurant,
+            orderItems: self.orderItems
         )
     }
 }
