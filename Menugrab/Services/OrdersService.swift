@@ -58,7 +58,7 @@ struct OrdersServiceImpl: OrdersService {
             .sink(receiveCompletion: { completion in
                 if case let .failure(error) = completion {
                     appState[\.currentOrder] = nil
-                    appState[\.displayedErrorMessage] = error.localizedDescription
+//                    appState[\.displayedErrorMessage] = error.localizedDescription
                 }
             }, receiveValue: { currentOrder in
                 appState[\.currentOrder] = currentOrder

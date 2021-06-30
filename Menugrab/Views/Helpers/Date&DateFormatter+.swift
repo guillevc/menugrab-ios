@@ -8,9 +8,15 @@
 import Foundation
 
 extension DateFormatter {
-    static let isoStringWithoutMillisFormatter: DateFormatter = {
+    static let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        return formatter
+    }()
+    
+    static let isoStringWithoutMillisFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
         return formatter
     }()
     
@@ -31,7 +37,7 @@ extension Date {
     }
     
     var formatted: String {
-        DateFormatter.isoStringWithoutMillisFormatter.string(from: self)
+        DateFormatter.dateFormatter.string(from: self)
     }
     
     var timeFormatted: String {

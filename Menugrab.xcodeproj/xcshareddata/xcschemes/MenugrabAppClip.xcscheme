@@ -79,7 +79,7 @@
          <EnvironmentVariable
             key = "CHECK_USER_LOCATION_DISABLED"
             value = ""
-            isEnabled = "YES">
+            isEnabled = "NO">
          </EnvironmentVariable>
       </EnvironmentVariables>
    </LaunchAction>

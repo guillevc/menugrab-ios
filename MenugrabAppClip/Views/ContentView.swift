@@ -7,14 +7,11 @@
 
 import SwiftUI
 
-fileprivate enum FullScreenCoverItem: Identifiable {
-    case orderDetails(order: Order)
+fileprivate enum FullScreenCoverItem: String, Identifiable {
+    case orderDetails
     
     var id: String {
-        switch self {
-        case let .orderDetails(order):
-            return "orderDetails[\(order.id)]"
-        }
+        rawValue
     }
 }
 
@@ -44,9 +41,9 @@ struct ContentView: View {
                                     container: viewModel.container,
                                     restaurant: restaurant
                                 ),
-                                navigateToCompletedOrderAction: { newOrder in
+                                navigateToCompletedOrderAction: { _ in
                                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                                        activeFullScreenCover = .orderDetails(order: newOrder)
+                                        activeFullScreenCover = .orderDetails
                                     }
                                 }
                             )
@@ -65,9 +62,9 @@ struct ContentView: View {
         }
         .fullScreenCover(item: $activeFullScreenCover) { item in
             switch item {
-            case let .orderDetails(createdOrder):
+            case .orderDetails:
                 OrderDetailsView(
-                    viewModel: .init(container: viewModel.container, type: .completedOrder(createdOrder)),
+                    viewModel: .init(container: viewModel.container, type: .currentOrder),
                     presentationType: .notNavigable,
                     navigateToRestaurantAction: { _ in },
                     navigateToCompletedOrderAction: nil
