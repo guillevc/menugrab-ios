@@ -65,4 +65,4 @@ It's based off of [Alexey Naumov](https://github.com/nalexn)'s [Clean Architectu
 ### Quick start
 
 - Add your `GoogleService-Info.plist` files to `Menugrab` and `MenugrabAppClip` folders.
-- Point to a running [menugrab-server](https://github.com/guillevc/menugrab-server) instance with populated restaurant data.
+- Point to a running [menugrab-server](https://github.com/guillevc/menugrab-server) instance in `AppEnvironment.swift` with populated restaurant data or use the default sample instance `https://menugrab.herokuapp.com/docs`
