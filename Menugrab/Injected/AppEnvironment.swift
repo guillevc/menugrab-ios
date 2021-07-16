@@ -19,8 +19,7 @@ struct AppEnvironment {
 // MARK: - Initializers
 
 extension AppEnvironment {
-//    private static let apiBaseURL = "http://192.168.2.10:3000/api"
-    private static let apiBaseURL = "https://api.menugrab.me/api"
+    private static let apiBaseURL = "https://menugrab.herokuapp.com/api"
     
     static func initialize(orderType: OrderType) -> Self {
         let appState = Store<AppState>(AppState.defaultValue(orderType: orderType))
