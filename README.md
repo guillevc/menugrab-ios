@@ -40,7 +40,9 @@ This repository contains the source code of the iPhone app component of Menugrab
 
 It' built completely using SwiftUI and Combine, reducing to almost zero the use of callbacks and delegates. It relies on Firebase Authentication for user login and in Firebase Cloud Messaging for receiving notifications from the backend server.
 
-![designs](images/designs.png)
+![designs](https://user-images.githubusercontent.com/13879763/126217223-65db2a34-927d-4816-ba34-006c213ddbc2.png)
+
+https://user-images.githubusercontent.com/13879763/126218167-4eb0604e-b852-43f9-bc60-0688c4b4902a.mp4
 
 ### UI/UX design
 
