@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		B30AAB1D25B47EDC00EC9EBA /* RoundedRectangleSpecificCorners.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30AAB1C25B47EDC00EC9EBA /* RoundedRectangleSpecificCorners.swift */; };
 		B3147BEC25B519E2007EF4D7 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = B3147BEB25B519E2007EF4D7 /* FirebaseAuth */; };
-		B3147BF125B51D87007EF4D7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B3147BF025B51D87007EF4D7 /* GoogleService-Info.plist */; };
 		B314E584262A3CC00007043E /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = B314E583262A3CC00007043E /* FirebaseMessaging */; };
 		B314E5BC262A4BA60007043E /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = B314E5BB262A4BA60007043E /* FirebaseMessaging */; };
 		B3247FE7261D2BB4001EC1CC /* OrderDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3247FE6261D2BB4001EC1CC /* OrderDetailsViewModel.swift */; };
@@ -81,7 +80,6 @@
 		B3AF0A5C261BA477003065EB /* OrderItemsTotalPriceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3AF0A5B261BA477003065EB /* OrderItemsTotalPriceView.swift */; };
 		B3B0BCA025A7F3080068C1EC /* Divider+.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3B0BC9F25A7F3080068C1EC /* Divider+.swift */; };
 		B3B0BCAD25A7F9580068C1EC /* CustomNavigationBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3B0BCAC25A7F9580068C1EC /* CustomNavigationBarView.swift */; };
-		B3B432A7261E79E300A8886F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B3B432A6261E79E200A8886F /* GoogleService-Info.plist */; };
 		B3B432B4261E7A1700A8886F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B38B6374259CE45400378052 /* Assets.xcassets */; };
 		B3B432BB261E7A2100A8886F /* DMSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B38B63D5259CE59E00378052 /* DMSans-Bold.ttf */; };
 		B3B432BC261E7A2100A8886F /* DMSans-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B38B63D4259CE59E00378052 /* DMSans-Medium.ttf */; };
@@ -916,7 +914,6 @@
 				B3495BAA261E6A270057580E /* Preview Assets.xcassets in Resources */,
 				B3B432BD261E7A2100A8886F /* DMSans-Regular.ttf in Resources */,
 				B3B432BB261E7A2100A8886F /* DMSans-Bold.ttf in Resources */,
-				B3B432A7261E79E300A8886F /* GoogleService-Info.plist in Resources */,
 				B3B432B4261E7A1700A8886F /* Assets.xcassets in Resources */,
 				B3495BA7261E6A270057580E /* Assets.xcassets in Resources */,
 				B3B432BC261E7A2100A8886F /* DMSans-Medium.ttf in Resources */,
@@ -946,7 +943,6 @@
 				B38B63DA259CE59E00378052 /* DMSans-Medium.ttf in Resources */,
 				B38B6378259CE45400378052 /* Preview Assets.xcassets in Resources */,
 				B38B6375259CE45400378052 /* Assets.xcassets in Resources */,
-				B3147BF125B51D87007EF4D7 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
