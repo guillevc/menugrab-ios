@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		44CF3BFF27E9EF960032DC9D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B3147BF025B51D87007EF4D7 /* GoogleService-Info.plist */; };
+		44CF3C0027E9EF9B0032DC9D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B3B432A6261E79E200A8886F /* GoogleService-Info.plist */; };
 		B30AAB1D25B47EDC00EC9EBA /* RoundedRectangleSpecificCorners.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30AAB1C25B47EDC00EC9EBA /* RoundedRectangleSpecificCorners.swift */; };
 		B3147BEC25B519E2007EF4D7 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = B3147BEB25B519E2007EF4D7 /* FirebaseAuth */; };
 		B314E584262A3CC00007043E /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = B314E583262A3CC00007043E /* FirebaseMessaging */; };
@@ -917,6 +919,7 @@
 				B3B432B4261E7A1700A8886F /* Assets.xcassets in Resources */,
 				B3495BA7261E6A270057580E /* Assets.xcassets in Resources */,
 				B3B432BC261E7A2100A8886F /* DMSans-Medium.ttf in Resources */,
+				44CF3C0027E9EF9B0032DC9D /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -943,6 +946,7 @@
 				B38B63DA259CE59E00378052 /* DMSans-Medium.ttf in Resources */,
 				B38B6378259CE45400378052 /* Preview Assets.xcassets in Resources */,
 				B38B6375259CE45400378052 /* Assets.xcassets in Resources */,
+				44CF3BFF27E9EF960032DC9D /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
