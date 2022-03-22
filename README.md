@@ -66,5 +66,7 @@ It's based off of [Alexey Naumov](https://github.com/nalexn)'s [Clean Architectu
 
 ### Quick start
 
-- Add your `GoogleService-Info.plist` files to `Menugrab` and `MenugrabAppClip` folders.
-- Point to a running [menugrab-server](https://github.com/guillevc/menugrab-server) instance in `AppEnvironment.swift` with populated restaurant data. You can use the example instance `https://menugrab.herokuapp.com` but authentication will fail as the server will be using a different Firebase cert.
+- Just run the app if you want to use the example `menugrab-server` instance with populated data (https://menugrab.herokuapp.com).
+- Alternatively:
+    - Add your own `GoogleService-Info.plist` files to `Menugrab` and `MenugrabAppClip` folders.
+    - Point to your running [menugrab-server](https://github.com/guillevc/menugrab-server) instance in `AppEnvironment.swift`.
