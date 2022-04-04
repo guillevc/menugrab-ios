@@ -6,19 +6,17 @@ on:
 
 jobs:
   build:
-    runs-on: macOS-latest
+    runs-on: macos-latest
 
     steps:
     - uses: actions/checkout@v2
-        
-    - name: Select Xcode
-      run: sudo xcode-select -switch /Applications/Xcode_12.app
+    
+    - uses: actions/cache@v3
+      with:
+        path: .build
+        key: ${{ runner.os }}-spm-${{ hashFiles('**/Package.resolved') }}
+        restore-keys: |
+          ${{ runner.os }}-spm-
 
-    - name: Xcode version
-      run: /usr/bin/xcodebuild -version
-      
-    - name: Build App
-      run: xcodebuild clean build -scheme Menugrab -destination 'platform=iOS Simulator,name=iPhone 11,OS=14.0'
-
-    - name: Build App Clip
-      run: xcodebuild clean build -scheme MenugrabAppClip -destination 'platform=iOS Simulator,name=iPhone 11,OS=14.0'
+    - name: xcodebuild
+      run: xcodebuild -scheme "Menugrab" -destination "generic/platform=iOS" build CODE_SIGNING_ALLOWED=NO
